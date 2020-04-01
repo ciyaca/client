@@ -1,0 +1,10 @@
+<RCC>
+    <qresource prefix="/">
+        <file>image/bg.jpg</file>
+        <file>image/hide_password.png</file>
+        <file>image/show_password.png</file>
+        <file>image/bg1.jpg</file>
+        <file>image/snapchat.png</file>
+        <file>image/bg2.jpg</file>
+    </qresource>
+</RCC>
