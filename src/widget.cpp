@@ -12,11 +12,18 @@ Widget::Widget(QWidget *parent)
     , ui(new Ui::Widget)
 {
     ui->setupUi(this);
+
+    this->state_login = 0;
+    this->state_register = 0;
+
     //放置logo
     QPixmap *pixmap = new QPixmap(":/image/snapchat.png");
     pixmap->scaled(ui->label->size(), Qt::KeepAspectRatio);
     ui->label->setScaledContents(true);
     ui->label->setPixmap(*pixmap);
+
+    //放置头像
+
 
     //登录提示符
     ui->lineEdit->setPlaceholderText("用户名");
@@ -26,6 +33,7 @@ Widget::Widget(QWidget *parent)
     ui->lineEdit_3->setPlaceholderText("请输入用户名");
     ui->lineEdit_4->setPlaceholderText("请输入密码");
     ui->lineEdit_5->setPlaceholderText("请重复密码");
+
     setWindowFlags(windowFlags()& ~Qt::WindowMaximizeButtonHint);
     setFixedSize(this->width(),this->height());
 
@@ -55,11 +63,13 @@ void Widget::paintEvent(QPaintEvent *){
 
 void Widget::on_pushButton_4_clicked()
 {
+    this->setWindowTitle("Login");
     ui->stackedWidget->setCurrentIndex(0);
 }
 
 void Widget::on_pushButton_2_clicked()
 {
+    this->setWindowTitle("Register");
     ui->stackedWidget->setCurrentIndex(1);
 }
 
@@ -67,6 +77,7 @@ QPushButton* Widget::createLineEditRightButton(QLineEdit *edit)
 {
     QPushButton *button = new QPushButton();
     QHBoxLayout *layout = new QHBoxLayout();
+    edit->setEchoMode(QLineEdit::Password);
     button->setCursor(Qt::PointingHandCursor);
     button->setCheckable(true);
     connect(button, &QPushButton::toggled, [edit](bool checked) {
@@ -87,7 +98,7 @@ QPushButton* Widget::createLineEditRightButton(QLineEdit *edit)
     return button;
 }
 
-bool Widget::on_pushButton_3_clicked()
+void Widget::on_pushButton_3_clicked()
 {
     //注册用户名
     QString nickname = ui->lineEdit_3->text();
@@ -95,7 +106,12 @@ bool Widget::on_pushButton_3_clicked()
     QString password1 = ui->lineEdit_4->text();
     //注册第二次密码
     QString password2 = ui->lineEdit_5->text();
+
     QRegExp rx;
+    // 首先对用户名进行判断
+    rx.setPatternSyntax(QRegExp::RegExp);
+    //对大小写字母敏感，即区分大小写
+    rx.setCaseSensitivity(Qt::CaseSensitive);
 
     if(nickname.size()==0)
     {
@@ -103,15 +119,116 @@ bool Widget::on_pushButton_3_clicked()
         ui->lineEdit_3->setFocus();
     }
     if(nickname.size() > 20){
-        QMessageBox::warning(this,tr("warning"),tr("昵称长度大于20"),QMessageBox::Yes);
+        QMessageBox::warning(this,tr("warning"),tr("昵称长度不可大于20"),QMessageBox::Yes);
         ui->lineEdit_3->clear();
         ui->lineEdit_3->setFocus();
+        return;
     }
+    rx.setPattern(QString("^[A-Za-z]+$"));
+    if(!rx.exactMatch(nickname))
+    {
+        QMessageBox::warning(this,tr("warning"),tr("用户名只能是字母"),QMessageBox::Yes);
+        ui->lineEdit_3->clear();
+        ui->lineEdit_3->setFocus();
+        return;
+    }
+
+    //然后对密码进行判断
+    //密码只包含字母和数字
+    rx.setPattern(QString("^[A-Za-z0-9]+$"));
+    if(password1.isEmpty()) //检测到密码输入框为空
+    {
+        QMessageBox::warning(this,tr("warning"),tr("密码不可为空"),QMessageBox::Yes);
+        ui->lineEdit_4->setFocus();
+        return;
+    }
+    else if(!rx.exactMatch(password1))
+    {
+        QMessageBox::warning(this,tr("warning"),tr("密码只能是数字或字母！"),QMessageBox::Yes);
+        ui->lineEdit_4->clear();
+        ui->lineEdit_4->setFocus();
+        ui->lineEdit_5->clear();
+        return;
+    }
+    else if(password1.size() < 6 || password1.size() > 12)
+    {
+        QMessageBox::warning(this,tr("warning"),tr("密码长度范围必须是6~12！"),QMessageBox::Yes);
+        ui->lineEdit_4->setFocus();
+        return;
+    }
+    if(password1.compare((password2)))
+    {
+        QMessageBox::warning(this,tr("warning"),tr("两次密码不一致"),QMessageBox::Yes);
+        ui->lineEdit_4->clear();
+        ui->lineEdit_4->setFocus();
+        ui->lineEdit_5->clear();
+        return;
+    }
+    QMessageBox::warning(this,tr("Wlcome"),tr("恭喜你！成功注册"),QMessageBox::Yes);
+}
+
+void Widget::on_pushButton_clicked()
+{
+    //这一部分直接将字符串发给后端
+    //用户名
+    QString nickname = ui->lineEdit->text();
+    //密码
+    QString password = ui->lineEdit_2->text();
+
+    QRegExp rx;
+    // 首先对用户名进行判断
     rx.setPatternSyntax(QRegExp::RegExp);
     //对大小写字母敏感，即区分大小写
     rx.setCaseSensitivity(Qt::CaseSensitive);
-    //密码长度为8-16位，且必须为数字、大小写字母或符号中至少2种
-    rx.setPattern(QString("^(?:(?=.*[A-Z])(?=.*[a-z])(?=.*[0-9])).{6,12}$"));
 
-
+    qDebug() << nickname;
+    qDebug() << password;
+//    qDebug() << this->state_login;
+    //登录部分进行简单的验证即可
+    //用户名范围
+    if(nickname.size()==0)
+    {
+        QMessageBox::warning(this,tr("warning"),tr("昵称不可为空"),QMessageBox::Yes);
+        ui->lineEdit->setFocus();
+    }
+    if(nickname.size() > 20){
+        QMessageBox::warning(this,tr("warning"),tr("昵称长度不可大于20"),QMessageBox::Yes);
+        ui->lineEdit->clear();
+        ui->lineEdit->setFocus();
+        return;
+    }
+    rx.setPattern(QString("^[A-Za-z]+$"));
+    if(!rx.exactMatch(nickname))
+    {
+        QMessageBox::warning(this,tr("warning"),tr("用户名只能是字母"),QMessageBox::Yes);
+        ui->lineEdit->clear();
+        ui->lineEdit->setFocus();
+        return;
+    }
+    //密码
+    rx.setPattern(QString("^[A-Za-z0-9]+$"));
+    if(password.isEmpty()) //检测到密码输入框为空
+    {
+        QMessageBox::warning(this,tr("warning"),tr("密码不可为空"),QMessageBox::Yes);
+        ui->lineEdit_2->setFocus();
+        return;
+    }
+    else if(!rx.exactMatch(password))
+    {
+        QMessageBox::warning(this,tr("warning"),tr("密码只能是数字或字母！"),QMessageBox::Yes);
+        ui->lineEdit_2->clear();
+        ui->lineEdit_2->setFocus();
+        return;
+    }
+    else if(password.size() < 6 || password.size() > 12)
+    {
+        QMessageBox::warning(this,tr("warning"),tr("密码长度范围必须是6~12！"),QMessageBox::Yes);
+        ui->lineEdit_2->setFocus();
+        return;
+    }
+    this->state_login = 1;
+    //创建Chat
+    this->Chat = new MainWindow();
+    this->hide();
+    this->Chat->show();
 }

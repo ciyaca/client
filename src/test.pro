@@ -16,13 +16,24 @@ DEFINES += QT_DEPRECATED_WARNINGS
 #DEFINES += QT_DISABLE_DEPRECATED_BEFORE=0x060000    # disables all the APIs deprecated before Qt 6.0.0
 
 SOURCES += \
+    chatface.cpp \
+    come_message.cpp \
+    common.cpp \
     main.cpp \
+    mainwindow.cpp \
     widget.cpp
 
 HEADERS += \
+    chatface.h \
+    come_message.h \
+    common.h \
+    mainwindow.h \
     widget.h
 
 FORMS += \
+    chatface.ui \
+    come_message.ui \
+    mainwindow.ui \
     widget.ui
 
 # Default rules for deployment.
@@ -30,7 +41,9 @@ qnx: target.path = /tmp/$${TARGET}/bin
 else: unix:!android: target.path = /opt/$${TARGET}/bin
 !isEmpty(target.path): INSTALLS += target
 
-DISTFILES +=
+DISTFILES += \
+    Chatface.qml \
+    ChatfaceForm.ui.qml
 
 RESOURCES += \
     image.qrc

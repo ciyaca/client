@@ -6,5 +6,12 @@
         <file>image/bg1.jpg</file>
         <file>image/snapchat.png</file>
         <file>image/bg2.jpg</file>
+        <file>image/Test_Avatar.jpg</file>
+        <file>image/bbs.png</file>
+        <file>image/chat.png</file>
+        <file>image/list.png</file>
+        <file>image/add.png</file>
+        <file>image/emoji.png</file>
+        <file>image/file.png</file>
     </qresource>
 </RCC>
