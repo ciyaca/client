@@ -1,6 +1,6 @@
 #ifndef COME_MESSAGE_H
 #define COME_MESSAGE_H
-
+#include "client_rpc.hpp"
 #include <QWidget>
 #include "common.h"
 

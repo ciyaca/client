@@ -5,6 +5,7 @@
 #include <QWidget>
 #include <QMainWindow>
 #include <QDebug>
+#include "client_rpc.hpp"
 
 Chatface::Chatface(struct person_info temp):
     ui(new Ui::Chatface)

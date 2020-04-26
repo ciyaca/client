@@ -1,6 +1,6 @@
 #ifndef WIDGET_H
 #define WIDGET_H
-
+#include "client_rpc.hpp"
 #include <QWidget>
 #include <QPushButton>
 #include <QLineEdit>

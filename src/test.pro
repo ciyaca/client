@@ -2,7 +2,7 @@ QT       += core gui
 
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 
-CONFIG += c++11
+CONFIG += c++17
 
 # The following define makes your compiler emit warnings if you use
 # any Qt feature that has been marked deprecated (the exact warnings
@@ -17,18 +17,30 @@ DEFINES += QT_DEPRECATED_WARNINGS
 
 SOURCES += \
     chatface.cpp \
+    client_rpc.cpp \
     come_message.cpp \
     common.cpp \
     emojiwidget.cpp \
+    feverrpc/feverrpc-client.cpp \
+    feverrpc/feverrpc-factory.cpp \
+    feverrpc/feverrpc-server.cpp \
+    feverrpc/feverrpc.cpp \
+    feverrpc/utils.cpp \
     main.cpp \
     mainwindow.cpp \
     widget.cpp
 
 HEADERS += \
     chatface.h \
+    client_rpc.hpp \
     come_message.h \
     common.h \
     emojiwidget.h \
+    feverrpc/feverrpc-client.hpp \
+    feverrpc/feverrpc-factory.hpp \
+    feverrpc/feverrpc-server.hpp \
+    feverrpc/feverrpc.hpp \
+    feverrpc/utils.hpp \
     mainwindow.h \
     widget.h
 

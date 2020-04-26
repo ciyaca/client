@@ -1,6 +1,6 @@
 #ifndef CHATFACE_H
 #define CHATFACE_H
-
+#include "client_rpc.hpp"
 #include <QWidget>
 #include "common.h"
 #include <emoji.h>

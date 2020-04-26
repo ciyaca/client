@@ -7,6 +7,8 @@
 #include <QtDebug>
 #include <QMessageBox>
 
+
+
 Widget::Widget(QWidget *parent)
     : QWidget(parent)
     , ui(new Ui::Widget)
@@ -164,6 +166,8 @@ void Widget::on_pushButton_3_clicked()
         ui->lineEdit_5->clear();
         return;
     }
+    //TO DO diao yong zhuce daima
+
     QMessageBox::warning(this,tr("Wlcome"),tr("恭喜你！成功注册"),QMessageBox::Yes);
 }
 
