@@ -2,6 +2,7 @@
 #include "mainwindow.h"
 #include <QApplication>
 #include <chatface.h>
+#include <emojiwidget.h>
 
 int main(int argc, char *argv[])
 {
@@ -11,7 +12,6 @@ int main(int argc, char *argv[])
 //    login->show();
     MainWindow m;
     m.show();
-
     a.exec();
     return 0;
 }

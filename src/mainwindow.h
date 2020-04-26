@@ -3,6 +3,7 @@
 
 #include <QMainWindow>
 #include "common.h"
+#include <QListWidgetItem>
 
 namespace Ui {
 class MainWindow;
@@ -19,11 +20,8 @@ public:
     ~MainWindow();
 
 private slots:
-    void on_MessageButton_clicked();
 
-    void on_ChatButton_clicked();
-
-    void on_BBSButton_clicked();
+    void on_listWidget_itemClicked(QListWidgetItem *item);
 
 private:
     Ui::MainWindow *ui;

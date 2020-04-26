@@ -55,22 +55,26 @@ OBJECTS_DIR   = ./
 SOURCES       = chatface.cpp \
 		come_message.cpp \
 		common.cpp \
+		emojiwidget.cpp \
 		main.cpp \
 		mainwindow.cpp \
 		widget.cpp qrc_image.cpp \
 		moc_chatface.cpp \
 		moc_come_message.cpp \
+		moc_emojiwidget.cpp \
 		moc_mainwindow.cpp \
 		moc_widget.cpp
 OBJECTS       = chatface.o \
 		come_message.o \
 		common.o \
+		emojiwidget.o \
 		main.o \
 		mainwindow.o \
 		widget.o \
 		qrc_image.o \
 		moc_chatface.o \
 		moc_come_message.o \
+		moc_emojiwidget.o \
 		moc_mainwindow.o \
 		moc_widget.o
 DIST          = Chatface.qml \
@@ -255,10 +259,12 @@ DIST          = Chatface.qml \
 		test.pro chatface.h \
 		come_message.h \
 		common.h \
+		emojiwidget.h \
 		mainwindow.h \
 		widget.h chatface.cpp \
 		come_message.cpp \
 		common.cpp \
+		emojiwidget.cpp \
 		main.cpp \
 		mainwindow.cpp \
 		widget.cpp
@@ -270,7 +276,7 @@ TARGET        = test
 first: all
 ####### Build rules
 
-test: ui_chatface.h ui_come_message.h ui_mainwindow.h ui_widget.h $(OBJECTS)  
+test: ui_chatface.h ui_come_message.h ui_emoji.h ui_emojiwidget.h ui_mainwindow.h ui_widget.h $(OBJECTS)  
 	$(LINK) $(LFLAGS) -o $(TARGET) $(OBJECTS) $(OBJCOMP) $(LIBS)
 
 Makefile: test.pro ../../Qt5.14.1/5.14.1/gcc_64/mkspecs/linux-g++/qmake.conf ../../Qt5.14.1/5.14.1/gcc_64/mkspecs/features/spec_pre.prf \
@@ -648,9 +654,9 @@ distdir: FORCE
 	$(COPY_FILE) --parents $(DIST) $(DISTDIR)/
 	$(COPY_FILE) --parents image.qrc $(DISTDIR)/
 	$(COPY_FILE) --parents ../../Qt5.14.1/5.14.1/gcc_64/mkspecs/features/data/dummy.cpp $(DISTDIR)/
-	$(COPY_FILE) --parents chatface.h come_message.h common.h mainwindow.h widget.h $(DISTDIR)/
-	$(COPY_FILE) --parents chatface.cpp come_message.cpp common.cpp main.cpp mainwindow.cpp widget.cpp $(DISTDIR)/
-	$(COPY_FILE) --parents chatface.ui come_message.ui mainwindow.ui widget.ui $(DISTDIR)/
+	$(COPY_FILE) --parents chatface.h come_message.h common.h emojiwidget.h mainwindow.h widget.h $(DISTDIR)/
+	$(COPY_FILE) --parents chatface.cpp come_message.cpp common.cpp emojiwidget.cpp main.cpp mainwindow.cpp widget.cpp $(DISTDIR)/
+	$(COPY_FILE) --parents chatface.ui come_message.ui emoji.ui emojiwidget.ui mainwindow.ui widget.ui $(DISTDIR)/
 
 
 clean: compiler_clean 
@@ -691,7 +697,139 @@ qrc_image.cpp: image.qrc \
 		image/Test_Avatar.jpg \
 		image/list.png \
 		image/bg2.jpg \
-		image/bg1.jpg
+		image/bg1.jpg \
+		image/emoji/23.gif \
+		image/emoji/32.gif \
+		image/emoji/41.gif \
+		image/emoji/50.gif \
+		image/emoji/105.gif \
+		image/emoji/114.gif \
+		image/emoji/123.gif \
+		image/emoji/132.gif \
+		image/emoji/12.gif \
+		image/emoji/21.gif \
+		image/emoji/9.gif \
+		image/emoji/30.gif \
+		image/emoji/103.gif \
+		image/emoji/112.gif \
+		image/emoji/121.gif \
+		image/emoji/130.gif \
+		image/emoji/10.gif \
+		image/emoji/99.gif \
+		image/emoji/7.gif \
+		image/emoji/101.gif \
+		image/emoji/110.gif \
+		image/emoji/79.gif \
+		image/emoji/88.gif \
+		image/emoji/97.gif \
+		image/emoji/5.gif \
+		image/emoji/59.gif \
+		image/emoji/68.gif \
+		image/emoji/77.gif \
+		image/emoji/86.gif \
+		image/emoji/95.gif \
+		image/emoji/3.gif \
+		image/emoji/39.gif \
+		image/emoji/48.gif \
+		image/emoji/57.gif \
+		image/emoji/66.gif \
+		image/emoji/75.gif \
+		image/emoji/84.gif \
+		image/emoji/93.gif \
+		image/emoji/19.gif \
+		image/emoji/1.gif \
+		image/emoji/28.gif \
+		image/emoji/37.gif \
+		image/emoji/46.gif \
+		image/emoji/55.gif \
+		image/emoji/64.gif \
+		image/emoji/119.gif \
+		image/emoji/73.gif \
+		image/emoji/128.gif \
+		image/emoji/82.gif \
+		image/emoji/91.gif \
+		image/emoji/17.gif \
+		image/emoji/26.gif \
+		image/emoji/35.gif \
+		image/emoji/44.gif \
+		image/emoji/53.gif \
+		image/emoji/108.gif \
+		image/emoji/62.gif \
+		image/emoji/117.gif \
+		image/emoji/71.gif \
+		image/emoji/126.gif \
+		image/emoji/80.gif \
+		image/emoji/15.gif \
+		image/emoji/24.gif \
+		image/emoji/33.gif \
+		image/emoji/42.gif \
+		image/emoji/51.gif \
+		image/emoji/106.gif \
+		image/emoji/60.gif \
+		image/emoji/115.gif \
+		image/emoji/124.gif \
+		image/emoji/13.gif \
+		image/emoji/22.gif \
+		image/emoji/31.gif \
+		image/emoji/40.gif \
+		image/emoji/104.gif \
+		image/emoji/113.gif \
+		image/emoji/122.gif \
+		image/emoji/131.gif \
+		image/emoji/11.gif \
+		image/emoji/20.gif \
+		image/emoji/8.gif \
+		image/emoji/102.gif \
+		image/emoji/111.gif \
+		image/emoji/120.gif \
+		image/emoji/89.gif \
+		image/emoji/98.gif \
+		image/emoji/6.gif \
+		image/emoji/100.gif \
+		image/emoji/69.gif \
+		image/emoji/78.gif \
+		image/emoji/87.gif \
+		image/emoji/96.gif \
+		image/emoji/4.gif \
+		image/emoji/49.gif \
+		image/emoji/58.gif \
+		image/emoji/67.gif \
+		image/emoji/76.gif \
+		image/emoji/85.gif \
+		image/emoji/94.gif \
+		image/emoji/2.gif \
+		image/emoji/29.gif \
+		image/emoji/38.gif \
+		image/emoji/47.gif \
+		image/emoji/56.gif \
+		image/emoji/65.gif \
+		image/emoji/74.gif \
+		image/emoji/129.gif \
+		image/emoji/83.gif \
+		image/emoji/92.gif \
+		image/emoji/18.gif \
+		image/emoji/27.gif \
+		image/emoji/36.gif \
+		image/emoji/45.gif \
+		image/emoji/54.gif \
+		image/emoji/109.gif \
+		image/emoji/63.gif \
+		image/emoji/118.gif \
+		image/emoji/72.gif \
+		image/emoji/127.gif \
+		image/emoji/81.gif \
+		image/emoji/90.gif \
+		image/emoji/16.gif \
+		image/emoji/25.gif \
+		image/emoji/34.gif \
+		image/emoji/43.gif \
+		image/emoji/52.gif \
+		image/emoji/107.gif \
+		image/emoji/61.gif \
+		image/emoji/116.gif \
+		image/emoji/70.gif \
+		image/emoji/125.gif \
+		image/emoji/14.gif
 	/home/ifpop/Qt5.14.1/5.14.1/gcc_64/bin/rcc -name image image.qrc -o qrc_image.cpp
 
 compiler_moc_predefs_make_all: moc_predefs.h
@@ -700,9 +838,9 @@ compiler_moc_predefs_clean:
 moc_predefs.h: ../../Qt5.14.1/5.14.1/gcc_64/mkspecs/features/data/dummy.cpp
 	g++ -pipe -g -std=gnu++11 -Wall -Wextra -dM -E -o moc_predefs.h ../../Qt5.14.1/5.14.1/gcc_64/mkspecs/features/data/dummy.cpp
 
-compiler_moc_header_make_all: moc_chatface.cpp moc_come_message.cpp moc_mainwindow.cpp moc_widget.cpp
+compiler_moc_header_make_all: moc_chatface.cpp moc_come_message.cpp moc_emojiwidget.cpp moc_mainwindow.cpp moc_widget.cpp
 compiler_moc_header_clean:
-	-$(DEL_FILE) moc_chatface.cpp moc_come_message.cpp moc_mainwindow.cpp moc_widget.cpp
+	-$(DEL_FILE) moc_chatface.cpp moc_come_message.cpp moc_emojiwidget.cpp moc_mainwindow.cpp moc_widget.cpp
 moc_chatface.cpp: chatface.h \
 		../../Qt5.14.1/5.14.1/gcc_64/include/QtWidgets/QWidget \
 		../../Qt5.14.1/5.14.1/gcc_64/include/QtWidgets/qwidget.h \
@@ -823,6 +961,8 @@ moc_chatface.cpp: chatface.h \
 		../../Qt5.14.1/5.14.1/gcc_64/include/QtWidgets/QMainWindow \
 		../../Qt5.14.1/5.14.1/gcc_64/include/QtWidgets/qmainwindow.h \
 		../../Qt5.14.1/5.14.1/gcc_64/include/QtWidgets/qtabwidget.h \
+		emoji.h \
+		normal_emoji.h \
 		moc_predefs.h \
 		../../Qt5.14.1/5.14.1/gcc_64/bin/moc
 	/home/ifpop/Qt5.14.1/5.14.1/gcc_64/bin/moc $(DEFINES) --include /home/ifpop/Desktop/test/moc_predefs.h -I/home/ifpop/Qt5.14.1/5.14.1/gcc_64/mkspecs/linux-g++ -I/home/ifpop/Desktop/test -I/home/ifpop/Qt5.14.1/5.14.1/gcc_64/include -I/home/ifpop/Qt5.14.1/5.14.1/gcc_64/include/QtWidgets -I/home/ifpop/Qt5.14.1/5.14.1/gcc_64/include/QtGui -I/home/ifpop/Qt5.14.1/5.14.1/gcc_64/include/QtCore -I/usr/include/c++/7 -I/usr/include/x86_64-linux-gnu/c++/7 -I/usr/include/c++/7/backward -I/usr/lib/gcc/x86_64-linux-gnu/7/include -I/usr/local/include -I/usr/lib/gcc/x86_64-linux-gnu/7/include-fixed -I/usr/include/x86_64-linux-gnu -I/usr/include chatface.h -o moc_chatface.cpp
@@ -951,6 +1091,119 @@ moc_come_message.cpp: come_message.h \
 		../../Qt5.14.1/5.14.1/gcc_64/bin/moc
 	/home/ifpop/Qt5.14.1/5.14.1/gcc_64/bin/moc $(DEFINES) --include /home/ifpop/Desktop/test/moc_predefs.h -I/home/ifpop/Qt5.14.1/5.14.1/gcc_64/mkspecs/linux-g++ -I/home/ifpop/Desktop/test -I/home/ifpop/Qt5.14.1/5.14.1/gcc_64/include -I/home/ifpop/Qt5.14.1/5.14.1/gcc_64/include/QtWidgets -I/home/ifpop/Qt5.14.1/5.14.1/gcc_64/include/QtGui -I/home/ifpop/Qt5.14.1/5.14.1/gcc_64/include/QtCore -I/usr/include/c++/7 -I/usr/include/x86_64-linux-gnu/c++/7 -I/usr/include/c++/7/backward -I/usr/lib/gcc/x86_64-linux-gnu/7/include -I/usr/local/include -I/usr/lib/gcc/x86_64-linux-gnu/7/include-fixed -I/usr/include/x86_64-linux-gnu -I/usr/include come_message.h -o moc_come_message.cpp
 
+moc_emojiwidget.cpp: emojiwidget.h \
+		../../Qt5.14.1/5.14.1/gcc_64/include/QtWidgets/QMainWindow \
+		../../Qt5.14.1/5.14.1/gcc_64/include/QtWidgets/qmainwindow.h \
+		../../Qt5.14.1/5.14.1/gcc_64/include/QtWidgets/qtwidgetsglobal.h \
+		../../Qt5.14.1/5.14.1/gcc_64/include/QtGui/qtguiglobal.h \
+		../../Qt5.14.1/5.14.1/gcc_64/include/QtCore/qglobal.h \
+		../../Qt5.14.1/5.14.1/gcc_64/include/QtCore/qconfig-bootstrapped.h \
+		../../Qt5.14.1/5.14.1/gcc_64/include/QtCore/qconfig.h \
+		../../Qt5.14.1/5.14.1/gcc_64/include/QtCore/qtcore-config.h \
+		../../Qt5.14.1/5.14.1/gcc_64/include/QtCore/qsystemdetection.h \
+		../../Qt5.14.1/5.14.1/gcc_64/include/QtCore/qprocessordetection.h \
+		../../Qt5.14.1/5.14.1/gcc_64/include/QtCore/qcompilerdetection.h \
+		../../Qt5.14.1/5.14.1/gcc_64/include/QtCore/qtypeinfo.h \
+		../../Qt5.14.1/5.14.1/gcc_64/include/QtCore/qsysinfo.h \
+		../../Qt5.14.1/5.14.1/gcc_64/include/QtCore/qlogging.h \
+		../../Qt5.14.1/5.14.1/gcc_64/include/QtCore/qflags.h \
+		../../Qt5.14.1/5.14.1/gcc_64/include/QtCore/qatomic.h \
+		../../Qt5.14.1/5.14.1/gcc_64/include/QtCore/qbasicatomic.h \
+		../../Qt5.14.1/5.14.1/gcc_64/include/QtCore/qatomic_bootstrap.h \
+		../../Qt5.14.1/5.14.1/gcc_64/include/QtCore/qgenericatomic.h \
+		../../Qt5.14.1/5.14.1/gcc_64/include/QtCore/qatomic_cxx11.h \
+		../../Qt5.14.1/5.14.1/gcc_64/include/QtCore/qatomic_msvc.h \
+		../../Qt5.14.1/5.14.1/gcc_64/include/QtCore/qglobalstatic.h \
+		../../Qt5.14.1/5.14.1/gcc_64/include/QtCore/qmutex.h \
+		../../Qt5.14.1/5.14.1/gcc_64/include/QtCore/qnumeric.h \
+		../../Qt5.14.1/5.14.1/gcc_64/include/QtCore/qversiontagging.h \
+		../../Qt5.14.1/5.14.1/gcc_64/include/QtGui/qtgui-config.h \
+		../../Qt5.14.1/5.14.1/gcc_64/include/QtWidgets/qtwidgets-config.h \
+		../../Qt5.14.1/5.14.1/gcc_64/include/QtWidgets/qwidget.h \
+		../../Qt5.14.1/5.14.1/gcc_64/include/QtGui/qwindowdefs.h \
+		../../Qt5.14.1/5.14.1/gcc_64/include/QtCore/qobjectdefs.h \
+		../../Qt5.14.1/5.14.1/gcc_64/include/QtCore/qnamespace.h \
+		../../Qt5.14.1/5.14.1/gcc_64/include/QtCore/qobjectdefs_impl.h \
+		../../Qt5.14.1/5.14.1/gcc_64/include/QtGui/qwindowdefs_win.h \
+		../../Qt5.14.1/5.14.1/gcc_64/include/QtCore/qobject.h \
+		../../Qt5.14.1/5.14.1/gcc_64/include/QtCore/qstring.h \
+		../../Qt5.14.1/5.14.1/gcc_64/include/QtCore/qchar.h \
+		../../Qt5.14.1/5.14.1/gcc_64/include/QtCore/qbytearray.h \
+		../../Qt5.14.1/5.14.1/gcc_64/include/QtCore/qrefcount.h \
+		../../Qt5.14.1/5.14.1/gcc_64/include/QtCore/qarraydata.h \
+		../../Qt5.14.1/5.14.1/gcc_64/include/QtCore/qstringliteral.h \
+		../../Qt5.14.1/5.14.1/gcc_64/include/QtCore/qstringalgorithms.h \
+		../../Qt5.14.1/5.14.1/gcc_64/include/QtCore/qstringview.h \
+		../../Qt5.14.1/5.14.1/gcc_64/include/QtCore/qstringbuilder.h \
+		../../Qt5.14.1/5.14.1/gcc_64/include/QtCore/qlist.h \
+		../../Qt5.14.1/5.14.1/gcc_64/include/QtCore/qalgorithms.h \
+		../../Qt5.14.1/5.14.1/gcc_64/include/QtCore/qiterator.h \
+		../../Qt5.14.1/5.14.1/gcc_64/include/QtCore/qhashfunctions.h \
+		../../Qt5.14.1/5.14.1/gcc_64/include/QtCore/qpair.h \
+		../../Qt5.14.1/5.14.1/gcc_64/include/QtCore/qvector.h \
+		../../Qt5.14.1/5.14.1/gcc_64/include/QtCore/qcontainertools_impl.h \
+		../../Qt5.14.1/5.14.1/gcc_64/include/QtCore/qpoint.h \
+		../../Qt5.14.1/5.14.1/gcc_64/include/QtCore/qbytearraylist.h \
+		../../Qt5.14.1/5.14.1/gcc_64/include/QtCore/qstringlist.h \
+		../../Qt5.14.1/5.14.1/gcc_64/include/QtCore/qregexp.h \
+		../../Qt5.14.1/5.14.1/gcc_64/include/QtCore/qstringmatcher.h \
+		../../Qt5.14.1/5.14.1/gcc_64/include/QtCore/qcoreevent.h \
+		../../Qt5.14.1/5.14.1/gcc_64/include/QtCore/qscopedpointer.h \
+		../../Qt5.14.1/5.14.1/gcc_64/include/QtCore/qmetatype.h \
+		../../Qt5.14.1/5.14.1/gcc_64/include/QtCore/qvarlengtharray.h \
+		../../Qt5.14.1/5.14.1/gcc_64/include/QtCore/qcontainerfwd.h \
+		../../Qt5.14.1/5.14.1/gcc_64/include/QtCore/qobject_impl.h \
+		../../Qt5.14.1/5.14.1/gcc_64/include/QtCore/qmargins.h \
+		../../Qt5.14.1/5.14.1/gcc_64/include/QtGui/qpaintdevice.h \
+		../../Qt5.14.1/5.14.1/gcc_64/include/QtCore/qrect.h \
+		../../Qt5.14.1/5.14.1/gcc_64/include/QtCore/qsize.h \
+		../../Qt5.14.1/5.14.1/gcc_64/include/QtGui/qpalette.h \
+		../../Qt5.14.1/5.14.1/gcc_64/include/QtGui/qcolor.h \
+		../../Qt5.14.1/5.14.1/gcc_64/include/QtGui/qrgb.h \
+		../../Qt5.14.1/5.14.1/gcc_64/include/QtGui/qrgba64.h \
+		../../Qt5.14.1/5.14.1/gcc_64/include/QtGui/qbrush.h \
+		../../Qt5.14.1/5.14.1/gcc_64/include/QtGui/qmatrix.h \
+		../../Qt5.14.1/5.14.1/gcc_64/include/QtGui/qpolygon.h \
+		../../Qt5.14.1/5.14.1/gcc_64/include/QtGui/qregion.h \
+		../../Qt5.14.1/5.14.1/gcc_64/include/QtCore/qdatastream.h \
+		../../Qt5.14.1/5.14.1/gcc_64/include/QtCore/qiodevice.h \
+		../../Qt5.14.1/5.14.1/gcc_64/include/QtCore/qline.h \
+		../../Qt5.14.1/5.14.1/gcc_64/include/QtGui/qtransform.h \
+		../../Qt5.14.1/5.14.1/gcc_64/include/QtGui/qpainterpath.h \
+		../../Qt5.14.1/5.14.1/gcc_64/include/QtGui/qimage.h \
+		../../Qt5.14.1/5.14.1/gcc_64/include/QtGui/qpixelformat.h \
+		../../Qt5.14.1/5.14.1/gcc_64/include/QtGui/qpixmap.h \
+		../../Qt5.14.1/5.14.1/gcc_64/include/QtCore/qsharedpointer.h \
+		../../Qt5.14.1/5.14.1/gcc_64/include/QtCore/qshareddata.h \
+		../../Qt5.14.1/5.14.1/gcc_64/include/QtCore/qhash.h \
+		../../Qt5.14.1/5.14.1/gcc_64/include/QtCore/qsharedpointer_impl.h \
+		../../Qt5.14.1/5.14.1/gcc_64/include/QtGui/qfont.h \
+		../../Qt5.14.1/5.14.1/gcc_64/include/QtGui/qfontmetrics.h \
+		../../Qt5.14.1/5.14.1/gcc_64/include/QtGui/qfontinfo.h \
+		../../Qt5.14.1/5.14.1/gcc_64/include/QtWidgets/qsizepolicy.h \
+		../../Qt5.14.1/5.14.1/gcc_64/include/QtGui/qcursor.h \
+		../../Qt5.14.1/5.14.1/gcc_64/include/QtGui/qkeysequence.h \
+		../../Qt5.14.1/5.14.1/gcc_64/include/QtGui/qevent.h \
+		../../Qt5.14.1/5.14.1/gcc_64/include/QtCore/qvariant.h \
+		../../Qt5.14.1/5.14.1/gcc_64/include/QtCore/qmap.h \
+		../../Qt5.14.1/5.14.1/gcc_64/include/QtCore/qdebug.h \
+		../../Qt5.14.1/5.14.1/gcc_64/include/QtCore/qtextstream.h \
+		../../Qt5.14.1/5.14.1/gcc_64/include/QtCore/qlocale.h \
+		../../Qt5.14.1/5.14.1/gcc_64/include/QtCore/qset.h \
+		../../Qt5.14.1/5.14.1/gcc_64/include/QtCore/qcontiguouscache.h \
+		../../Qt5.14.1/5.14.1/gcc_64/include/QtCore/qurl.h \
+		../../Qt5.14.1/5.14.1/gcc_64/include/QtCore/qurlquery.h \
+		../../Qt5.14.1/5.14.1/gcc_64/include/QtCore/qfile.h \
+		../../Qt5.14.1/5.14.1/gcc_64/include/QtCore/qfiledevice.h \
+		../../Qt5.14.1/5.14.1/gcc_64/include/QtGui/qvector2d.h \
+		../../Qt5.14.1/5.14.1/gcc_64/include/QtGui/qtouchdevice.h \
+		../../Qt5.14.1/5.14.1/gcc_64/include/QtWidgets/qtabwidget.h \
+		../../Qt5.14.1/5.14.1/gcc_64/include/QtGui/qicon.h \
+		../../Qt5.14.1/5.14.1/gcc_64/include/QtWidgets/QWidget \
+		moc_predefs.h \
+		../../Qt5.14.1/5.14.1/gcc_64/bin/moc
+	/home/ifpop/Qt5.14.1/5.14.1/gcc_64/bin/moc $(DEFINES) --include /home/ifpop/Desktop/test/moc_predefs.h -I/home/ifpop/Qt5.14.1/5.14.1/gcc_64/mkspecs/linux-g++ -I/home/ifpop/Desktop/test -I/home/ifpop/Qt5.14.1/5.14.1/gcc_64/include -I/home/ifpop/Qt5.14.1/5.14.1/gcc_64/include/QtWidgets -I/home/ifpop/Qt5.14.1/5.14.1/gcc_64/include/QtGui -I/home/ifpop/Qt5.14.1/5.14.1/gcc_64/include/QtCore -I/usr/include/c++/7 -I/usr/include/x86_64-linux-gnu/c++/7 -I/usr/include/c++/7/backward -I/usr/lib/gcc/x86_64-linux-gnu/7/include -I/usr/local/include -I/usr/lib/gcc/x86_64-linux-gnu/7/include-fixed -I/usr/include/x86_64-linux-gnu -I/usr/include emojiwidget.h -o moc_emojiwidget.cpp
+
 moc_mainwindow.cpp: mainwindow.h \
 		../../Qt5.14.1/5.14.1/gcc_64/include/QtWidgets/QMainWindow \
 		../../Qt5.14.1/5.14.1/gcc_64/include/QtWidgets/qmainwindow.h \
@@ -1070,6 +1323,24 @@ moc_mainwindow.cpp: mainwindow.h \
 		../../Qt5.14.1/5.14.1/gcc_64/include/QtWidgets/QPushButton \
 		../../Qt5.14.1/5.14.1/gcc_64/include/QtWidgets/qpushbutton.h \
 		../../Qt5.14.1/5.14.1/gcc_64/include/QtWidgets/qabstractbutton.h \
+		../../Qt5.14.1/5.14.1/gcc_64/include/QtWidgets/QListWidgetItem \
+		../../Qt5.14.1/5.14.1/gcc_64/include/QtWidgets/qlistwidget.h \
+		../../Qt5.14.1/5.14.1/gcc_64/include/QtWidgets/qlistview.h \
+		../../Qt5.14.1/5.14.1/gcc_64/include/QtWidgets/qabstractitemview.h \
+		../../Qt5.14.1/5.14.1/gcc_64/include/QtWidgets/qabstractscrollarea.h \
+		../../Qt5.14.1/5.14.1/gcc_64/include/QtWidgets/qframe.h \
+		../../Qt5.14.1/5.14.1/gcc_64/include/QtCore/qabstractitemmodel.h \
+		../../Qt5.14.1/5.14.1/gcc_64/include/QtCore/qitemselectionmodel.h \
+		../../Qt5.14.1/5.14.1/gcc_64/include/QtWidgets/qabstractitemdelegate.h \
+		../../Qt5.14.1/5.14.1/gcc_64/include/QtWidgets/qstyleoption.h \
+		../../Qt5.14.1/5.14.1/gcc_64/include/QtWidgets/qabstractspinbox.h \
+		../../Qt5.14.1/5.14.1/gcc_64/include/QtGui/qvalidator.h \
+		../../Qt5.14.1/5.14.1/gcc_64/include/QtCore/qregularexpression.h \
+		../../Qt5.14.1/5.14.1/gcc_64/include/QtWidgets/qslider.h \
+		../../Qt5.14.1/5.14.1/gcc_64/include/QtWidgets/qabstractslider.h \
+		../../Qt5.14.1/5.14.1/gcc_64/include/QtWidgets/qstyle.h \
+		../../Qt5.14.1/5.14.1/gcc_64/include/QtWidgets/qtabbar.h \
+		../../Qt5.14.1/5.14.1/gcc_64/include/QtWidgets/qrubberband.h \
 		moc_predefs.h \
 		../../Qt5.14.1/5.14.1/gcc_64/bin/moc
 	/home/ifpop/Qt5.14.1/5.14.1/gcc_64/bin/moc $(DEFINES) --include /home/ifpop/Desktop/test/moc_predefs.h -I/home/ifpop/Qt5.14.1/5.14.1/gcc_64/mkspecs/linux-g++ -I/home/ifpop/Desktop/test -I/home/ifpop/Qt5.14.1/5.14.1/gcc_64/include -I/home/ifpop/Qt5.14.1/5.14.1/gcc_64/include/QtWidgets -I/home/ifpop/Qt5.14.1/5.14.1/gcc_64/include/QtGui -I/home/ifpop/Qt5.14.1/5.14.1/gcc_64/include/QtCore -I/usr/include/c++/7 -I/usr/include/x86_64-linux-gnu/c++/7 -I/usr/include/c++/7/backward -I/usr/lib/gcc/x86_64-linux-gnu/7/include -I/usr/local/include -I/usr/lib/gcc/x86_64-linux-gnu/7/include-fixed -I/usr/include/x86_64-linux-gnu -I/usr/include mainwindow.h -o moc_mainwindow.cpp
@@ -1200,6 +1471,23 @@ moc_widget.cpp: widget.h \
 		../../Qt5.14.1/5.14.1/gcc_64/include/QtGui/qbitmap.h \
 		../../Qt5.14.1/5.14.1/gcc_64/include/QtGui/QPainter \
 		../../Qt5.14.1/5.14.1/gcc_64/include/QtGui/qpainter.h \
+		../../Qt5.14.1/5.14.1/gcc_64/include/QtWidgets/QListWidgetItem \
+		../../Qt5.14.1/5.14.1/gcc_64/include/QtWidgets/qlistwidget.h \
+		../../Qt5.14.1/5.14.1/gcc_64/include/QtWidgets/qlistview.h \
+		../../Qt5.14.1/5.14.1/gcc_64/include/QtWidgets/qabstractitemview.h \
+		../../Qt5.14.1/5.14.1/gcc_64/include/QtWidgets/qabstractscrollarea.h \
+		../../Qt5.14.1/5.14.1/gcc_64/include/QtCore/qabstractitemmodel.h \
+		../../Qt5.14.1/5.14.1/gcc_64/include/QtCore/qitemselectionmodel.h \
+		../../Qt5.14.1/5.14.1/gcc_64/include/QtWidgets/qabstractitemdelegate.h \
+		../../Qt5.14.1/5.14.1/gcc_64/include/QtWidgets/qstyleoption.h \
+		../../Qt5.14.1/5.14.1/gcc_64/include/QtWidgets/qabstractspinbox.h \
+		../../Qt5.14.1/5.14.1/gcc_64/include/QtGui/qvalidator.h \
+		../../Qt5.14.1/5.14.1/gcc_64/include/QtCore/qregularexpression.h \
+		../../Qt5.14.1/5.14.1/gcc_64/include/QtWidgets/qslider.h \
+		../../Qt5.14.1/5.14.1/gcc_64/include/QtWidgets/qabstractslider.h \
+		../../Qt5.14.1/5.14.1/gcc_64/include/QtWidgets/qstyle.h \
+		../../Qt5.14.1/5.14.1/gcc_64/include/QtWidgets/qtabbar.h \
+		../../Qt5.14.1/5.14.1/gcc_64/include/QtWidgets/qrubberband.h \
 		moc_predefs.h \
 		../../Qt5.14.1/5.14.1/gcc_64/bin/moc
 	/home/ifpop/Qt5.14.1/5.14.1/gcc_64/bin/moc $(DEFINES) --include /home/ifpop/Desktop/test/moc_predefs.h -I/home/ifpop/Qt5.14.1/5.14.1/gcc_64/mkspecs/linux-g++ -I/home/ifpop/Desktop/test -I/home/ifpop/Qt5.14.1/5.14.1/gcc_64/include -I/home/ifpop/Qt5.14.1/5.14.1/gcc_64/include/QtWidgets -I/home/ifpop/Qt5.14.1/5.14.1/gcc_64/include/QtGui -I/home/ifpop/Qt5.14.1/5.14.1/gcc_64/include/QtCore -I/usr/include/c++/7 -I/usr/include/x86_64-linux-gnu/c++/7 -I/usr/include/c++/7/backward -I/usr/lib/gcc/x86_64-linux-gnu/7/include -I/usr/local/include -I/usr/lib/gcc/x86_64-linux-gnu/7/include-fixed -I/usr/include/x86_64-linux-gnu -I/usr/include widget.h -o moc_widget.cpp
@@ -1208,9 +1496,9 @@ compiler_moc_objc_header_make_all:
 compiler_moc_objc_header_clean:
 compiler_moc_source_make_all:
 compiler_moc_source_clean:
-compiler_uic_make_all: ui_chatface.h ui_come_message.h ui_mainwindow.h ui_widget.h
+compiler_uic_make_all: ui_chatface.h ui_come_message.h ui_emoji.h ui_emojiwidget.h ui_mainwindow.h ui_widget.h
 compiler_uic_clean:
-	-$(DEL_FILE) ui_chatface.h ui_come_message.h ui_mainwindow.h ui_widget.h
+	-$(DEL_FILE) ui_chatface.h ui_come_message.h ui_emoji.h ui_emojiwidget.h ui_mainwindow.h ui_widget.h
 ui_chatface.h: chatface.ui \
 		../../Qt5.14.1/5.14.1/gcc_64/bin/uic
 	/home/ifpop/Qt5.14.1/5.14.1/gcc_64/bin/uic chatface.ui -o ui_chatface.h
@@ -1218,6 +1506,14 @@ ui_chatface.h: chatface.ui \
 ui_come_message.h: come_message.ui \
 		../../Qt5.14.1/5.14.1/gcc_64/bin/uic
 	/home/ifpop/Qt5.14.1/5.14.1/gcc_64/bin/uic come_message.ui -o ui_come_message.h
+
+ui_emoji.h: emoji.ui \
+		../../Qt5.14.1/5.14.1/gcc_64/bin/uic
+	/home/ifpop/Qt5.14.1/5.14.1/gcc_64/bin/uic emoji.ui -o ui_emoji.h
+
+ui_emojiwidget.h: emojiwidget.ui \
+		../../Qt5.14.1/5.14.1/gcc_64/bin/uic
+	/home/ifpop/Qt5.14.1/5.14.1/gcc_64/bin/uic emojiwidget.ui -o ui_emojiwidget.h
 
 ui_mainwindow.h: mainwindow.ui \
 		../../Qt5.14.1/5.14.1/gcc_64/bin/uic
@@ -1357,6 +1653,8 @@ chatface.o: chatface.cpp chatface.h \
 		../../Qt5.14.1/5.14.1/gcc_64/include/QtWidgets/QMainWindow \
 		../../Qt5.14.1/5.14.1/gcc_64/include/QtWidgets/qmainwindow.h \
 		../../Qt5.14.1/5.14.1/gcc_64/include/QtWidgets/qtabwidget.h \
+		emoji.h \
+		normal_emoji.h \
 		ui_chatface.h \
 		../../Qt5.14.1/5.14.1/gcc_64/include/QtCore/QVariant \
 		../../Qt5.14.1/5.14.1/gcc_64/include/QtWidgets/QApplication \
@@ -1366,9 +1664,10 @@ chatface.o: chatface.cpp chatface.h \
 		../../Qt5.14.1/5.14.1/gcc_64/include/QtWidgets/qdesktopwidget.h \
 		../../Qt5.14.1/5.14.1/gcc_64/include/QtGui/qguiapplication.h \
 		../../Qt5.14.1/5.14.1/gcc_64/include/QtGui/qinputmethod.h \
+		../../Qt5.14.1/5.14.1/gcc_64/include/QtWidgets/QFrame \
+		../../Qt5.14.1/5.14.1/gcc_64/include/QtWidgets/qframe.h \
 		../../Qt5.14.1/5.14.1/gcc_64/include/QtWidgets/QLabel \
 		../../Qt5.14.1/5.14.1/gcc_64/include/QtWidgets/qlabel.h \
-		../../Qt5.14.1/5.14.1/gcc_64/include/QtWidgets/qframe.h \
 		../../Qt5.14.1/5.14.1/gcc_64/include/QtWidgets/QTextEdit \
 		../../Qt5.14.1/5.14.1/gcc_64/include/QtWidgets/qtextedit.h \
 		../../Qt5.14.1/5.14.1/gcc_64/include/QtWidgets/qabstractscrollarea.h \
@@ -1634,6 +1933,158 @@ common.o: common.cpp common.h \
 		../../Qt5.14.1/5.14.1/gcc_64/include/QtWidgets/qtabwidget.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o common.o common.cpp
 
+emojiwidget.o: emojiwidget.cpp emojiwidget.h \
+		../../Qt5.14.1/5.14.1/gcc_64/include/QtWidgets/QMainWindow \
+		../../Qt5.14.1/5.14.1/gcc_64/include/QtWidgets/qmainwindow.h \
+		../../Qt5.14.1/5.14.1/gcc_64/include/QtWidgets/qtwidgetsglobal.h \
+		../../Qt5.14.1/5.14.1/gcc_64/include/QtGui/qtguiglobal.h \
+		../../Qt5.14.1/5.14.1/gcc_64/include/QtCore/qglobal.h \
+		../../Qt5.14.1/5.14.1/gcc_64/include/QtCore/qconfig-bootstrapped.h \
+		../../Qt5.14.1/5.14.1/gcc_64/include/QtCore/qconfig.h \
+		../../Qt5.14.1/5.14.1/gcc_64/include/QtCore/qtcore-config.h \
+		../../Qt5.14.1/5.14.1/gcc_64/include/QtCore/qsystemdetection.h \
+		../../Qt5.14.1/5.14.1/gcc_64/include/QtCore/qprocessordetection.h \
+		../../Qt5.14.1/5.14.1/gcc_64/include/QtCore/qcompilerdetection.h \
+		../../Qt5.14.1/5.14.1/gcc_64/include/QtCore/qtypeinfo.h \
+		../../Qt5.14.1/5.14.1/gcc_64/include/QtCore/qsysinfo.h \
+		../../Qt5.14.1/5.14.1/gcc_64/include/QtCore/qlogging.h \
+		../../Qt5.14.1/5.14.1/gcc_64/include/QtCore/qflags.h \
+		../../Qt5.14.1/5.14.1/gcc_64/include/QtCore/qatomic.h \
+		../../Qt5.14.1/5.14.1/gcc_64/include/QtCore/qbasicatomic.h \
+		../../Qt5.14.1/5.14.1/gcc_64/include/QtCore/qatomic_bootstrap.h \
+		../../Qt5.14.1/5.14.1/gcc_64/include/QtCore/qgenericatomic.h \
+		../../Qt5.14.1/5.14.1/gcc_64/include/QtCore/qatomic_cxx11.h \
+		../../Qt5.14.1/5.14.1/gcc_64/include/QtCore/qatomic_msvc.h \
+		../../Qt5.14.1/5.14.1/gcc_64/include/QtCore/qglobalstatic.h \
+		../../Qt5.14.1/5.14.1/gcc_64/include/QtCore/qmutex.h \
+		../../Qt5.14.1/5.14.1/gcc_64/include/QtCore/qnumeric.h \
+		../../Qt5.14.1/5.14.1/gcc_64/include/QtCore/qversiontagging.h \
+		../../Qt5.14.1/5.14.1/gcc_64/include/QtGui/qtgui-config.h \
+		../../Qt5.14.1/5.14.1/gcc_64/include/QtWidgets/qtwidgets-config.h \
+		../../Qt5.14.1/5.14.1/gcc_64/include/QtWidgets/qwidget.h \
+		../../Qt5.14.1/5.14.1/gcc_64/include/QtGui/qwindowdefs.h \
+		../../Qt5.14.1/5.14.1/gcc_64/include/QtCore/qobjectdefs.h \
+		../../Qt5.14.1/5.14.1/gcc_64/include/QtCore/qnamespace.h \
+		../../Qt5.14.1/5.14.1/gcc_64/include/QtCore/qobjectdefs_impl.h \
+		../../Qt5.14.1/5.14.1/gcc_64/include/QtGui/qwindowdefs_win.h \
+		../../Qt5.14.1/5.14.1/gcc_64/include/QtCore/qobject.h \
+		../../Qt5.14.1/5.14.1/gcc_64/include/QtCore/qstring.h \
+		../../Qt5.14.1/5.14.1/gcc_64/include/QtCore/qchar.h \
+		../../Qt5.14.1/5.14.1/gcc_64/include/QtCore/qbytearray.h \
+		../../Qt5.14.1/5.14.1/gcc_64/include/QtCore/qrefcount.h \
+		../../Qt5.14.1/5.14.1/gcc_64/include/QtCore/qarraydata.h \
+		../../Qt5.14.1/5.14.1/gcc_64/include/QtCore/qstringliteral.h \
+		../../Qt5.14.1/5.14.1/gcc_64/include/QtCore/qstringalgorithms.h \
+		../../Qt5.14.1/5.14.1/gcc_64/include/QtCore/qstringview.h \
+		../../Qt5.14.1/5.14.1/gcc_64/include/QtCore/qstringbuilder.h \
+		../../Qt5.14.1/5.14.1/gcc_64/include/QtCore/qlist.h \
+		../../Qt5.14.1/5.14.1/gcc_64/include/QtCore/qalgorithms.h \
+		../../Qt5.14.1/5.14.1/gcc_64/include/QtCore/qiterator.h \
+		../../Qt5.14.1/5.14.1/gcc_64/include/QtCore/qhashfunctions.h \
+		../../Qt5.14.1/5.14.1/gcc_64/include/QtCore/qpair.h \
+		../../Qt5.14.1/5.14.1/gcc_64/include/QtCore/qvector.h \
+		../../Qt5.14.1/5.14.1/gcc_64/include/QtCore/qcontainertools_impl.h \
+		../../Qt5.14.1/5.14.1/gcc_64/include/QtCore/qpoint.h \
+		../../Qt5.14.1/5.14.1/gcc_64/include/QtCore/qbytearraylist.h \
+		../../Qt5.14.1/5.14.1/gcc_64/include/QtCore/qstringlist.h \
+		../../Qt5.14.1/5.14.1/gcc_64/include/QtCore/qregexp.h \
+		../../Qt5.14.1/5.14.1/gcc_64/include/QtCore/qstringmatcher.h \
+		../../Qt5.14.1/5.14.1/gcc_64/include/QtCore/qcoreevent.h \
+		../../Qt5.14.1/5.14.1/gcc_64/include/QtCore/qscopedpointer.h \
+		../../Qt5.14.1/5.14.1/gcc_64/include/QtCore/qmetatype.h \
+		../../Qt5.14.1/5.14.1/gcc_64/include/QtCore/qvarlengtharray.h \
+		../../Qt5.14.1/5.14.1/gcc_64/include/QtCore/qcontainerfwd.h \
+		../../Qt5.14.1/5.14.1/gcc_64/include/QtCore/qobject_impl.h \
+		../../Qt5.14.1/5.14.1/gcc_64/include/QtCore/qmargins.h \
+		../../Qt5.14.1/5.14.1/gcc_64/include/QtGui/qpaintdevice.h \
+		../../Qt5.14.1/5.14.1/gcc_64/include/QtCore/qrect.h \
+		../../Qt5.14.1/5.14.1/gcc_64/include/QtCore/qsize.h \
+		../../Qt5.14.1/5.14.1/gcc_64/include/QtGui/qpalette.h \
+		../../Qt5.14.1/5.14.1/gcc_64/include/QtGui/qcolor.h \
+		../../Qt5.14.1/5.14.1/gcc_64/include/QtGui/qrgb.h \
+		../../Qt5.14.1/5.14.1/gcc_64/include/QtGui/qrgba64.h \
+		../../Qt5.14.1/5.14.1/gcc_64/include/QtGui/qbrush.h \
+		../../Qt5.14.1/5.14.1/gcc_64/include/QtGui/qmatrix.h \
+		../../Qt5.14.1/5.14.1/gcc_64/include/QtGui/qpolygon.h \
+		../../Qt5.14.1/5.14.1/gcc_64/include/QtGui/qregion.h \
+		../../Qt5.14.1/5.14.1/gcc_64/include/QtCore/qdatastream.h \
+		../../Qt5.14.1/5.14.1/gcc_64/include/QtCore/qiodevice.h \
+		../../Qt5.14.1/5.14.1/gcc_64/include/QtCore/qline.h \
+		../../Qt5.14.1/5.14.1/gcc_64/include/QtGui/qtransform.h \
+		../../Qt5.14.1/5.14.1/gcc_64/include/QtGui/qpainterpath.h \
+		../../Qt5.14.1/5.14.1/gcc_64/include/QtGui/qimage.h \
+		../../Qt5.14.1/5.14.1/gcc_64/include/QtGui/qpixelformat.h \
+		../../Qt5.14.1/5.14.1/gcc_64/include/QtGui/qpixmap.h \
+		../../Qt5.14.1/5.14.1/gcc_64/include/QtCore/qsharedpointer.h \
+		../../Qt5.14.1/5.14.1/gcc_64/include/QtCore/qshareddata.h \
+		../../Qt5.14.1/5.14.1/gcc_64/include/QtCore/qhash.h \
+		../../Qt5.14.1/5.14.1/gcc_64/include/QtCore/qsharedpointer_impl.h \
+		../../Qt5.14.1/5.14.1/gcc_64/include/QtGui/qfont.h \
+		../../Qt5.14.1/5.14.1/gcc_64/include/QtGui/qfontmetrics.h \
+		../../Qt5.14.1/5.14.1/gcc_64/include/QtGui/qfontinfo.h \
+		../../Qt5.14.1/5.14.1/gcc_64/include/QtWidgets/qsizepolicy.h \
+		../../Qt5.14.1/5.14.1/gcc_64/include/QtGui/qcursor.h \
+		../../Qt5.14.1/5.14.1/gcc_64/include/QtGui/qkeysequence.h \
+		../../Qt5.14.1/5.14.1/gcc_64/include/QtGui/qevent.h \
+		../../Qt5.14.1/5.14.1/gcc_64/include/QtCore/qvariant.h \
+		../../Qt5.14.1/5.14.1/gcc_64/include/QtCore/qmap.h \
+		../../Qt5.14.1/5.14.1/gcc_64/include/QtCore/qdebug.h \
+		../../Qt5.14.1/5.14.1/gcc_64/include/QtCore/qtextstream.h \
+		../../Qt5.14.1/5.14.1/gcc_64/include/QtCore/qlocale.h \
+		../../Qt5.14.1/5.14.1/gcc_64/include/QtCore/qset.h \
+		../../Qt5.14.1/5.14.1/gcc_64/include/QtCore/qcontiguouscache.h \
+		../../Qt5.14.1/5.14.1/gcc_64/include/QtCore/qurl.h \
+		../../Qt5.14.1/5.14.1/gcc_64/include/QtCore/qurlquery.h \
+		../../Qt5.14.1/5.14.1/gcc_64/include/QtCore/qfile.h \
+		../../Qt5.14.1/5.14.1/gcc_64/include/QtCore/qfiledevice.h \
+		../../Qt5.14.1/5.14.1/gcc_64/include/QtGui/qvector2d.h \
+		../../Qt5.14.1/5.14.1/gcc_64/include/QtGui/qtouchdevice.h \
+		../../Qt5.14.1/5.14.1/gcc_64/include/QtWidgets/qtabwidget.h \
+		../../Qt5.14.1/5.14.1/gcc_64/include/QtGui/qicon.h \
+		../../Qt5.14.1/5.14.1/gcc_64/include/QtWidgets/QWidget \
+		ui_emojiwidget.h \
+		../../Qt5.14.1/5.14.1/gcc_64/include/QtCore/QVariant \
+		../../Qt5.14.1/5.14.1/gcc_64/include/QtWidgets/QApplication \
+		../../Qt5.14.1/5.14.1/gcc_64/include/QtWidgets/qapplication.h \
+		../../Qt5.14.1/5.14.1/gcc_64/include/QtCore/qcoreapplication.h \
+		../../Qt5.14.1/5.14.1/gcc_64/include/QtCore/qeventloop.h \
+		../../Qt5.14.1/5.14.1/gcc_64/include/QtWidgets/qdesktopwidget.h \
+		../../Qt5.14.1/5.14.1/gcc_64/include/QtGui/qguiapplication.h \
+		../../Qt5.14.1/5.14.1/gcc_64/include/QtGui/qinputmethod.h \
+		../../Qt5.14.1/5.14.1/gcc_64/include/QtWidgets/QHeaderView \
+		../../Qt5.14.1/5.14.1/gcc_64/include/QtWidgets/qheaderview.h \
+		../../Qt5.14.1/5.14.1/gcc_64/include/QtWidgets/qabstractitemview.h \
+		../../Qt5.14.1/5.14.1/gcc_64/include/QtWidgets/qabstractscrollarea.h \
+		../../Qt5.14.1/5.14.1/gcc_64/include/QtWidgets/qframe.h \
+		../../Qt5.14.1/5.14.1/gcc_64/include/QtCore/qabstractitemmodel.h \
+		../../Qt5.14.1/5.14.1/gcc_64/include/QtCore/qitemselectionmodel.h \
+		../../Qt5.14.1/5.14.1/gcc_64/include/QtWidgets/qabstractitemdelegate.h \
+		../../Qt5.14.1/5.14.1/gcc_64/include/QtWidgets/qstyleoption.h \
+		../../Qt5.14.1/5.14.1/gcc_64/include/QtWidgets/qabstractspinbox.h \
+		../../Qt5.14.1/5.14.1/gcc_64/include/QtGui/qvalidator.h \
+		../../Qt5.14.1/5.14.1/gcc_64/include/QtCore/qregularexpression.h \
+		../../Qt5.14.1/5.14.1/gcc_64/include/QtWidgets/qslider.h \
+		../../Qt5.14.1/5.14.1/gcc_64/include/QtWidgets/qabstractslider.h \
+		../../Qt5.14.1/5.14.1/gcc_64/include/QtWidgets/qstyle.h \
+		../../Qt5.14.1/5.14.1/gcc_64/include/QtWidgets/qtabbar.h \
+		../../Qt5.14.1/5.14.1/gcc_64/include/QtWidgets/qrubberband.h \
+		../../Qt5.14.1/5.14.1/gcc_64/include/QtWidgets/QTableWidget \
+		../../Qt5.14.1/5.14.1/gcc_64/include/QtWidgets/qtablewidget.h \
+		../../Qt5.14.1/5.14.1/gcc_64/include/QtWidgets/qtableview.h \
+		../../Qt5.14.1/5.14.1/gcc_64/include/QtCore/QDebug \
+		../../Qt5.14.1/5.14.1/gcc_64/include/QtWidgets/QLabel \
+		../../Qt5.14.1/5.14.1/gcc_64/include/QtWidgets/qlabel.h \
+		../../Qt5.14.1/5.14.1/gcc_64/include/QtGui/QMovie \
+		../../Qt5.14.1/5.14.1/gcc_64/include/QtGui/qmovie.h \
+		../../Qt5.14.1/5.14.1/gcc_64/include/QtGui/qimagereader.h \
+		../../Qt5.14.1/5.14.1/gcc_64/include/QtGui/qimageiohandler.h \
+		../../Qt5.14.1/5.14.1/gcc_64/include/QtCore/qplugin.h \
+		../../Qt5.14.1/5.14.1/gcc_64/include/QtCore/qpointer.h \
+		../../Qt5.14.1/5.14.1/gcc_64/include/QtCore/qjsonobject.h \
+		../../Qt5.14.1/5.14.1/gcc_64/include/QtCore/qjsonvalue.h \
+		../../Qt5.14.1/5.14.1/gcc_64/include/QtCore/qfactoryinterface.h
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o emojiwidget.o emojiwidget.cpp
+
 main.o: main.cpp widget.h \
 		../../Qt5.14.1/5.14.1/gcc_64/include/QtWidgets/QWidget \
 		../../Qt5.14.1/5.14.1/gcc_64/include/QtWidgets/qwidget.h \
@@ -1760,6 +2211,23 @@ main.o: main.cpp widget.h \
 		../../Qt5.14.1/5.14.1/gcc_64/include/QtGui/qbitmap.h \
 		../../Qt5.14.1/5.14.1/gcc_64/include/QtGui/QPainter \
 		../../Qt5.14.1/5.14.1/gcc_64/include/QtGui/qpainter.h \
+		../../Qt5.14.1/5.14.1/gcc_64/include/QtWidgets/QListWidgetItem \
+		../../Qt5.14.1/5.14.1/gcc_64/include/QtWidgets/qlistwidget.h \
+		../../Qt5.14.1/5.14.1/gcc_64/include/QtWidgets/qlistview.h \
+		../../Qt5.14.1/5.14.1/gcc_64/include/QtWidgets/qabstractitemview.h \
+		../../Qt5.14.1/5.14.1/gcc_64/include/QtWidgets/qabstractscrollarea.h \
+		../../Qt5.14.1/5.14.1/gcc_64/include/QtCore/qabstractitemmodel.h \
+		../../Qt5.14.1/5.14.1/gcc_64/include/QtCore/qitemselectionmodel.h \
+		../../Qt5.14.1/5.14.1/gcc_64/include/QtWidgets/qabstractitemdelegate.h \
+		../../Qt5.14.1/5.14.1/gcc_64/include/QtWidgets/qstyleoption.h \
+		../../Qt5.14.1/5.14.1/gcc_64/include/QtWidgets/qabstractspinbox.h \
+		../../Qt5.14.1/5.14.1/gcc_64/include/QtGui/qvalidator.h \
+		../../Qt5.14.1/5.14.1/gcc_64/include/QtCore/qregularexpression.h \
+		../../Qt5.14.1/5.14.1/gcc_64/include/QtWidgets/qslider.h \
+		../../Qt5.14.1/5.14.1/gcc_64/include/QtWidgets/qabstractslider.h \
+		../../Qt5.14.1/5.14.1/gcc_64/include/QtWidgets/qstyle.h \
+		../../Qt5.14.1/5.14.1/gcc_64/include/QtWidgets/qtabbar.h \
+		../../Qt5.14.1/5.14.1/gcc_64/include/QtWidgets/qrubberband.h \
 		../../Qt5.14.1/5.14.1/gcc_64/include/QtWidgets/QApplication \
 		../../Qt5.14.1/5.14.1/gcc_64/include/QtWidgets/qapplication.h \
 		../../Qt5.14.1/5.14.1/gcc_64/include/QtCore/qcoreapplication.h \
@@ -1767,7 +2235,10 @@ main.o: main.cpp widget.h \
 		../../Qt5.14.1/5.14.1/gcc_64/include/QtWidgets/qdesktopwidget.h \
 		../../Qt5.14.1/5.14.1/gcc_64/include/QtGui/qguiapplication.h \
 		../../Qt5.14.1/5.14.1/gcc_64/include/QtGui/qinputmethod.h \
-		chatface.h
+		chatface.h \
+		emoji.h \
+		normal_emoji.h \
+		emojiwidget.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o main.o main.cpp
 
 mainwindow.o: mainwindow.cpp mainwindow.h \
@@ -1889,23 +2360,12 @@ mainwindow.o: mainwindow.cpp mainwindow.h \
 		../../Qt5.14.1/5.14.1/gcc_64/include/QtWidgets/QPushButton \
 		../../Qt5.14.1/5.14.1/gcc_64/include/QtWidgets/qpushbutton.h \
 		../../Qt5.14.1/5.14.1/gcc_64/include/QtWidgets/qabstractbutton.h \
-		ui_mainwindow.h \
-		../../Qt5.14.1/5.14.1/gcc_64/include/QtCore/QVariant \
-		../../Qt5.14.1/5.14.1/gcc_64/include/QtWidgets/QApplication \
-		../../Qt5.14.1/5.14.1/gcc_64/include/QtWidgets/qapplication.h \
-		../../Qt5.14.1/5.14.1/gcc_64/include/QtCore/qcoreapplication.h \
-		../../Qt5.14.1/5.14.1/gcc_64/include/QtCore/qeventloop.h \
-		../../Qt5.14.1/5.14.1/gcc_64/include/QtWidgets/qdesktopwidget.h \
-		../../Qt5.14.1/5.14.1/gcc_64/include/QtGui/qguiapplication.h \
-		../../Qt5.14.1/5.14.1/gcc_64/include/QtGui/qinputmethod.h \
-		../../Qt5.14.1/5.14.1/gcc_64/include/QtWidgets/QLabel \
-		../../Qt5.14.1/5.14.1/gcc_64/include/QtWidgets/qlabel.h \
-		../../Qt5.14.1/5.14.1/gcc_64/include/QtWidgets/qframe.h \
-		../../Qt5.14.1/5.14.1/gcc_64/include/QtWidgets/QListWidget \
+		../../Qt5.14.1/5.14.1/gcc_64/include/QtWidgets/QListWidgetItem \
 		../../Qt5.14.1/5.14.1/gcc_64/include/QtWidgets/qlistwidget.h \
 		../../Qt5.14.1/5.14.1/gcc_64/include/QtWidgets/qlistview.h \
 		../../Qt5.14.1/5.14.1/gcc_64/include/QtWidgets/qabstractitemview.h \
 		../../Qt5.14.1/5.14.1/gcc_64/include/QtWidgets/qabstractscrollarea.h \
+		../../Qt5.14.1/5.14.1/gcc_64/include/QtWidgets/qframe.h \
 		../../Qt5.14.1/5.14.1/gcc_64/include/QtCore/qabstractitemmodel.h \
 		../../Qt5.14.1/5.14.1/gcc_64/include/QtCore/qitemselectionmodel.h \
 		../../Qt5.14.1/5.14.1/gcc_64/include/QtWidgets/qabstractitemdelegate.h \
@@ -1918,6 +2378,18 @@ mainwindow.o: mainwindow.cpp mainwindow.h \
 		../../Qt5.14.1/5.14.1/gcc_64/include/QtWidgets/qstyle.h \
 		../../Qt5.14.1/5.14.1/gcc_64/include/QtWidgets/qtabbar.h \
 		../../Qt5.14.1/5.14.1/gcc_64/include/QtWidgets/qrubberband.h \
+		ui_mainwindow.h \
+		../../Qt5.14.1/5.14.1/gcc_64/include/QtCore/QVariant \
+		../../Qt5.14.1/5.14.1/gcc_64/include/QtWidgets/QApplication \
+		../../Qt5.14.1/5.14.1/gcc_64/include/QtWidgets/qapplication.h \
+		../../Qt5.14.1/5.14.1/gcc_64/include/QtCore/qcoreapplication.h \
+		../../Qt5.14.1/5.14.1/gcc_64/include/QtCore/qeventloop.h \
+		../../Qt5.14.1/5.14.1/gcc_64/include/QtWidgets/qdesktopwidget.h \
+		../../Qt5.14.1/5.14.1/gcc_64/include/QtGui/qguiapplication.h \
+		../../Qt5.14.1/5.14.1/gcc_64/include/QtGui/qinputmethod.h \
+		../../Qt5.14.1/5.14.1/gcc_64/include/QtWidgets/QLabel \
+		../../Qt5.14.1/5.14.1/gcc_64/include/QtWidgets/qlabel.h \
+		../../Qt5.14.1/5.14.1/gcc_64/include/QtWidgets/QListWidget \
 		../../Qt5.14.1/5.14.1/gcc_64/include/QtWidgets/QMenuBar \
 		../../Qt5.14.1/5.14.1/gcc_64/include/QtWidgets/qmenubar.h \
 		../../Qt5.14.1/5.14.1/gcc_64/include/QtWidgets/qmenu.h \
@@ -1932,6 +2404,8 @@ mainwindow.o: mainwindow.cpp mainwindow.h \
 		../../Qt5.14.1/5.14.1/gcc_64/include/QtWidgets/QTabWidget \
 		../../Qt5.14.1/5.14.1/gcc_64/include/QtWidgets/QWidget \
 		chatface.h \
+		emoji.h \
+		normal_emoji.h \
 		come_message.h \
 		../../Qt5.14.1/5.14.1/gcc_64/include/QtCore/QDebug
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o mainwindow.o mainwindow.cpp
@@ -2062,6 +2536,23 @@ widget.o: widget.cpp widget.h \
 		../../Qt5.14.1/5.14.1/gcc_64/include/QtGui/qbitmap.h \
 		../../Qt5.14.1/5.14.1/gcc_64/include/QtGui/QPainter \
 		../../Qt5.14.1/5.14.1/gcc_64/include/QtGui/qpainter.h \
+		../../Qt5.14.1/5.14.1/gcc_64/include/QtWidgets/QListWidgetItem \
+		../../Qt5.14.1/5.14.1/gcc_64/include/QtWidgets/qlistwidget.h \
+		../../Qt5.14.1/5.14.1/gcc_64/include/QtWidgets/qlistview.h \
+		../../Qt5.14.1/5.14.1/gcc_64/include/QtWidgets/qabstractitemview.h \
+		../../Qt5.14.1/5.14.1/gcc_64/include/QtWidgets/qabstractscrollarea.h \
+		../../Qt5.14.1/5.14.1/gcc_64/include/QtCore/qabstractitemmodel.h \
+		../../Qt5.14.1/5.14.1/gcc_64/include/QtCore/qitemselectionmodel.h \
+		../../Qt5.14.1/5.14.1/gcc_64/include/QtWidgets/qabstractitemdelegate.h \
+		../../Qt5.14.1/5.14.1/gcc_64/include/QtWidgets/qstyleoption.h \
+		../../Qt5.14.1/5.14.1/gcc_64/include/QtWidgets/qabstractspinbox.h \
+		../../Qt5.14.1/5.14.1/gcc_64/include/QtGui/qvalidator.h \
+		../../Qt5.14.1/5.14.1/gcc_64/include/QtCore/qregularexpression.h \
+		../../Qt5.14.1/5.14.1/gcc_64/include/QtWidgets/qslider.h \
+		../../Qt5.14.1/5.14.1/gcc_64/include/QtWidgets/qabstractslider.h \
+		../../Qt5.14.1/5.14.1/gcc_64/include/QtWidgets/qstyle.h \
+		../../Qt5.14.1/5.14.1/gcc_64/include/QtWidgets/qtabbar.h \
+		../../Qt5.14.1/5.14.1/gcc_64/include/QtWidgets/qrubberband.h \
 		ui_widget.h \
 		../../Qt5.14.1/5.14.1/gcc_64/include/QtCore/QVariant \
 		../../Qt5.14.1/5.14.1/gcc_64/include/QtWidgets/QApplication \
@@ -2095,6 +2586,9 @@ moc_chatface.o: moc_chatface.cpp
 
 moc_come_message.o: moc_come_message.cpp 
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o moc_come_message.o moc_come_message.cpp
+
+moc_emojiwidget.o: moc_emojiwidget.cpp 
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o moc_emojiwidget.o moc_emojiwidget.cpp
 
 moc_mainwindow.o: moc_mainwindow.cpp 
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o moc_mainwindow.o moc_mainwindow.cpp

@@ -19,6 +19,7 @@ SOURCES += \
     chatface.cpp \
     come_message.cpp \
     common.cpp \
+    emojiwidget.cpp \
     main.cpp \
     mainwindow.cpp \
     widget.cpp
@@ -27,12 +28,15 @@ HEADERS += \
     chatface.h \
     come_message.h \
     common.h \
+    emojiwidget.h \
     mainwindow.h \
     widget.h
 
 FORMS += \
     chatface.ui \
     come_message.ui \
+    emoji.ui \
+    emojiwidget.ui \
     mainwindow.ui \
     widget.ui
 

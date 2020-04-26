@@ -24,6 +24,7 @@ MainWindow::MainWindow(QWidget *parent) :
     this->Recv_t[this->num_r].name = "Derek";
     this->Recv_t[this->num_r++].Message = "4984984984465646";
     this->First_recv();
+//    ui->stackedWidget->setCurrentIndex(3);
 }
 
 MainWindow::~MainWindow()
@@ -94,18 +95,12 @@ void MainWindow::First_recv(){
 
     Chatface* chat_temp = new Chatface(this->Recv_t[this->num_r-1]);
     ui->stackedWidget->addWidget(chat_temp);
-    ui->stackedWidget->setCurrentIndex(this->num_r);
+    ui->stackedWidget->setCurrentIndex(this->num_r+1);
     ui->listWidget->setCurrentRow(this->num_r-1);
 }
 
-void MainWindow::on_MessageButton_clicked()
+void MainWindow::on_listWidget_itemClicked(QListWidgetItem *item)
 {
-}
-
-void MainWindow::on_ChatButton_clicked()
-{
-}
-
-void MainWindow::on_BBSButton_clicked()
-{
+//    qDebug() << ui->listWidget->currentRow();
+    ui->stackedWidget->setCurrentIndex(ui->listWidget->currentRow()+2);
 }
