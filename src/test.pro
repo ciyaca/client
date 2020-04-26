@@ -3,6 +3,10 @@ QT       += core gui
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 
 CONFIG += c++17
+LIBS += -lmsgpack
+
+INCLUDEPATH += /usr/local/include/msgpack
+INCLUDEPATH += /usr/local/include
 
 # The following define makes your compiler emit warnings if you use
 # any Qt feature that has been marked deprecated (the exact warnings
@@ -41,6 +45,7 @@ HEADERS += \
     feverrpc/feverrpc-server.hpp \
     feverrpc/feverrpc.hpp \
     feverrpc/utils.hpp \
+    info_code.h \
     mainwindow.h \
     widget.h
 

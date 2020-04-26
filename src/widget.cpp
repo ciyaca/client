@@ -230,7 +230,7 @@ void Widget::on_pushButton_clicked()
         ui->lineEdit_2->setFocus();
         return;
     }
-    this->state_login = 1;
+    this->state_login = client_rpc.call<int>("login", nickname, password);
     //创建Chat
     this->Chat = new MainWindow();
     this->hide();
