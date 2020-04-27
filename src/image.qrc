@@ -4,7 +4,6 @@
         <file>image/hide_password.png</file>
         <file>image/show_password.png</file>
         <file>image/bg1.jpg</file>
-        <file>image/snapchat.png</file>
         <file>image/bg2.jpg</file>
         <file>image/Test_Avatar.jpg</file>
         <file>image/bbs.png</file>
@@ -145,5 +144,6 @@
         <file>image/emoji/97.gif</file>
         <file>image/emoji/98.gif</file>
         <file>image/emoji/99.gif</file>
+        <file>image/logo.png</file>
     </qresource>
 </RCC>

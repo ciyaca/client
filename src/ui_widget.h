@@ -338,7 +338,7 @@ public:
         stackedWidget->addWidget(register_2);
         label = new QLabel(Widget);
         label->setObjectName(QString::fromUtf8("label"));
-        label->setGeometry(QRect(70, 80, 131, 101));
+        label->setGeometry(QRect(40, 40, 221, 201));
 
         retranslateUi(Widget);
 

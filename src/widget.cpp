@@ -1,3 +1,7 @@
+/*
+ * login and register
+ * */
+
 #include "widget.h"
 #include "ui_widget.h"
 
@@ -6,7 +10,9 @@
 #include <QHBoxLayout>
 #include <QtDebug>
 #include <QMessageBox>
-
+#include <string>
+#include <iostream>
+using namespace std;
 
 
 Widget::Widget(QWidget *parent)
@@ -15,11 +21,11 @@ Widget::Widget(QWidget *parent)
 {
     ui->setupUi(this);
 
-    this->state_login = 0;
-    this->state_register = 0;
+    this->state_login = EXIT;
+    this->state_register = EXIT;
 
     //放置logo
-    QPixmap *pixmap = new QPixmap(":/image/snapchat.png");
+    QPixmap *pixmap = new QPixmap(":/image/logo.png");
     pixmap->scaled(ui->label->size(), Qt::KeepAspectRatio);
     ui->label->setScaledContents(true);
     ui->label->setPixmap(*pixmap);
@@ -50,7 +56,9 @@ Widget::~Widget()
     delete ui;
 }
 
-
+/*
+ * background picture
+ */
 void Widget::paintEvent(QPaintEvent *){
     this->setAutoFillBackground(true);  // 不加上, 可能显示不出背景图.
     QPalette palette = this->palette();
@@ -63,18 +71,27 @@ void Widget::paintEvent(QPaintEvent *){
 }
 
 
+/*
+ * 注册界面的返回按钮
+ * */
 void Widget::on_pushButton_4_clicked()
 {
     this->setWindowTitle("Login");
     ui->stackedWidget->setCurrentIndex(0);
 }
 
+/*
+ * 登录界面的注册按钮
+ * */
 void Widget::on_pushButton_2_clicked()
 {
     this->setWindowTitle("Register");
     ui->stackedWidget->setCurrentIndex(1);
 }
 
+/*
+ * 在输出行右边添加按钮，也就是显示密码/隐藏密码按钮
+ * */
 QPushButton* Widget::createLineEditRightButton(QLineEdit *edit)
 {
     QPushButton *button = new QPushButton();
@@ -100,6 +117,9 @@ QPushButton* Widget::createLineEditRightButton(QLineEdit *edit)
     return button;
 }
 
+/*
+ * register
+ * */
 void Widget::on_pushButton_3_clicked()
 {
     //注册用户名
@@ -171,6 +191,9 @@ void Widget::on_pushButton_3_clicked()
     QMessageBox::warning(this,tr("Wlcome"),tr("恭喜你！成功注册"),QMessageBox::Yes);
 }
 
+/*
+ * login
+ * */
 void Widget::on_pushButton_clicked()
 {
     //这一部分直接将字符串发给后端
@@ -230,9 +253,18 @@ void Widget::on_pushButton_clicked()
         ui->lineEdit_2->setFocus();
         return;
     }
-    this->state_login = client_rpc.call<int>("login", nickname, password);
-    //创建Chat
-    this->Chat = new MainWindow();
-    this->hide();
-    this->Chat->show();
+    //转换为string类型，兼容冯开宇代码
+    string nickname1 = nickname.toStdString();
+    string password1 = password.toStdString();
+    this->state_login = client_rpc.call<int>("login", nickname1, password1);
+    if( this->state_login == SUCCESS)
+    {
+        //创建Chat
+        this->Chat = new MainWindow();
+        this->hide();
+        this->Chat->show();
+    }
+    else{
+        // 这一部分是报错提示，未注册或密码错误
+    }
 }
