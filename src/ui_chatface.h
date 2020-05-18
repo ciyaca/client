@@ -12,7 +12,9 @@
 #include <QtCore/QVariant>
 #include <QtWidgets/QApplication>
 #include <QtWidgets/QLabel>
+#include <QtWidgets/QLineEdit>
 #include <QtWidgets/QListWidget>
+#include <QtWidgets/QProgressBar>
 #include <QtWidgets/QPushButton>
 #include <QtWidgets/QTextEdit>
 #include <QtWidgets/QToolButton>
@@ -31,6 +33,8 @@ public:
     QLabel *label;
     QPushButton *pushButton;
     QListWidget *listWidget;
+    QProgressBar *progressBar;
+    QLineEdit *lineEdit;
 
     void setupUi(QWidget *Chatface)
     {
@@ -61,6 +65,13 @@ public:
         listWidget = new QListWidget(Chatface);
         listWidget->setObjectName(QString::fromUtf8("listWidget"));
         listWidget->setGeometry(QRect(5, 41, 641, 431));
+        progressBar = new QProgressBar(Chatface);
+        progressBar->setObjectName(QString::fromUtf8("progressBar"));
+        progressBar->setGeometry(QRect(420, 470, 118, 31));
+        progressBar->setValue(24);
+        lineEdit = new QLineEdit(Chatface);
+        lineEdit->setObjectName(QString::fromUtf8("lineEdit"));
+        lineEdit->setGeometry(QRect(162, 470, 221, 31));
 
         retranslateUi(Chatface);
 

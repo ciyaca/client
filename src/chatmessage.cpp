@@ -51,9 +51,10 @@ QSize QNChatMessage::picRect(QString path){
     m_iconLeftRect = QRect(iconSpaceW, iconTMPH, iconWH, iconWH);
     m_iconRightRect = QRect(this->width() - iconSpaceW - iconWH, iconTMPH, iconWH, iconWH);
 
-    QPixmap picture = QPixmap(":/image/bg.jpg");
-    QSize size = picture.size();
-
+    QPixmap picture = QPixmap(path);
+    QPixmap scaledPixmap = picture.scaled(250,250, Qt::KeepAspectRatio);
+    QSize size = scaledPixmap.size();
+    qDebug()<<scaledPixmap.size();
     m_sanjiaoLeftRect = QRect(iconWH+iconSpaceW+iconRectW, m_lineHeight/2, sanJiaoW, size.height() - m_lineHeight);
     m_sanjiaoRightRect = QRect(this->width() - iconRectW - iconWH - iconSpaceW - sanJiaoW, m_lineHeight/2, sanJiaoW, size.height() - m_lineHeight);
 
@@ -69,7 +70,12 @@ QSize QNChatMessage::picRect(QString path){
                            m_kuangLeftRect.width()-2*textSpaceRect,m_kuangLeftRect.height()-2*iconTMPH);
     m_textRightRect.setRect(m_kuangRightRect.x()+textSpaceRect,m_kuangRightRect.y()+iconTMPH,
                             m_kuangRightRect.width()-2*textSpaceRect,m_kuangRightRect.height()-2*iconTMPH);
-
+//    qDebug()<<m_kuangRightRect;
+    m_kuangRightRect.setX(m_kuangRightRect.x()-100);
+    m_kuangRightRect.setY(m_kuangRightRect.y()-20);
+    m_textRightRect.setX(m_textRightRect.x()-100);
+//    m_textLeftRect.setX(m_textLeftRect.x()+75);
+//    m_kuangLeftRect.setX(m_kuangLeftRect.x()+75);
     return QSize(size.width(), size.height());
 }
 QSize QNChatMessage::fontRect(QString str)
@@ -110,6 +116,8 @@ QSize QNChatMessage::fontRect(QString str)
     m_textRightRect.setRect(m_kuangRightRect.x()+textSpaceRect,m_kuangRightRect.y()+iconTMPH,
                             m_kuangRightRect.width()-2*textSpaceRect,m_kuangRightRect.height()-2*iconTMPH);
 
+    m_textRightRect.setX(m_textRightRect.x()-5);
+    m_textLeftRect.setX(m_textLeftRect.x()-5);
     return QSize(size.width(), hei);
 }
 
@@ -178,7 +186,7 @@ void QNChatMessage::paintEvent(QPaintEvent *event)
         QColor col_Kuang(255,255,255);
         painter.setBrush(QBrush(col_Kuang));
         painter.drawRoundedRect(m_kuangLeftRect,4,4);
-        qDebug()<< m_kuangLeftRect;
+//        qDebug()<< m_kuangLeftRect;
 
         //三角
         QPointF points[3] = {
@@ -235,6 +243,7 @@ void QNChatMessage::paintEvent(QPaintEvent *event)
         QTextOption option(Qt::AlignLeft | Qt::AlignVCenter);
         option.setWrapMode(QTextOption::WrapAtWordBoundaryOrAnywhere);
         painter.setFont(this->font());
+
         painter.drawText(m_textRightRect,m_msg,option);
     }  else if(m_userType == User_Type::User_Time) { // 时间
         QPen penText;
@@ -307,6 +316,7 @@ void QNChatMessage::paintEvent(QPaintEvent *event)
         painter.drawPolygon(points, 3);
 
         //内容
+//        pic = pic.scaled(250,250, Qt::KeepAspectRatio);
         painter.drawPixmap(m_textRightRect,pic);
     }
     else if(m_userType == User_Type::User_Sheemjio){
@@ -320,7 +330,7 @@ void QNChatMessage::paintEvent(QPaintEvent *event)
         QColor col_Kuang(255,255,255);
         painter.setBrush(QBrush(col_Kuang));
         painter.drawRoundedRect(m_kuangLeftRect,4,4);
-        qDebug()<< m_kuangLeftRect;
+//        qDebug()<< m_kuangLeftRect;
 
         //三角
         QPointF points[3] = {
@@ -343,5 +353,38 @@ void QNChatMessage::paintEvent(QPaintEvent *event)
         m_loading->move(m_kuangLeftRect.x()+8, m_kuangLeftRect.y()+m_kuangLeftRect.height()/2-8);
         m_loading->show();
         m_loadingMovie->start();
+    }
+    else if(m_userType == User_Type::User_Shepic){
+        painter.drawPixmap(m_iconLeftRect, m_leftPixmap);
+
+        //框加边
+        QColor col_KuangB(234, 234, 234);
+        painter.setBrush(QBrush(col_KuangB));
+        painter.drawRoundedRect(m_kuangLeftRect.x()-1,m_kuangLeftRect.y()-1,m_kuangLeftRect.width()+2,m_kuangLeftRect.height()+2,4,4);
+        //框
+        QColor col_Kuang(255,255,255);
+        painter.setBrush(QBrush(col_Kuang));
+        painter.drawRoundedRect(m_kuangLeftRect,4,4);
+
+        //三角
+        QPointF points[3] = {
+            QPointF(m_sanjiaoLeftRect.x(), 30),
+            QPointF(m_sanjiaoLeftRect.x()+m_sanjiaoLeftRect.width(), 25),
+            QPointF(m_sanjiaoLeftRect.x()+m_sanjiaoLeftRect.width(), 35),
+        };
+        QPen pen;
+        pen.setColor(col_Kuang);
+        painter.setPen(pen);
+        painter.drawPolygon(points, 3);
+
+        //三角加边
+        QPen penSanJiaoBian;
+        penSanJiaoBian.setColor(col_KuangB);
+        painter.setPen(penSanJiaoBian);
+        painter.drawLine(QPointF(m_sanjiaoLeftRect.x() - 1, 30), QPointF(m_sanjiaoLeftRect.x()+m_sanjiaoLeftRect.width(), 24));
+        painter.drawLine(QPointF(m_sanjiaoLeftRect.x() - 1, 30), QPointF(m_sanjiaoLeftRect.x()+m_sanjiaoLeftRect.width(), 36));
+
+//        pic = pic.scaled(250,250, Qt::KeepAspectRatio);
+        painter.drawPixmap(m_textLeftRect,pic);
     }
 }

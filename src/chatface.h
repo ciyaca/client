@@ -37,6 +37,8 @@ private slots:
 
     void on_pushButton_clicked();
 
+    void on_toolButton_2_clicked();
+
 private:
     Ui::Chatface *ui;
     normal_emoji* normalEmoji;

@@ -18,6 +18,7 @@
 #include <QMessageBox>
 #include <QDateTime>
 #include <QVBoxLayout>
+#include <QFileDialog>
 
 Chatface::Chatface(struct person_info temp):
     ui(new Ui::Chatface)
@@ -40,12 +41,12 @@ void Chatface::chatface_init()
     ui->toolButton->setIcon(QIcon(":/image/emoji.png"));
     ui->toolButton_2->setIcon(QIcon(":/image/file.png"));
     this->emoji_flag = 0;
-//    QString time = QString::number(QDateTime::currentDateTime().toTime_t()); //时间戳
-//    dealMessageTime(time);
-//    QNChatMessage* messageW = new QNChatMessage(ui->listWidget->parentWidget());
-//    QListWidgetItem* item = new QListWidgetItem(ui->listWidget);
-//    dealMessage(messageW,item,"",time,":image/bg.jpg",QNChatMessage::User_pic);
-    recv_message("0 :/image/emoji/23.gif");
+
+    ui->lineEdit->setPlaceholderText("文件名");
+    ui->progressBar->setValue(0);
+
+//    recv_message("1 :/image/emoji/23.gif");
+    recv_message("2 :/image/add.png");
 }
 Chatface::~Chatface()
 {
@@ -118,19 +119,30 @@ void Chatface::on_pushButton_clicked()
     QString sendStr = ui->textEdit->toPlainText();
 
     if(sendStr == ""){
-        QMessageBox::warning(this,tr("warning"),tr("发送信息为空"),QMessageBox::Yes);
+        if(ui->lineEdit->text() == ""){
+            QMessageBox::warning(this,tr("warning"),tr("发送信息为空"),QMessageBox::Yes);
+        }
     }
-    //在这边显示消息
-    QString time = QString::number(QDateTime::currentDateTime().toTime_t()); //时间戳
-    sendStr += "\n";
-    qDebug()<<"addMessage" << sendStr << time << ui->listWidget->count();
-    dealMessageTime(time);
-    QNChatMessage* messageW = new QNChatMessage(ui->listWidget->parentWidget());
-    QListWidgetItem* item = new QListWidgetItem(ui->listWidget);
-    dealMessage(messageW, item, sendStr, time, "",QNChatMessage::User_Me);
-    /*
-     *  发送sendstr字符串
-    */
+    else{
+        //在这边显示消息
+        QString time = QString::number(QDateTime::currentDateTime().toTime_t()); //时间戳
+//        qDebug()<<"addMessage" << sendStr << time << ui->listWidget->count();
+        dealMessageTime(time);
+        QNChatMessage* messageW = new QNChatMessage(ui->listWidget->parentWidget());
+        QListWidgetItem* item = new QListWidgetItem(ui->listWidget);
+        dealMessage(messageW, item, sendStr, time, "",QNChatMessage::User_Me);
+        /*
+         *  发送sendstr字符串
+        */
+    }
+    if(ui->lineEdit->text() != ""){
+        /*
+         * 发送文件
+         * 文件名称在lineEdit中
+         * */
+    }
+    ui->lineEdit->clear();
+    ui->progressBar->setValue(0);
 }
 
 /*
@@ -140,7 +152,7 @@ void Chatface::dealMessage(QNChatMessage *messageW, QListWidgetItem *item, QStri
 {
     messageW->setFixedWidth(this->width());
     QSize size;
-    if(type == QNChatMessage::User_Mepic){
+    if(type == QNChatMessage::User_Mepic || type == QNChatMessage::User_Shepic){
         size = messageW->picRect(path);
     }
     else{
@@ -206,8 +218,32 @@ void Chatface::recv_message(QString msg){
     }
     else if(msg[0] == '2'){//如果是图片 2
         msg = msg.mid(2,msg.size());
+        QString time = QString::number(QDateTime::currentDateTime().toTime_t()); //时间戳
+        qDebug()<<"addMessage" << msg << time << ui->listWidget->count();
+        dealMessageTime(time);
+        QNChatMessage* messageW = new QNChatMessage(ui->listWidget->parentWidget());
+        QListWidgetItem* item = new QListWidgetItem(ui->listWidget);
+        dealMessage(messageW, item, "", time, msg,QNChatMessage::User_Shepic);
     }
     else if(msg[0] == '3'){//如果是文件
         msg = msg.mid(2,msg.size());
+    }
+}
+
+/*
+ * 发送文件
+ * */
+void Chatface::on_toolButton_2_clicked()
+{
+    ui->progressBar->setValue(0);
+    QString filename = QFileDialog::getOpenFileName(this, "Open a file", "/", "files (*)");
+    ui->lineEdit->setText(filename);
+    if(filename.endsWith(".png")||filename.endsWith(".jpg")){//发送图片
+        qDebug() << filename;
+        QString time = QString::number(QDateTime::currentDateTime().toTime_t()); //时间戳
+        dealMessageTime(time);
+        QNChatMessage* messageW = new QNChatMessage(ui->listWidget->parentWidget());
+        QListWidgetItem* item = new QListWidgetItem(ui->listWidget);
+        dealMessage(messageW,item,"",time,filename,QNChatMessage::User_Mepic);
     }
 }
