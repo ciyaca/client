@@ -21,7 +21,8 @@ public:
         User_Time,  //时间
         User_Meemjio, //emjio
         User_Sheemjio,
-        User_pic,
+        User_Mepic,
+        User_Shepic
     };
     void setTextSuccess();
     void setText(QString text, QString path,QString time, QSize allSize, User_Type userType);

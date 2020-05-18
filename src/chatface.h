@@ -22,13 +22,13 @@ public:
     void chatface_init();
     bool emoji_flag;
     QWidget parentt;
-    QList<QString> emjio_list;
     void showSmallEmotion(QPoint point);
     void showNormalEmotion(QPoint point);
     void onAnimationFinished();
 
     void dealMessage(QNChatMessage *messageW, QListWidgetItem *item, QString text, QString time, QString path,QNChatMessage::User_Type type);
     void dealMessageTime(QString curMsgTime);
+    void recv_message(QString);
     ~Chatface();
 
 private slots:

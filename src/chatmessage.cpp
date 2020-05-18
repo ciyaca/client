@@ -27,12 +27,12 @@ void QNChatMessage::setText(QString text, QString path,QString time, QSize allSi
     m_time = time;
     m_curTime = QDateTime::fromTime_t(time.toInt()).toString("hh:mm");
     m_allSize = allSize;
-    if(m_userType == User_Type::User_Meemjio){
+    if(m_userType == User_Type::User_Meemjio || m_userType == User_Type::User_Sheemjio){
          m_loadingMovie->setFileName(path);
          m_loading->setMovie(m_loadingMovie);
          m_loading->resize(24,24);
     }
-    else if(m_userType == User_Type::User_pic){
+    else if(m_userType == User_Type::User_Mepic || m_userType == User_Type::User_Shepic){
         pic =  QPixmap(path);
     }
     this->update();
@@ -286,7 +286,7 @@ void QNChatMessage::paintEvent(QPaintEvent *event)
         m_loading->show();
         m_loadingMovie->start();
     }
-    else{
+    else if(m_userType == User_Type::User_Mepic){
         painter.drawPixmap(m_iconRightRect, m_rightPixmap);
 
         //框
@@ -308,5 +308,40 @@ void QNChatMessage::paintEvent(QPaintEvent *event)
 
         //内容
         painter.drawPixmap(m_textRightRect,pic);
+    }
+    else if(m_userType == User_Type::User_Sheemjio){
+        painter.drawPixmap(m_iconLeftRect, m_leftPixmap);
+
+        //框加边
+        QColor col_KuangB(234, 234, 234);
+        painter.setBrush(QBrush(col_KuangB));
+        painter.drawRoundedRect(m_kuangLeftRect.x()-1,m_kuangLeftRect.y()-1,m_kuangLeftRect.width()+2,m_kuangLeftRect.height()+2,4,4);
+        //框
+        QColor col_Kuang(255,255,255);
+        painter.setBrush(QBrush(col_Kuang));
+        painter.drawRoundedRect(m_kuangLeftRect,4,4);
+        qDebug()<< m_kuangLeftRect;
+
+        //三角
+        QPointF points[3] = {
+            QPointF(m_sanjiaoLeftRect.x(), 30),
+            QPointF(m_sanjiaoLeftRect.x()+m_sanjiaoLeftRect.width(), 25),
+            QPointF(m_sanjiaoLeftRect.x()+m_sanjiaoLeftRect.width(), 35),
+        };
+        QPen pen;
+        pen.setColor(col_Kuang);
+        painter.setPen(pen);
+        painter.drawPolygon(points, 3);
+
+        //三角加边
+        QPen penSanJiaoBian;
+        penSanJiaoBian.setColor(col_KuangB);
+        painter.setPen(penSanJiaoBian);
+        painter.drawLine(QPointF(m_sanjiaoLeftRect.x() - 1, 30), QPointF(m_sanjiaoLeftRect.x()+m_sanjiaoLeftRect.width(), 24));
+        painter.drawLine(QPointF(m_sanjiaoLeftRect.x() - 1, 30), QPointF(m_sanjiaoLeftRect.x()+m_sanjiaoLeftRect.width(), 36));
+
+        m_loading->move(m_kuangLeftRect.x()+8, m_kuangLeftRect.y()+m_kuangLeftRect.height()/2-8);
+        m_loading->show();
+        m_loadingMovie->start();
     }
 }

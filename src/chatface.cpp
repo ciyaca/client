@@ -1,3 +1,8 @@
+/*
+ * name: chatface.cpp
+ * description: 聊天界面窗体
+ * */
+
 #include "chatface.h"
 #include "ui_chatface.h"
 #include "chatmessage.h"
@@ -40,12 +45,16 @@ void Chatface::chatface_init()
 //    QNChatMessage* messageW = new QNChatMessage(ui->listWidget->parentWidget());
 //    QListWidgetItem* item = new QListWidgetItem(ui->listWidget);
 //    dealMessage(messageW,item,"",time,":image/bg.jpg",QNChatMessage::User_pic);
+    recv_message("0 :/image/emoji/23.gif");
 }
 Chatface::~Chatface()
 {
     delete ui;
 }
 
+/*
+ * 表情包按键
+ * */
 void Chatface::on_toolButton_clicked()
 {
     emojiwidget* emo = NULL;
@@ -63,6 +72,9 @@ void Chatface::on_toolButton_clicked()
         this->emoji_flag = 0;
     }
 }
+/*
+ * 点击表情包之后的动作
+ * */
 void Chatface::on_recv_emoji_path(QString path)
 {
     // 表情包直接发送
@@ -91,6 +103,10 @@ void Chatface::on_recv_emoji_path(QString path)
     QNChatMessage* messageW = new QNChatMessage(ui->listWidget->parentWidget());
     QListWidgetItem* item = new QListWidgetItem(ui->listWidget);
     dealMessage(messageW, item, msg,time,path, QNChatMessage::User_Meemjio);
+
+    /*
+     * 这里需要将path直接发送
+     */
     this->emoji_flag = 0;
 }
 
@@ -99,51 +115,32 @@ void Chatface::on_recv_emoji_path(QString path)
  * */
 void Chatface::on_pushButton_clicked()
 {
-    // null|null
-    int flag = 0;
     QString sendStr = ui->textEdit->toPlainText();
-    QString message;
-    if(!this->emjio_list.isEmpty()){
-        while(!this->emjio_list.isEmpty()){
-            message += this->emjio_list.first();
-            this->emjio_list.pop_front();
-            message +=";";
-        }
-        message +="|";
-        flag = 1;
-    }
-    else{
-        message +="null;|";
-    }
+
     if(sendStr == ""){
-        message += "null";
-    }
-    else{
-        message += sendStr;
-        flag = 1;
-    }
-    if(!flag){
         QMessageBox::warning(this,tr("warning"),tr("发送信息为空"),QMessageBox::Yes);
     }
-    else{
-        //在这边显示消息
-        QString time = QString::number(QDateTime::currentDateTime().toTime_t()); //时间戳
-        message += "\n";
-        qDebug()<<"addMessage" << message << time << ui->listWidget->count();
-        dealMessageTime(time);
-        QNChatMessage* messageW = new QNChatMessage(ui->listWidget->parentWidget());
-        QListWidgetItem* item = new QListWidgetItem(ui->listWidget);
-        dealMessage(messageW, item, message, time, "",QNChatMessage::User_Me);
-        //need to do send message
-    }
-    qDebug()<<"addMessage" << message ;
+    //在这边显示消息
+    QString time = QString::number(QDateTime::currentDateTime().toTime_t()); //时间戳
+    sendStr += "\n";
+    qDebug()<<"addMessage" << sendStr << time << ui->listWidget->count();
+    dealMessageTime(time);
+    QNChatMessage* messageW = new QNChatMessage(ui->listWidget->parentWidget());
+    QListWidgetItem* item = new QListWidgetItem(ui->listWidget);
+    dealMessage(messageW, item, sendStr, time, "",QNChatMessage::User_Me);
+    /*
+     *  发送sendstr字符串
+    */
 }
 
+/*
+ * 消息处理函数，界面显示
+ * */
 void Chatface::dealMessage(QNChatMessage *messageW, QListWidgetItem *item, QString text, QString time, QString path, QNChatMessage::User_Type type)
 {
     messageW->setFixedWidth(this->width());
     QSize size;
-    if(type == QNChatMessage::User_pic){
+    if(type == QNChatMessage::User_Mepic){
         size = messageW->picRect(path);
     }
     else{
@@ -153,7 +150,9 @@ void Chatface::dealMessage(QNChatMessage *messageW, QListWidgetItem *item, QStri
     messageW->setText(text, path,time, size, type);
     ui->listWidget->setItemWidget(item, messageW);
 }
-
+/*
+ * 显示时间
+ * */
 void Chatface::dealMessageTime(QString curMsgTime)
 {
     bool isShowTime = false;
@@ -177,5 +176,38 @@ void Chatface::dealMessageTime(QString curMsgTime)
         itemTime->setSizeHint(size);
         messageTime->setText(curMsgTime, "",curMsgTime, size, QNChatMessage::User_Time);
         ui->listWidget->setItemWidget(itemTime, messageTime);
+    }
+}
+
+/*
+ * 接收消息后的处理函数
+ * */
+void Chatface::recv_message(QString msg){
+    if(msg[0] == '0'){// 假设是表情包  0 path
+        msg = msg.mid(2,msg.size());
+        QString message = "        ";
+        //在这边显示消息
+        qDebug()<<msg;
+        QString time = QString::number(QDateTime::currentDateTime().toTime_t()); //时间戳
+        dealMessageTime(time);
+        QNChatMessage* messageW = new QNChatMessage(ui->listWidget->parentWidget());
+        QListWidgetItem* item = new QListWidgetItem(ui->listWidget);
+        dealMessage(messageW, item, message,time,msg, QNChatMessage::User_Sheemjio);
+    }
+    else if(msg[0] == '1'){//如果是文字 1 msg
+        msg = msg.mid(2,msg.size());
+        //在这边显示消息
+        QString time = QString::number(QDateTime::currentDateTime().toTime_t()); //时间戳
+        qDebug()<<"addMessage" << msg << time << ui->listWidget->count();
+        dealMessageTime(time);
+        QNChatMessage* messageW = new QNChatMessage(ui->listWidget->parentWidget());
+        QListWidgetItem* item = new QListWidgetItem(ui->listWidget);
+        dealMessage(messageW, item, msg, time, "",QNChatMessage::User_She);
+    }
+    else if(msg[0] == '2'){//如果是图片 2
+        msg = msg.mid(2,msg.size());
+    }
+    else if(msg[0] == '3'){//如果是文件
+        msg = msg.mid(2,msg.size());
     }
 }
