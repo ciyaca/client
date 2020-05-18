@@ -5,6 +5,9 @@
 #include "common.h"
 #include <emoji.h>
 #include <normal_emoji.h>
+#include <QList>
+#include "chatmessage.h"
+#include <QListWidgetItem>
 
 namespace Ui {
 class Chatface;
@@ -19,14 +22,20 @@ public:
     void chatface_init();
     bool emoji_flag;
     QWidget parentt;
+    QList<QString> emjio_list;
     void showSmallEmotion(QPoint point);
     void showNormalEmotion(QPoint point);
     void onAnimationFinished();
+
+    void dealMessage(QNChatMessage *messageW, QListWidgetItem *item, QString text, QString time, QString path,QNChatMessage::User_Type type);
+    void dealMessageTime(QString curMsgTime);
     ~Chatface();
 
 private slots:
     void on_toolButton_clicked();
     void on_recv_emoji_path(QString path);
+
+    void on_pushButton_clicked();
 
 private:
     Ui::Chatface *ui;

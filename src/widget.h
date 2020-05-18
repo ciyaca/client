@@ -19,6 +19,7 @@ public:
     QPushButton* createLineEditRightButton(QLineEdit *);
     int state_login;
     int state_register;
+    MainWindow *Chat;
     ~Widget();
 protected:
     void paintEvent(QPaintEvent *);
@@ -33,6 +34,5 @@ private slots:
 
 private:
     Ui::Widget *ui;
-    MainWindow *Chat;
 };
 #endif // WIDGET_H

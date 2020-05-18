@@ -21,10 +21,12 @@ emojiwidget::~emojiwidget()
 void emojiwidget::addEmotionItem(QString fileName)
 {
     // 获取当前添加到第几行第几列
-   int row = this->emoji_list.size()/ui->tableWidget->rowCount();
-   int column = this->emoji_list.size()%ui->tableWidget->rowCount();
 
-   qDebug() << row << "" << column;
+   int row = this->emoji_list.size()/9;
+   int column = this->emoji_list.size()%9;
+
+//   qDebug() << row << "" << column;
+//   qDebug() << fileName;
    QTableWidgetItem* tableWidgetItem = new QTableWidgetItem;
    ui->tableWidget->setItem(row, column, tableWidgetItem);
 
@@ -47,7 +49,7 @@ void emojiwidget::init_emotion()
     ui->tableWidget->setEditTriggers(QAbstractItemView::NoEditTriggers);
     QString path = ":image/emoji/%1.gif";
     for (int i = 1; i <= 132; i++) {
-        addEmotionItem(path.arg(i + 1));
+        addEmotionItem(path.arg(i));
     }
 }
 void emojiwidget::getItem_now(int row, int column)
@@ -59,6 +61,6 @@ void emojiwidget::getItem_now(int row, int column)
     path.append(QString::number(k));
     path.append(".gif");
     emit emit_emoji_path(path);
-    qDebug() << path;
+//    qDebug() << path;
     this->close();
 }

@@ -12,6 +12,8 @@
 #include <QtCore/QVariant>
 #include <QtWidgets/QApplication>
 #include <QtWidgets/QLabel>
+#include <QtWidgets/QListWidget>
+#include <QtWidgets/QPushButton>
 #include <QtWidgets/QTextEdit>
 #include <QtWidgets/QToolButton>
 #include <QtWidgets/QWidget>
@@ -27,6 +29,8 @@ public:
     QTextEdit *textEdit;
     QToolButton *toolButton_4;
     QLabel *label;
+    QPushButton *pushButton;
+    QListWidget *listWidget;
 
     void setupUi(QWidget *Chatface)
     {
@@ -51,6 +55,12 @@ public:
         label = new QLabel(Chatface);
         label->setObjectName(QString::fromUtf8("label"));
         label->setGeometry(QRect(10, 0, 81, 31));
+        pushButton = new QPushButton(Chatface);
+        pushButton->setObjectName(QString::fromUtf8("pushButton"));
+        pushButton->setGeometry(QRect(590, 600, 51, 31));
+        listWidget = new QListWidget(Chatface);
+        listWidget->setObjectName(QString::fromUtf8("listWidget"));
+        listWidget->setGeometry(QRect(5, 41, 641, 431));
 
         retranslateUi(Chatface);
 
@@ -65,6 +75,7 @@ public:
         toolButton_3->setText(QCoreApplication::translate("Chatface", "...", nullptr));
         toolButton_4->setText(QCoreApplication::translate("Chatface", "\346\266\210\346\201\257\350\256\260\345\275\225", nullptr));
         label->setText(QCoreApplication::translate("Chatface", "TextLabel", nullptr));
+        pushButton->setText(QCoreApplication::translate("Chatface", "\345\217\221\351\200\201", nullptr));
     } // retranslateUi
 
 };

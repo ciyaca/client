@@ -21,6 +21,7 @@ DEFINES += QT_DEPRECATED_WARNINGS
 
 SOURCES += \
     chatface.cpp \
+    chatmessage.cpp \
     client_rpc.cpp \
     come_message.cpp \
     common.cpp \
@@ -36,6 +37,7 @@ SOURCES += \
 
 HEADERS += \
     chatface.h \
+    chatmessage.h \
     client_rpc.hpp \
     come_message.h \
     common.h \

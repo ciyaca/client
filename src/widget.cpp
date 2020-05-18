@@ -257,14 +257,4 @@ void Widget::on_pushButton_clicked()
     string nickname1 = nickname.toStdString();
     string password1 = password.toStdString();
     this->state_login = client_rpc.call<int>("login", nickname1, password1);
-    if( this->state_login == SUCCESS)
-    {
-        //创建Chat
-        this->Chat = new MainWindow();
-        this->hide();
-        this->Chat->show();
-    }
-    else{
-        // 这一部分是报错提示，未注册或密码错误
-    }
 }
