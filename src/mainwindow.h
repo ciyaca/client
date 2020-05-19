@@ -18,6 +18,8 @@ public:
     explicit MainWindow(QWidget *parent = nullptr);
     void Show_init();
     void First_recv();
+    void recv_message(person_info);
+    int Avatar_tag;
     ~MainWindow();
 
 private slots:

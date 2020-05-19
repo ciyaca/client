@@ -46,7 +46,7 @@ void Chatface::chatface_init()
     ui->progressBar->setValue(0);
 
 //    recv_message("1 :/image/emoji/23.gif");
-    recv_message("2 :/image/add.png");
+//    recv_message("2 :/image/add.png");
 }
 Chatface::~Chatface()
 {
@@ -79,32 +79,11 @@ void Chatface::on_toolButton_clicked()
 void Chatface::on_recv_emoji_path(QString path)
 {
     // 表情包直接发送
-//    qDebug() << "on_recv_emoji recv path:" << path;
-//    QUrl Uri ( QString ( "file://%1" ).arg ( path ) );
-//    QImage image = QImageReader ( path ).read();
-//    QTextDocument * textDocument = ui->textEdit->document();
-//    textDocument->addResource( QTextDocument::ImageResource, Uri, QVariant ( image ) );
-//    QTextCursor cursor = ui->textEdit->textCursor();
-//    QTextImageFormat imageFormat;
-//    imageFormat.setWidth( image.width() );
-//    imageFormat.setHeight( image.height() );
-//    imageFormat.setName( Uri.toString() );
-//    cursor.insertImage(imageFormat);
-//    this->emjio_list.append(path);
-//    QTextDocumentFragment fragment;
-//    QString file_path = "<img src='"+path+"'>";
-//    qDebug() << file_path;
-//    fragment = QTextDocumentFragment::fromHtml(file_path);
-//    ui->textEdit->textCursor().insertFragment(fragment);
-//    ui->textEdit->setVisible(true);
     QString msg = "        ";
     //在这边显示消息
     QString time = QString::number(QDateTime::currentDateTime().toTime_t()); //时间戳
     dealMessageTime(time);
-    QNChatMessage* messageW = new QNChatMessage(ui->listWidget->parentWidget());
-    QListWidgetItem* item = new QListWidgetItem(ui->listWidget);
-    dealMessage(messageW, item, msg,time,path, QNChatMessage::User_Meemjio);
-
+    dealMessage(msg,time,path, QNChatMessage::User_Meemjio);
     /*
      * 这里需要将path直接发送
      */
@@ -128,9 +107,7 @@ void Chatface::on_pushButton_clicked()
         QString time = QString::number(QDateTime::currentDateTime().toTime_t()); //时间戳
 //        qDebug()<<"addMessage" << sendStr << time << ui->listWidget->count();
         dealMessageTime(time);
-        QNChatMessage* messageW = new QNChatMessage(ui->listWidget->parentWidget());
-        QListWidgetItem* item = new QListWidgetItem(ui->listWidget);
-        dealMessage(messageW, item, sendStr, time, "",QNChatMessage::User_Me);
+        dealMessage(sendStr, time, "",QNChatMessage::User_Me);
         /*
          *  发送sendstr字符串
         */
@@ -143,13 +120,18 @@ void Chatface::on_pushButton_clicked()
     }
     ui->lineEdit->clear();
     ui->progressBar->setValue(0);
+    ui->textEdit->clear();
 }
 
 /*
  * 消息处理函数，界面显示
  * */
-void Chatface::dealMessage(QNChatMessage *messageW, QListWidgetItem *item, QString text, QString time, QString path, QNChatMessage::User_Type type)
+void Chatface::dealMessage(QString text, QString time, QString path, QNChatMessage::User_Type type)
 {
+    QNChatMessage* messageW = new QNChatMessage(ui->listWidget->parentWidget());
+    QListWidgetItem* item = new QListWidgetItem(ui->listWidget);
+    messageW->Me_tag = this->Me_tag;
+    messageW->She_tag = this->She_tag;
     messageW->setFixedWidth(this->width());
     QSize size;
     if(type == QNChatMessage::User_Mepic || type == QNChatMessage::User_Shepic){
@@ -167,10 +149,14 @@ void Chatface::dealMessage(QNChatMessage *messageW, QListWidgetItem *item, QStri
  * */
 void Chatface::dealMessageTime(QString curMsgTime)
 {
+//    qDebug()<<curMsgTime;
+
     bool isShowTime = false;
     if(ui->listWidget->count() > 0) {
         QListWidgetItem* lastItem = ui->listWidget->item(ui->listWidget->count() - 1);
         QNChatMessage* messageW = (QNChatMessage*)ui->listWidget->itemWidget(lastItem);
+        messageW->Me_tag = this->Me_tag;
+        messageW->She_tag = this->She_tag;
         int lastTime = messageW->time().toInt();
         int curTime = curMsgTime.toInt();
         qDebug() << "curTime lastTime:" << curTime - lastTime;
@@ -182,7 +168,8 @@ void Chatface::dealMessageTime(QString curMsgTime)
     if(isShowTime) {
         QNChatMessage* messageTime = new QNChatMessage(ui->listWidget->parentWidget());
         QListWidgetItem* itemTime = new QListWidgetItem(ui->listWidget);
-
+        messageTime->Me_tag = this->Me_tag;
+        messageTime->She_tag = this->She_tag;
         QSize size = QSize(this->width(), 40);
         messageTime->resize(size);
         itemTime->setSizeHint(size);
@@ -202,9 +189,7 @@ void Chatface::recv_message(QString msg){
         qDebug()<<msg;
         QString time = QString::number(QDateTime::currentDateTime().toTime_t()); //时间戳
         dealMessageTime(time);
-        QNChatMessage* messageW = new QNChatMessage(ui->listWidget->parentWidget());
-        QListWidgetItem* item = new QListWidgetItem(ui->listWidget);
-        dealMessage(messageW, item, message,time,msg, QNChatMessage::User_Sheemjio);
+        dealMessage(message,time,msg, QNChatMessage::User_Sheemjio);
     }
     else if(msg[0] == '1'){//如果是文字 1 msg
         msg = msg.mid(2,msg.size());
@@ -212,18 +197,14 @@ void Chatface::recv_message(QString msg){
         QString time = QString::number(QDateTime::currentDateTime().toTime_t()); //时间戳
         qDebug()<<"addMessage" << msg << time << ui->listWidget->count();
         dealMessageTime(time);
-        QNChatMessage* messageW = new QNChatMessage(ui->listWidget->parentWidget());
-        QListWidgetItem* item = new QListWidgetItem(ui->listWidget);
-        dealMessage(messageW, item, msg, time, "",QNChatMessage::User_She);
+        dealMessage(msg, time, "",QNChatMessage::User_She);
     }
     else if(msg[0] == '2'){//如果是图片 2
         msg = msg.mid(2,msg.size());
         QString time = QString::number(QDateTime::currentDateTime().toTime_t()); //时间戳
         qDebug()<<"addMessage" << msg << time << ui->listWidget->count();
         dealMessageTime(time);
-        QNChatMessage* messageW = new QNChatMessage(ui->listWidget->parentWidget());
-        QListWidgetItem* item = new QListWidgetItem(ui->listWidget);
-        dealMessage(messageW, item, "", time, msg,QNChatMessage::User_Shepic);
+        dealMessage("", time, msg,QNChatMessage::User_Shepic);
     }
     else if(msg[0] == '3'){//如果是文件
         msg = msg.mid(2,msg.size());
@@ -242,8 +223,6 @@ void Chatface::on_toolButton_2_clicked()
         qDebug() << filename;
         QString time = QString::number(QDateTime::currentDateTime().toTime_t()); //时间戳
         dealMessageTime(time);
-        QNChatMessage* messageW = new QNChatMessage(ui->listWidget->parentWidget());
-        QListWidgetItem* item = new QListWidgetItem(ui->listWidget);
-        dealMessage(messageW,item,"",time,filename,QNChatMessage::User_Mepic);
+        dealMessage("",time,filename,QNChatMessage::User_Mepic);
     }
 }

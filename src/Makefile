@@ -860,7 +860,17 @@ qrc_image.cpp: image.qrc \
 		image/emoji/116.gif \
 		image/emoji/70.gif \
 		image/emoji/125.gif \
-		image/emoji/14.gif
+		image/emoji/14.gif \
+		image/Avatar/4.jpg \
+		image/Avatar/8.jpg \
+		image/Avatar/3.jpg \
+		image/Avatar/7.jpg \
+		image/Avatar/2.jpg \
+		image/Avatar/6.jpg \
+		image/Avatar/10.jpg \
+		image/Avatar/1.jpg \
+		image/Avatar/5.jpg \
+		image/Avatar/9.jpg
 	/home/ifpop/Qt5.14.1/5.14.1/gcc_64/bin/rcc -name image image.qrc -o qrc_image.cpp
 
 compiler_moc_predefs_make_all: moc_predefs.h
@@ -1882,12 +1892,16 @@ chatface.o: chatface.cpp chatface.h \
 		../../Qt5.14.1/5.14.1/gcc_64/include/QtGui/qinputmethod.h \
 		../../Qt5.14.1/5.14.1/gcc_64/include/QtWidgets/QLabel \
 		../../Qt5.14.1/5.14.1/gcc_64/include/QtWidgets/qlabel.h \
+		../../Qt5.14.1/5.14.1/gcc_64/include/QtWidgets/QLineEdit \
+		../../Qt5.14.1/5.14.1/gcc_64/include/QtWidgets/qlineedit.h \
+		../../Qt5.14.1/5.14.1/gcc_64/include/QtGui/qtextcursor.h \
+		../../Qt5.14.1/5.14.1/gcc_64/include/QtGui/qtextformat.h \
 		../../Qt5.14.1/5.14.1/gcc_64/include/QtWidgets/QListWidget \
+		../../Qt5.14.1/5.14.1/gcc_64/include/QtWidgets/QProgressBar \
+		../../Qt5.14.1/5.14.1/gcc_64/include/QtWidgets/qprogressbar.h \
 		../../Qt5.14.1/5.14.1/gcc_64/include/QtWidgets/QTextEdit \
 		../../Qt5.14.1/5.14.1/gcc_64/include/QtWidgets/qtextedit.h \
 		../../Qt5.14.1/5.14.1/gcc_64/include/QtGui/qtextdocument.h \
-		../../Qt5.14.1/5.14.1/gcc_64/include/QtGui/qtextcursor.h \
-		../../Qt5.14.1/5.14.1/gcc_64/include/QtGui/qtextformat.h \
 		../../Qt5.14.1/5.14.1/gcc_64/include/QtWidgets/QToolButton \
 		../../Qt5.14.1/5.14.1/gcc_64/include/QtWidgets/qtoolbutton.h \
 		emojiwidget.h \
@@ -1908,7 +1922,16 @@ chatface.o: chatface.cpp chatface.h \
 		../../Qt5.14.1/5.14.1/gcc_64/include/QtWidgets/qmessagebox.h \
 		../../Qt5.14.1/5.14.1/gcc_64/include/QtWidgets/qdialog.h \
 		../../Qt5.14.1/5.14.1/gcc_64/include/QtCore/QDateTime \
-		../../Qt5.14.1/5.14.1/gcc_64/include/QtCore/qdatetime.h
+		../../Qt5.14.1/5.14.1/gcc_64/include/QtCore/qdatetime.h \
+		../../Qt5.14.1/5.14.1/gcc_64/include/QtWidgets/QVBoxLayout \
+		../../Qt5.14.1/5.14.1/gcc_64/include/QtWidgets/qboxlayout.h \
+		../../Qt5.14.1/5.14.1/gcc_64/include/QtWidgets/qlayout.h \
+		../../Qt5.14.1/5.14.1/gcc_64/include/QtWidgets/qlayoutitem.h \
+		../../Qt5.14.1/5.14.1/gcc_64/include/QtWidgets/qgridlayout.h \
+		../../Qt5.14.1/5.14.1/gcc_64/include/QtWidgets/QFileDialog \
+		../../Qt5.14.1/5.14.1/gcc_64/include/QtWidgets/qfiledialog.h \
+		../../Qt5.14.1/5.14.1/gcc_64/include/QtCore/qdir.h \
+		../../Qt5.14.1/5.14.1/gcc_64/include/QtCore/qfileinfo.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o chatface.o chatface.cpp
 
 chatmessage.o: chatmessage.cpp chatmessage.h \
@@ -2834,7 +2857,9 @@ mainwindow.o: mainwindow.cpp mainwindow.h \
 		../../Qt5.14.1/5.14.1/gcc_64/include/QtCore/QList \
 		chatmessage.h \
 		come_message.h \
-		../../Qt5.14.1/5.14.1/gcc_64/include/QtCore/QDebug
+		../../Qt5.14.1/5.14.1/gcc_64/include/QtCore/QDebug \
+		../../Qt5.14.1/5.14.1/gcc_64/include/QtCore/QDateTime \
+		../../Qt5.14.1/5.14.1/gcc_64/include/QtCore/qdatetime.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o mainwindow.o mainwindow.cpp
 
 widget.o: widget.cpp widget.h \

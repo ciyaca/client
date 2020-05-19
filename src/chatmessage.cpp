@@ -13,11 +13,9 @@ QNChatMessage::QNChatMessage(QWidget *parent) : QWidget(parent)
     te_font.setFamily("MicrosoftYaHei");
     te_font.setPointSize(12);
     this->setFont(te_font);  //设置字体
-    m_leftPixmap = QPixmap(":/image/bg.jpg");   //头像
-    m_rightPixmap = QPixmap(":/image/bg1.jpg");
 
-    m_loadingMovie = new QMovie(this);  //loading的转圈圈
-    m_loading = new QLabel(this);  //用一个Label来装loading的小圈圈
+    m_loadingMovie = new QMovie(this);  //表情包
+    m_loading = new QLabel(this);
 }
 
 void QNChatMessage::setText(QString text, QString path,QString time, QSize allSize, QNChatMessage::User_Type userType)
@@ -54,7 +52,7 @@ QSize QNChatMessage::picRect(QString path){
     QPixmap picture = QPixmap(path);
     QPixmap scaledPixmap = picture.scaled(250,250, Qt::KeepAspectRatio);
     QSize size = scaledPixmap.size();
-    qDebug()<<scaledPixmap.size();
+//    qDebug()<<scaledPixmap.size();
     m_sanjiaoLeftRect = QRect(iconWH+iconSpaceW+iconRectW, m_lineHeight/2, sanJiaoW, size.height() - m_lineHeight);
     m_sanjiaoRightRect = QRect(this->width() - iconRectW - iconWH - iconSpaceW - sanJiaoW, m_lineHeight/2, sanJiaoW, size.height() - m_lineHeight);
 
@@ -172,7 +170,11 @@ void QNChatMessage::paintEvent(QPaintEvent *event)
     painter.setRenderHints(QPainter::Antialiasing | QPainter::SmoothPixmapTransform);//消锯齿
     painter.setPen(Qt::NoPen);
     painter.setBrush(QBrush(Qt::gray));
-
+    QString Me_path = QString(":/image/Avatar/%1.jpg").arg(this->Me_tag);
+    QString She_path = QString(":/image/Avatar/%1.jpg").arg(this->She_tag);
+    m_leftPixmap = QPixmap(She_path);   //头像
+    m_rightPixmap = QPixmap(Me_path);
+    qDebug()<<Me_path<<this->She_tag;
     if(m_userType == User_Type::User_She) { // 用户
         //头像
 //        painter.drawRoundedRect(m_iconLeftRect,m_iconLeftRect.width(),m_iconLeftRect.height());

@@ -33,6 +33,8 @@ public:
     inline QString text() {return m_msg;}
     inline QString time() {return m_time;}
     inline User_Type userType() {return m_userType;}
+    int Me_tag;
+    int She_tag;
 protected:
     void paintEvent(QPaintEvent *event);
 private:

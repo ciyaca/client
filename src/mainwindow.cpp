@@ -4,6 +4,7 @@
 #include "chatface.h"
 #include "come_message.h"
 #include <QDebug>
+#include <QDateTime>
 
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
@@ -14,17 +15,12 @@ MainWindow::MainWindow(QWidget *parent) :
     //设置界面初始化
     this->Show_init();
 
-    //test ->recv
-    this->Recv_t[this->num_r].tag = 1;
-    this->Recv_t[this->num_r].name = "IFpop";
-    this->Recv_t[this->num_r++].Message = "123";
-//    qDebug() << this->Recv_t[0].name;
-    this->First_recv();
-    this->Recv_t[this->num_r].tag = 2;
-    this->Recv_t[this->num_r].name = "Derek";
-    this->Recv_t[this->num_r++].Message = "4984984984465646";
-    this->First_recv();
-//    ui->stackedWidget->setCurrentIndex(3);
+    //来信格式样例
+    struct person_info temp;
+    temp.name = "Derek";
+    temp.Message = "1 4984984984465646";
+    temp.tag = 1;
+    this->recv_message(temp);
 }
 
 MainWindow::~MainWindow()
@@ -35,7 +31,8 @@ MainWindow::~MainWindow()
 void MainWindow::Show_init(){
     //用户头像
     QPixmap Avatar;
-    Avatar.load(":/image/Test_Avatar.jpg");
+    Avatar.load(":/image/Avatar/10.jpg");
+    this->Avatar_tag = 10;
     // 将图片剪裁压缩成50*50大小的图
     QPixmap fitpixmap_avatar = Avatar.scaled(50, 50, Qt::IgnoreAspectRatio, Qt::SmoothTransformation);
     fitpixmap_avatar = PixmapToRound(Avatar,25);
@@ -57,7 +54,7 @@ void MainWindow::Show_init(){
     ui->page->setAutoFillBackground(true);  // 不加上, 可能显示不出背景图.
     QPalette palette = ui->page->palette();
     palette.setBrush(QPalette::Window,
-    QBrush(QPixmap(":/image/bg1.jpg").scaled(  // 缩放背景图.
+    QBrush(QPixmap(":/image/logo.png").scaled(  // 缩放背景图.
         ui->page->size(),
         Qt::IgnoreAspectRatio,
         Qt::SmoothTransformation)));  // 使用平滑的缩放方式
@@ -94,9 +91,63 @@ void MainWindow::First_recv(){
     ui->listWidget->setItemWidget(item,witem);
 
     Chatface* chat_temp = new Chatface(this->Recv_t[this->num_r-1]);
+    chat_temp->Me_tag = this->Avatar_tag;
+    chat_temp->She_tag = this->Recv_t[this->num_r-1].tag;
     ui->stackedWidget->addWidget(chat_temp);
     ui->stackedWidget->setCurrentIndex(this->num_r+1);
     ui->listWidget->setCurrentRow(this->num_r-1);
+    recv_message(this->Recv_t[this->num_r-1]);
+}
+
+void MainWindow::recv_message(person_info recv_person){
+    QString msg = recv_person.Message;
+    int cur_index = 0; //标记是否在左边找到，没有则新建
+    //遍历左边tab列表
+    qDebug()<<recv_person.name;
+    for(int i = 0 ; i < this->num_r ; i++){
+        if(this->Recv_t[i].name == recv_person.name){
+            //显示消息
+            cur_index = i;
+        }
+    }
+    qDebug()<<cur_index<<this->num_r;
+    if(cur_index != this->num_r){
+        if(msg[0] == '0'){// 假设是表情包  0 path
+            msg = msg.mid(2,msg.size());
+            QString message = "        ";
+            //在这边显示消息
+            QString time = QString::number(QDateTime::currentDateTime().toTime_t()); //时间戳
+            ui->stackedWidget->setCurrentIndex(cur_index+2);
+            Chatface* chat_temp = (Chatface*)ui->stackedWidget->widget(cur_index+2);
+            chat_temp->dealMessageTime(time);
+            chat_temp->dealMessage(message,time,msg, QNChatMessage::User_Sheemjio);
+        }
+        else if(msg[0] == '1'){//如果是文字 1 msg
+            msg = msg.mid(2,msg.size());
+            //在这边显示消息
+            ui->stackedWidget->setCurrentIndex(cur_index+2);
+            Chatface* chat_temp = (Chatface*)ui->stackedWidget->widget(cur_index+2);
+            QString time = QString::number(QDateTime::currentDateTime().toTime_t()); //时间戳
+            chat_temp->dealMessageTime(time);
+            chat_temp->dealMessage(msg, time, "",QNChatMessage::User_She);
+            qDebug()<<msg;
+        }
+        else if(msg[0] == '2'){//如果是图片 2
+            msg = msg.mid(2,msg.size());
+            ui->stackedWidget->setCurrentIndex(cur_index+2);
+            Chatface* chat_temp = (Chatface*)ui->stackedWidget->widget(cur_index+2);
+            QString time = QString::number(QDateTime::currentDateTime().toTime_t()); //时间戳
+            chat_temp->dealMessageTime(time);
+            chat_temp->dealMessage("", time, msg,QNChatMessage::User_Shepic);
+        }
+        else if(msg[0] == '3'){
+            msg = msg.mid(2,msg.size());
+        }
+    }
+    else{
+        this->Recv_t[this->num_r++] = recv_person;
+        this->First_recv();
+    }
 }
 
 void MainWindow::on_listWidget_itemClicked(QListWidgetItem *item)

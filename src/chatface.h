@@ -26,9 +26,11 @@ public:
     void showNormalEmotion(QPoint point);
     void onAnimationFinished();
 
-    void dealMessage(QNChatMessage *messageW, QListWidgetItem *item, QString text, QString time, QString path,QNChatMessage::User_Type type);
+    void dealMessage(QString text, QString time, QString path,QNChatMessage::User_Type type);
     void dealMessageTime(QString curMsgTime);
     void recv_message(QString);
+    int Me_tag;
+    int She_tag;
     ~Chatface();
 
 private slots:
