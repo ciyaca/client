@@ -11,15 +11,16 @@
 
 #include <QtCore/QVariant>
 #include <QtWidgets/QApplication>
+#include <QtWidgets/QHeaderView>
 #include <QtWidgets/QLabel>
 #include <QtWidgets/QListWidget>
 #include <QtWidgets/QMainWindow>
 #include <QtWidgets/QMenuBar>
 #include <QtWidgets/QPushButton>
-#include <QtWidgets/QScrollArea>
 #include <QtWidgets/QStackedWidget>
 #include <QtWidgets/QStatusBar>
 #include <QtWidgets/QTabWidget>
+#include <QtWidgets/QTreeWidget>
 #include <QtWidgets/QWidget>
 
 QT_BEGIN_NAMESPACE
@@ -35,10 +36,9 @@ public:
     QWidget *page_2;
     QListWidget *listWidget;
     QWidget *tab_2;
-    QScrollArea *scrollArea_2;
-    QWidget *scrollAreaWidgetContents_2;
-    QPushButton *pushButton;
     QWidget *widget_tab_2;
+    QTreeWidget *treeWidget;
+    QPushButton *pushButton;
     QWidget *tab_3;
     QLabel *Avatar;
     QMenuBar *menubar;
@@ -48,7 +48,7 @@ public:
     {
         if (MainWindow->objectName().isEmpty())
             MainWindow->setObjectName(QString::fromUtf8("MainWindow"));
-        MainWindow->resize(855, 700);
+        MainWindow->resize(860, 702);
         MainWindow->setStyleSheet(QString::fromUtf8(""));
         centralwidget = new QWidget(MainWindow);
         centralwidget->setObjectName(QString::fromUtf8("centralwidget"));
@@ -95,7 +95,7 @@ public:
         tab->setObjectName(QString::fromUtf8("tab"));
         stackedWidget = new QStackedWidget(tab);
         stackedWidget->setObjectName(QString::fromUtf8("stackedWidget"));
-        stackedWidget->setGeometry(QRect(199, 0, 661, 641));
+        stackedWidget->setGeometry(QRect(199, 0, 671, 641));
         page = new QWidget();
         page->setObjectName(QString::fromUtf8("page"));
         stackedWidget->addWidget(page);
@@ -123,16 +123,35 @@ public:
         tabWidget->addTab(tab, QString());
         tab_2 = new QWidget();
         tab_2->setObjectName(QString::fromUtf8("tab_2"));
-        scrollArea_2 = new QScrollArea(tab_2);
-        scrollArea_2->setObjectName(QString::fromUtf8("scrollArea_2"));
-        scrollArea_2->setGeometry(QRect(0, 0, 240, 430));
-        scrollArea_2->setWidgetResizable(true);
-        scrollAreaWidgetContents_2 = new QWidget();
-        scrollAreaWidgetContents_2->setObjectName(QString::fromUtf8("scrollAreaWidgetContents_2"));
-        scrollAreaWidgetContents_2->setGeometry(QRect(0, 0, 238, 428));
-        pushButton = new QPushButton(scrollAreaWidgetContents_2);
+        widget_tab_2 = new QWidget(tab_2);
+        widget_tab_2->setObjectName(QString::fromUtf8("widget_tab_2"));
+        widget_tab_2->setGeometry(QRect(240, 0, 621, 641));
+        treeWidget = new QTreeWidget(tab_2);
+        treeWidget->setObjectName(QString::fromUtf8("treeWidget"));
+        treeWidget->setGeometry(QRect(0, 0, 241, 601));
+        treeWidget->setStyleSheet(QString::fromUtf8("QTreeWidget\n"
+"{\n"
+"   border-style:none;   \n"
+"}\n"
+"\n"
+"QTreeWidget::item\n"
+"{\n"
+"   height: 26;\n"
+"   color:rgba(255, 255, 255, 0);    \n"
+"}\n"
+"\n"
+"QTreeWidget::item:selected:active\n"
+"{\n"
+"    background-color: rgba(135, 206, 250, 153);\n"
+"}\n"
+"\n"
+"QTreeWidget::item:selected:!active, QTreeView::item:hover \n"
+"{\n"
+"    background-color: rgba(135, 206, 250, 50);\n"
+"}"));
+        pushButton = new QPushButton(tab_2);
         pushButton->setObjectName(QString::fromUtf8("pushButton"));
-        pushButton->setGeometry(QRect(200, 380, 31, 31));
+        pushButton->setGeometry(QRect(210, 550, 31, 31));
         pushButton->setStyleSheet(QString::fromUtf8("QPushButton#pushButton\n"
 "{\n"
 "border: none;\n"
@@ -164,10 +183,6 @@ public:
 "text-decoration: none;\n"
 "background-color: rgb(85,170,255);\n"
 "}"));
-        scrollArea_2->setWidget(scrollAreaWidgetContents_2);
-        widget_tab_2 = new QWidget(tab_2);
-        widget_tab_2->setObjectName(QString::fromUtf8("widget_tab_2"));
-        widget_tab_2->setGeometry(QRect(239, -1, 621, 421));
         tabWidget->addTab(tab_2, QString());
         tab_3 = new QWidget();
         tab_3->setObjectName(QString::fromUtf8("tab_3"));
@@ -185,7 +200,7 @@ public:
         MainWindow->setCentralWidget(centralwidget);
         menubar = new QMenuBar(MainWindow);
         menubar->setObjectName(QString::fromUtf8("menubar"));
-        menubar->setGeometry(QRect(0, 0, 855, 28));
+        menubar->setGeometry(QRect(0, 0, 860, 28));
         MainWindow->setMenuBar(menubar);
         statusbar = new QStatusBar(MainWindow);
         statusbar->setObjectName(QString::fromUtf8("statusbar"));
@@ -203,6 +218,8 @@ public:
     {
         MainWindow->setWindowTitle(QCoreApplication::translate("MainWindow", "Start To Chat", nullptr));
         tabWidget->setTabText(tabWidget->indexOf(tab), QCoreApplication::translate("MainWindow", "1", nullptr));
+        QTreeWidgetItem *___qtreewidgetitem = treeWidget->headerItem();
+        ___qtreewidgetitem->setText(0, QCoreApplication::translate("MainWindow", "\350\201\224\347\263\273\344\272\272", nullptr));
         pushButton->setText(QString());
         tabWidget->setTabText(tabWidget->indexOf(tab_2), QCoreApplication::translate("MainWindow", "2", nullptr));
         tabWidget->setTabText(tabWidget->indexOf(tab_3), QCoreApplication::translate("MainWindow", "3", nullptr));

@@ -155,5 +155,6 @@
         <file>image/Avatar/3.jpg</file>
         <file>image/Avatar/9.jpg</file>
         <file>image/Avatar/10.jpg</file>
+        <file>image/search.png</file>
     </qresource>
 </RCC>

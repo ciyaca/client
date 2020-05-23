@@ -5,6 +5,7 @@
 #include <QMainWindow>
 #include "common.h"
 #include <QListWidgetItem>
+#include<QTreeWidgetItem>
 
 namespace Ui {
 class MainWindow;
@@ -19,12 +20,24 @@ public:
     void Show_init();
     void First_recv();
     void recv_message(person_info);
+    void initContactTree();
+    void initGroupChatTree();
+    void addMyFriendInfo(QTreeWidgetItem* pRootGroupItem,person_info,int);
     int Avatar_tag;
+    QList<person_info> person_list;
+    QList<person_info> group_list;
     ~MainWindow();
 
 private slots:
 
     void on_listWidget_itemClicked(QListWidgetItem *item);
+
+    void on_treeWidget_itemDoubleClicked(QTreeWidgetItem *item, int column);
+
+    void on_pushButton_clicked();
+    void on_pushButton_2_clicked();
+    void Add_friend();
+    void Create_group();
 
 private:
     Ui::MainWindow *ui;

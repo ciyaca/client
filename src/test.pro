@@ -20,11 +20,13 @@ DEFINES += QT_DEPRECATED_WARNINGS
 #DEFINES += QT_DISABLE_DEPRECATED_BEFORE=0x060000    # disables all the APIs deprecated before Qt 6.0.0
 
 SOURCES += \
+    addfriend.cpp \
     chatface.cpp \
     chatmessage.cpp \
     client_rpc.cpp \
     come_message.cpp \
     common.cpp \
+    contactitem.cpp \
     emojiwidget.cpp \
     feverrpc/feverrpc-client.cpp \
     feverrpc/feverrpc-factory.cpp \
@@ -36,11 +38,13 @@ SOURCES += \
     widget.cpp
 
 HEADERS += \
+    addfriend.h \
     chatface.h \
     chatmessage.h \
     client_rpc.hpp \
     come_message.h \
     common.h \
+    contactitem.h \
     emojiwidget.h \
     feverrpc/feverrpc-client.hpp \
     feverrpc/feverrpc-factory.hpp \
@@ -52,8 +56,10 @@ HEADERS += \
     widget.h
 
 FORMS += \
+    addfriend.ui \
     chatface.ui \
     come_message.ui \
+    contactitem.ui \
     emoji.ui \
     emojiwidget.ui \
     mainwindow.ui \
@@ -66,7 +72,9 @@ else: unix:!android: target.path = /opt/$${TARGET}/bin
 
 DISTFILES += \
     Chatface.qml \
-    ChatfaceForm.ui.qml
+    ChatfaceForm.ui.qml \
+    image/arrow down.png \
+    image/arrow-right.png
 
 RESOURCES += \
     image.qrc
