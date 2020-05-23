@@ -26,11 +26,8 @@ SOURCES += \
     client.cpp \
     come_message.cpp \
     common.cpp \
-<<<<<<< HEAD
     controller.cpp \
-=======
     contactitem.cpp \
->>>>>>> f0da6249d33166966910dc234f05de0d88047097
     emojiwidget.cpp \
     feverrpc/feverrpc-client.cpp \
     feverrpc/feverrpc-factory.cpp \
@@ -48,11 +45,8 @@ HEADERS += \
     client.h \
     come_message.h \
     common.h \
-<<<<<<< HEAD
     controller.h \
-=======
     contactitem.h \
->>>>>>> f0da6249d33166966910dc234f05de0d88047097
     emojiwidget.h \
     feverrpc/feverrpc-client.hpp \
     feverrpc/feverrpc-factory.hpp \
