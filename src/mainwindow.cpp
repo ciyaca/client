@@ -17,12 +17,12 @@ MainWindow::MainWindow(QWidget *parent) :
     //设置界面初始化
     this->Show_init();
 
-    //来信格式样例
-    struct person_info temp;
-    temp.name = "Derek";
-    temp.Message = "1 4984984984465646";
-    temp.tag = 1;
-    this->recv_message(temp);
+//    //来信格式样例
+//    struct person_info temp;
+//    temp.name = "Derk";
+//    temp.Message = "1 4984984984465646";
+//    temp.tag = 1;
+//    this->recv_message(temp);
 }
 
 MainWindow::~MainWindow()
@@ -76,11 +76,11 @@ void MainWindow::Show_init(){
 
     //显示好友列表
     struct person_info temp;
-    temp.name = "Derek";
+    temp.name = "q";
     temp.Message = "";
     temp.tag = 1;
     person_list.append(temp);
-    temp.name = "IFpop";
+    temp.name = "w";
     temp.Message = "";
     temp.tag = 2;
     person_list.append(temp);
@@ -115,7 +115,7 @@ void MainWindow::First_recv(){
     ui->listWidget->addItem(item);
     ui->listWidget->setItemWidget(item,witem);
 
-    Chatface* chat_temp = new Chatface(this->Recv_t[this->num_r-1]);
+    Chatface* chat_temp = new Chatface(this->nickname, this->Recv_t[this->num_r-1]);
     chat_temp->Me_tag = this->Avatar_tag;
     chat_temp->She_tag = this->Recv_t[this->num_r-1].tag;
     ui->stackedWidget->addWidget(chat_temp);

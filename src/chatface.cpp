@@ -11,7 +11,7 @@
 #include <QWidget>
 #include <QMainWindow>
 #include <QDebug>
-//#include "client_rpc.hpp"
+#include "client.h"
 #include <QImageReader>
 #include <QMovie>
 #include <QTextDocumentFragment>
@@ -20,7 +20,7 @@
 #include <QVBoxLayout>
 #include <QFileDialog>
 
-Chatface::Chatface(struct person_info temp):
+Chatface::Chatface(QString my_nickname, struct person_info temp):
     ui(new Ui::Chatface)
 {
 
@@ -30,6 +30,9 @@ Chatface::Chatface(struct person_info temp):
     QFont ft;
     ft.setPointSize(16);
     ui->label->setFont(ft);
+
+    this->my_nickname = my_nickname;
+    this->object_nickname = temp.name;
 
     //初始化
     chatface_init();
@@ -87,6 +90,10 @@ void Chatface::on_recv_emoji_path(QString path)
     /*
      * 这里需要将path直接发送
      */
+    msg = "0 " + path;
+    client_rpc.call<int>("sendMessage",this->my_nickname.toStdString(),
+                         this->object_nickname.toStdString(),msg.toStdString());
+
     this->emoji_flag = 0;
 }
 
@@ -111,7 +118,12 @@ void Chatface::on_pushButton_clicked()
         /*
          *  发送sendstr字符串
         */
-//        qDebug() << sendStr;
+        qDebug() << "my nickname" << this->my_nickname;
+        qDebug() << "object nickname" << this->object_nickname;
+        qDebug() << sendStr;
+        client_rpc.call<int>("sendMessage",this->my_nickname.toStdString(),
+                             this->object_nickname.toStdString(),sendStr.toStdString());
+
 
     }
     if(ui->lineEdit->text() != ""){

@@ -6,6 +6,7 @@
 #include "client.h"
 #include "widget.h"
 #include "mainwindow.h"
+#include "common.h"
 
 class Controller : public QObject
 {
@@ -30,7 +31,7 @@ signals:
   void startRunning(); // 用于触发新线程中的耗时操作函数
 
 private slots:
-  void recvMessage(const QString &str); // 接收新线程中的结果
+  void recvMessage(person_info p); // 接收新线程中的结果
   void loginSuccessfully(QString nickname);
   void exit();
 

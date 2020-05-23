@@ -1,10 +1,11 @@
 #pragma once
+//#define DEBUG
 namespace std {
 #ifdef DEBUG
 #define dbgprintf(format, args...)                                               \
-    printf("[%s,%s,%d] " format "\n", __FILE__, __FUNCTION__, __LINE__, args)
+    printf("[%s,%s,%d] " format "\n", __FILE__, __FUNCTION__, __LINE__, args);fflush(stdout);
 #define dbgputs(string)                                                          \
-    printf("[%s,%s,%d] " string "\n", __FILE__, __FUNCTION__, __LINE__)
+    printf("[%s,%s,%d] " string "\n", __FILE__, __FUNCTION__, __LINE__);fflush(stdout);
 #else
 #define dbgprintf(format, args...)                                               \
     {}

@@ -9,6 +9,7 @@
 #include "feverrpc/feverrpc.hpp"
 #include "feverrpc/utils.hpp"
 #include <string>
+#include "common.h"
 
 using namespace std;
 extern FeverRPC::Client client_rpc;
@@ -33,7 +34,7 @@ private:
 
 
 signals:
-  void resultReady(const QString &str); // 向外界发送结果
+  void resultReady(person_info); // 向外界发送结果
 
 public slots:
   void on_doSomething(); // 耗时操作

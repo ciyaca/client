@@ -4,6 +4,8 @@
 
 Controller::Controller(QObject *parent) : QObject(parent)
 {
+    printf("I'm Controller");
+    fflush(stdout);
   qDebug() << "Controller's thread is :" << QThread::currentThreadId();
 
   this->client = Client::getInstance();
@@ -20,8 +22,6 @@ Controller::Controller(QObject *parent) : QObject(parent)
 
   connect(login_window, &Widget::loginSuccessfully, this, &Controller::loginSuccessfully);
   connect(login_window, &Widget::close, this, &Controller::exit);
-
-
 }
 
 
@@ -36,22 +36,25 @@ void Controller::start()
   emit startRunning();
 }
 
-void Controller::recvMessage(const QString &str)
+void Controller::recvMessage(person_info p)
 {
-  qDebug() << str;
+    this->main_window->recv_message(p);
 }
 
 void Controller::login()
 {
+    qDebug() << "controller working in thread:" << QThread::currentThreadId();
     this->login_window->show();
 }
 
 void Controller::loginSuccessfully(QString nickname)
 {
+    qDebug() << nickname;
     this->nickname = nickname;
     this->main_window->nickname = nickname;
     this->client->setUsername(nickname);
     this->login_window->close();
+    this->start();
     this->main_window->show();
 }
 

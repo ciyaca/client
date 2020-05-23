@@ -269,8 +269,12 @@ void Widget::on_pushButton_clicked()
         //success
         emit loginSuccessfully(nickname);
     }
-    else
+    else if(this->state_login == -2)
     {
-        on_pushButton_clicked();
+        // not exist
+        QMessageBox::warning(this,tr("warning"),tr("asdfiahsifhaiyf"),QMessageBox::Yes);
+    }
+    else if(this->state_login == -1){
+        //password or username wrong
     }
 }

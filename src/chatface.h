@@ -16,9 +16,12 @@ class Chatface;
 class Chatface : public QWidget
 {
     Q_OBJECT
+private:
+    QString my_nickname;
+    QString object_nickname;
 
 public:
-    explicit Chatface(struct person_info);
+    explicit Chatface(QString my_nickname, struct person_info);
     void chatface_init();
     bool emoji_flag;
     QWidget parentt;
