@@ -5,6 +5,8 @@
 #include "come_message.h"
 #include <QDebug>
 #include <QDateTime>
+#include "contactitem.h"
+#include "addfriend.h"
 
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
@@ -65,18 +67,41 @@ void MainWindow::Show_init(){
     palette = ui->widget_tab_2->palette();
     palette.setBrush(QPalette::Window,
     QBrush(QPixmap(":/image/bg.jpg").scaled(  // 缩放背景图.
-        ui->widget_tab_2->size(),
-        Qt::IgnoreAspectRatio,
-        Qt::SmoothTransformation)));  // 使用平滑的缩放方式
+    ui->widget_tab_2->size(),
+    Qt::IgnoreAspectRatio,
+    Qt::SmoothTransformation)));  // 使用平滑的缩放方式
     ui->widget_tab_2->setPalette(palette);         // 给widget加上背景图
 
     //初始化BBS
 
     //显示好友列表
+    struct person_info temp;
+    temp.name = "Derek";
+    temp.Message = "";
+    temp.tag = 1;
+    person_list.append(temp);
+    temp.name = "IFpop";
+    temp.Message = "";
+    temp.tag = 2;
+    person_list.append(temp);
+    group_list.append(temp);
 
+    this->initContactTree();
+    this->initGroupChatTree();
     //读取历史聊天记录
 
     //初始化list
+
+    //初始化，添加好友按钮
+    QAction *addfriend = new QAction("添加好友或群组", this);
+    QAction *create_group = new QAction("创建群聊", this);
+    QMenu *mfile = new QMenu;
+    mfile->addAction(addfriend);
+    mfile->addAction(create_group);
+    ui->pushButton->setMenu(mfile);
+    //绑定槽函数
+    connect( addfriend, SIGNAL(triggered()), this, SLOT(Add_friend()));
+    connect( create_group, SIGNAL(triggered()), this, SLOT(Create_group()));
 }
 
 //第一次收到消息
@@ -101,7 +126,7 @@ void MainWindow::First_recv(){
 
 void MainWindow::recv_message(person_info recv_person){
     QString msg = recv_person.Message;
-    int cur_index = 0; //标记是否在左边找到，没有则新建
+    int cur_index = -1; //标记是否在左边找到，没有则新建
     //遍历左边tab列表
     qDebug()<<recv_person.name;
     for(int i = 0 ; i < this->num_r ; i++){
@@ -111,7 +136,7 @@ void MainWindow::recv_message(person_info recv_person){
         }
     }
     qDebug()<<cur_index<<this->num_r;
-    if(cur_index != this->num_r){
+    if(cur_index != -1){
         if(msg[0] == '0'){// 假设是表情包  0 path
             msg = msg.mid(2,msg.size());
             QString message = "        ";
@@ -154,4 +179,131 @@ void MainWindow::on_listWidget_itemClicked(QListWidgetItem *item)
 {
 //    qDebug() << ui->listWidget->currentRow();
     ui->stackedWidget->setCurrentIndex(ui->listWidget->currentRow()+2);
+}
+void MainWindow::initContactTree()
+{
+    ui->treeWidget->clear();
+    //分组节点
+    QTreeWidgetItem *pRootFriendItem = new QTreeWidgetItem();
+    //设置Data用于区分，Item是分组节点还是子节点，0代表分组节点，1代表子节点
+    pRootFriendItem->setData(0, Qt::UserRole, 0);
+    QLabel *pItemName = new QLabel(ui->treeWidget);
+    int nMyFriendNum = person_list.size();
+    QString qsGroupName = QString(tr("我的好友 [%1/%2]")).arg(0).arg(nMyFriendNum);
+    pItemName->setText(qsGroupName);
+    //擦入分组节点
+    ui->treeWidget->addTopLevelItem(pRootFriendItem);
+    ui->treeWidget->setItemWidget(pRootFriendItem, 0, pItemName);
+
+    for (int nIndex = 0; nIndex < nMyFriendNum; ++nIndex)
+    {
+        //添加子节点
+        addMyFriendInfo(pRootFriendItem,person_list[nIndex],nIndex+1);
+    }
+}
+
+void MainWindow::initGroupChatTree()
+{
+    QTreeWidgetItem *pRootFriendItem = new QTreeWidgetItem();
+    int nMyGrouprNum = group_list.size();
+    ////设置Data用于区分，Item是分组节点还是子节点，0代表分组节点
+    pRootFriendItem->setData(0, Qt::UserRole, 100);
+    QLabel *pItemName = new QLabel(ui->treeWidget);
+    QString qsGroupName = QString(tr("我的群组 [%1/%2]")).arg(0).arg(nMyGrouprNum);
+    pItemName->setText(qsGroupName);
+
+    for (int nIndex = 0; nIndex < nMyGrouprNum; ++nIndex)
+    {
+        //添加子节点
+        addMyFriendInfo(pRootFriendItem,group_list[nIndex],nIndex+101);
+    }
+    ui->treeWidget->addTopLevelItem(pRootFriendItem);
+    ui->treeWidget->setItemWidget(pRootFriendItem, 0, pItemName);
+}
+
+void MainWindow::addMyFriendInfo(QTreeWidgetItem* pRootGroupItem,person_info pi,int num)
+{
+    QTreeWidgetItem *pChild = new QTreeWidgetItem();
+    pChild->setSizeHint(0,QSize(241,50));
+    //添加子节点
+    pChild->setData(0, Qt::UserRole, num);
+    contactitem* pContactItem = new contactitem(ui->treeWidget);
+    pContactItem->setContactName(pi.name);
+    pContactItem->setContactIcon(pi.tag);
+//    pContactItem->setContactIcon(USER_ICON);
+    pRootGroupItem->addChild(pChild);
+    ui->treeWidget->setItemWidget(pChild, 0, pContactItem);
+}
+
+void MainWindow::on_treeWidget_itemDoubleClicked(QTreeWidgetItem *item, int column)
+{
+    QVariant temp = item->data(0,Qt::UserRole);
+    int num = temp.toInt();
+    //如果此时双击的是群组名称，则不做处理
+    if(num == 0){
+        qDebug()<<"我的好友";
+    }
+    else if(num == 100){
+        qDebug()<<"我的群组";
+    }
+    else if(num >= 1 && num < 100){//好友上限100
+//        qDebug()<<person_list[num-1].name;
+        int cur_index = -1;
+        //从消息列表中进行寻找
+        for(int i = 0 ; i < this->num_r ; i++){
+            if(this->Recv_t[i].name == person_list[num-1].name){
+                //显示消息
+                cur_index = i;
+            }
+        }
+        qDebug()<<cur_index;
+        if(cur_index != -1){
+            ui->tabWidget->setCurrentIndex(0);
+            ui->stackedWidget->setCurrentIndex(cur_index+2);
+        }
+        else{
+//            qDebug()<<"new";
+            this->Recv_t[this->num_r++] = person_list[num-1];
+            this->First_recv();
+            ui->tabWidget->setCurrentIndex(0);
+        }
+    }
+    else{//群组
+        int cur_index = -1;
+        //从消息列表中进行寻找
+        for(int i = 0 ; i < this->num_r ; i++){
+            if(this->Recv_t[i].name == group_list[num-101].name){
+                //显示消息
+                cur_index = i;
+            }
+        }
+        qDebug()<<cur_index;
+        if(cur_index != -1){
+            ui->tabWidget->setCurrentIndex(0);
+            ui->stackedWidget->setCurrentIndex(cur_index+2);
+        }
+        else{
+//            qDebug()<<"new";
+            this->Recv_t[this->num_r++] = group_list[num-101];
+            this->First_recv();
+            ui->tabWidget->setCurrentIndex(0);
+        }
+    }
+}
+
+void MainWindow::on_pushButton_clicked()
+{
+}
+
+void MainWindow::on_pushButton_2_clicked()
+{
+}
+void MainWindow::Add_friend(){
+    addfriend* af = new addfriend();
+    af->show();
+
+
+}
+void MainWindow::Create_group(){
+
 }

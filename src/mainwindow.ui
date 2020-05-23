@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>855</width>
-    <height>700</height>
+    <width>860</width>
+    <height>702</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -84,7 +84,7 @@ border:none;
        <rect>
         <x>199</x>
         <y>0</y>
-        <width>661</width>
+        <width>671</width>
         <height>641</height>
        </rect>
       </property>
@@ -123,38 +123,64 @@ QListWidget::Item:selected:!active {
      <attribute name="title">
       <string>2</string>
      </attribute>
-     <widget class="QScrollArea" name="scrollArea_2">
+     <widget class="QWidget" name="widget_tab_2" native="true">
+      <property name="geometry">
+       <rect>
+        <x>240</x>
+        <y>0</y>
+        <width>621</width>
+        <height>641</height>
+       </rect>
+      </property>
+     </widget>
+     <widget class="QTreeWidget" name="treeWidget">
       <property name="geometry">
        <rect>
         <x>0</x>
         <y>0</y>
-        <width>240</width>
-        <height>430</height>
+        <width>241</width>
+        <height>601</height>
        </rect>
       </property>
-      <property name="widgetResizable">
-       <bool>true</bool>
+      <property name="styleSheet">
+       <string notr="true">QTreeWidget
+{
+   border-style:none;   
+}
+
+QTreeWidget::item
+{
+   height: 26;
+   color:rgba(255, 255, 255, 0);    
+}
+
+QTreeWidget::item:selected:active
+{
+    background-color: rgba(135, 206, 250, 153);
+}
+
+QTreeWidget::item:selected:!active, QTreeView::item:hover 
+{
+    background-color: rgba(135, 206, 250, 50);
+}</string>
       </property>
-      <widget class="QWidget" name="scrollAreaWidgetContents_2">
-       <property name="geometry">
-        <rect>
-         <x>0</x>
-         <y>0</y>
-         <width>238</width>
-         <height>428</height>
-        </rect>
+      <column>
+       <property name="text">
+        <string>联系人</string>
        </property>
-       <widget class="QPushButton" name="pushButton">
-        <property name="geometry">
-         <rect>
-          <x>200</x>
-          <y>380</y>
-          <width>31</width>
-          <height>31</height>
-         </rect>
-        </property>
-        <property name="styleSheet">
-         <string notr="true">QPushButton#pushButton
+      </column>
+     </widget>
+     <widget class="QPushButton" name="pushButton">
+      <property name="geometry">
+       <rect>
+        <x>210</x>
+        <y>550</y>
+        <width>31</width>
+        <height>31</height>
+       </rect>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">QPushButton#pushButton
 {
 border: none;
 color: white;
@@ -185,21 +211,9 @@ border-radius: 20px;
 text-decoration: none;
 background-color: rgb(85,170,255);
 }</string>
-        </property>
-        <property name="text">
-         <string/>
-        </property>
-       </widget>
-      </widget>
-     </widget>
-     <widget class="QWidget" name="widget_tab_2" native="true">
-      <property name="geometry">
-       <rect>
-        <x>239</x>
-        <y>-1</y>
-        <width>621</width>
-        <height>421</height>
-       </rect>
+      </property>
+      <property name="text">
+       <string/>
       </property>
      </widget>
     </widget>
@@ -232,7 +246,7 @@ background-color: rgb(85,170,255);
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>855</width>
+     <width>860</width>
      <height>28</height>
     </rect>
    </property>

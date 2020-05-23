@@ -1,0 +1,160 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>addfriend</class>
+ <widget class="QWidget" name="addfriend">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>318</width>
+    <height>108</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>Form</string>
+  </property>
+  <widget class="QTabWidget" name="tabWidget">
+   <property name="geometry">
+    <rect>
+     <x>-4</x>
+     <y>-1</y>
+     <width>331</width>
+     <height>111</height>
+    </rect>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">QTabWidget#tabWidget{
+	background-color:none;
+}
+/*设置窗体样式*/
+QTabWidget#tabWidget::pane{ 
+	/*border:none;*/
+}
+/*设置QTabWidget 的Tab标签所在那一行的样式下*/
+QTabWidget#tabWidget::tab-bar{
+	alignment:center;	
+}
+/*设置QTabWidget 的Tab标签的样式*/
+QTabWidget#tabWidget QTabBar::tab{
+	border-color: black;
+	border-bottom:none;
+	border-top-left-radius: 6px;
+	border-top-right-radius: 6px;
+	background:transparent;
+	min-width:5ex;
+	min-height:5ex;
+}
+QTabWidget#tabWidget&gt;QTabBar::tab:!selected:hover{
+	border:3px solid #C589C3;
+	background:rgb(255, 255, 255, 100);
+	border-color: black;
+	width:40px;
+	height:40px;
+}
+QTabWidget#tabWidget&gt;QTabBar::tab:selected{
+background: none;
+border:none;
+}</string>
+   </property>
+   <property name="currentIndex">
+    <number>1</number>
+   </property>
+   <widget class="QWidget" name="tab">
+    <attribute name="title">
+     <string>Tab 1</string>
+    </attribute>
+    <widget class="QLineEdit" name="lineEdit">
+     <property name="geometry">
+      <rect>
+       <x>62</x>
+       <y>14</y>
+       <width>211</width>
+       <height>41</height>
+      </rect>
+     </property>
+     <property name="styleSheet">
+      <string notr="true">QLineEdit#lineEdit {
+   font-family: &quot;Microsoft YaHei&quot;;
+   font-size: 18px;
+   color: rgb(50, 50, 50);
+	background-color: rgba(255, 255, 255, 0%);
+	border:2px solid #b9babb;
+    border-radius: 4px;
+    padding: 2px 2px;
+    min-height: 18px;   /* 对应高度大概是24px，这里不知为何不能等价 */
+    padding-right: 18px;
+}
+QLineEdit#lineEdit:focus{
+    border: 2px solid #014099;
+}
+ 
+QLineEdit#lineEdit_2:hover{
+    border: 2px solid #014099;
+}
+QLineEdit#lineEdit QPushButton {
+    width:  16px;
+    height: 16px;
+    qproperty-flat: true;
+    margin-right: 4px;
+    border: none;
+    border-width: 0;
+    background: transparent;
+    border-image: url(:/image/search.png) 0 0 0 0 stretch stretch;
+
+}
+ </string>
+     </property>
+    </widget>
+   </widget>
+   <widget class="QWidget" name="tab_2">
+    <attribute name="title">
+     <string>Tab 2</string>
+    </attribute>
+    <widget class="QLineEdit" name="lineEdit_2">
+     <property name="geometry">
+      <rect>
+       <x>70</x>
+       <y>10</y>
+       <width>211</width>
+       <height>41</height>
+      </rect>
+     </property>
+     <property name="styleSheet">
+      <string notr="true">QLineEdit#lineEdit_2 {
+   font-family: &quot;Microsoft YaHei&quot;;
+   font-size: 18px;
+   color: rgb(50, 50, 50);
+	background-color: rgba(255, 255, 255, 0%);
+	border:2px solid #b9babb;
+    border-radius: 4px;
+    padding: 2px 2px;
+    min-height: 18px;   /* 对应高度大概是24px，这里不知为何不能等价 */
+    padding-right: 18px;
+}
+QLineEdit#lineEdit_2:focus{
+    border: 2px solid #014099;
+}
+ 
+QLineEdit#lineEdit_2:hover{
+    border: 2px solid #014099;
+}
+QLineEdit#lineEdit_2 QPushButton {
+    width:  16px;
+    height: 16px;
+    qproperty-flat: true;
+    margin-right: 4px;
+    border: none;
+    border-width: 0;
+    background: transparent;
+    border-image: url(:/image/search.png) 0 0 0 0 stretch stretch;
+
+}
+ </string>
+     </property>
+    </widget>
+   </widget>
+  </widget>
+ </widget>
+ <resources/>
+ <connections/>
+</ui>
