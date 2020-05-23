@@ -39,6 +39,15 @@ Come_message::Come_message(struct person_info temp) :
            msg = allmsg;
        }
     }
+    else if(temp.Message[0] == '2'){
+        msg += "图片";
+    }
+    else if(temp.Message[0] == '3'){
+        msg += "文件";
+    }
+    else if(temp.Message[0] == '4'){//time  --> BBS
+        msg += temp.Message.mid(2,temp.Message.size());
+    }
     ui->label_2->setText(msg);
 }
 Come_message::~Come_message()
