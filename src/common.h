@@ -1,6 +1,6 @@
 #ifndef COMMON_H
 #define COMMON_H
-#include "client_rpc.hpp"
+
 #include <QPixmap>
 #include <QBitmap>
 #include <QPainter>

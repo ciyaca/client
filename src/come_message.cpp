@@ -3,7 +3,7 @@
 #include "come_message.h"
 #include <QDebug>
 #include "common.h"
-#include "client_rpc.hpp"
+//#include "client_rpc.hpp"
 
 Come_message::Come_message(struct person_info temp) :
     ui(new Ui::Come_message)

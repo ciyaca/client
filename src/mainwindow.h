@@ -1,7 +1,6 @@
 #ifndef MAINWINDOW_H
 #define MAINWINDOW_H
 
-#include "client_rpc.hpp"
 #include <QMainWindow>
 #include "common.h"
 #include <QListWidgetItem>
@@ -13,6 +12,9 @@ class MainWindow;
 class MainWindow : public QMainWindow
 {
     Q_OBJECT
+
+public:
+    QString nickname;
 
 public:
     explicit MainWindow(QWidget *parent = nullptr);

@@ -22,9 +22,10 @@ DEFINES += QT_DEPRECATED_WARNINGS
 SOURCES += \
     chatface.cpp \
     chatmessage.cpp \
-    client_rpc.cpp \
+    client.cpp \
     come_message.cpp \
     common.cpp \
+    controller.cpp \
     emojiwidget.cpp \
     feverrpc/feverrpc-client.cpp \
     feverrpc/feverrpc-factory.cpp \
@@ -38,9 +39,10 @@ SOURCES += \
 HEADERS += \
     chatface.h \
     chatmessage.h \
-    client_rpc.hpp \
+    client.h \
     come_message.h \
     common.h \
+    controller.h \
     emojiwidget.h \
     feverrpc/feverrpc-client.hpp \
     feverrpc/feverrpc-factory.hpp \

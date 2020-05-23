@@ -4,7 +4,6 @@
 
 #include "widget.h"
 #include "ui_widget.h"
-
 #include <QPainter>
 #include <QFont>
 #include <QHBoxLayout>
@@ -21,8 +20,8 @@ Widget::Widget(QWidget *parent)
 {
     ui->setupUi(this);
 
-    this->state_login = EXIT;
-    this->state_register = EXIT;
+    this->state_login = -1;
+    this->state_register = -1;
 
     //放置logo
     QPixmap *pixmap = new QPixmap(":/image/logo.png");
@@ -188,6 +187,14 @@ void Widget::on_pushButton_3_clicked()
     }
     //TO DO diao yong zhuce daima
 
+    if(client_rpc.call<int>("regist", nickname.toStdString(), password1.toStdString()) == 0)
+    {
+        //success
+    }
+    else
+    {
+
+    }
     QMessageBox::warning(this,tr("Wlcome"),tr("恭喜你！成功注册"),QMessageBox::Yes);
 }
 
@@ -257,4 +264,13 @@ void Widget::on_pushButton_clicked()
     string nickname1 = nickname.toStdString();
     string password1 = password.toStdString();
     this->state_login = client_rpc.call<int>("login", nickname1, password1);
+    if(this->state_login == 1)
+    {
+        //success
+        emit loginSuccessfully(nickname);
+    }
+    else
+    {
+        on_pushButton_clicked();
+    }
 }

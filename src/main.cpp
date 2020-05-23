@@ -3,19 +3,18 @@
 #include <QApplication>
 #include <chatface.h>
 #include <emojiwidget.h>
-#include "client_rpc.hpp"
-
+#include <QThread>
+#include <QEventLoop>
+#include <QTimer>
+#include "controller.h"
 
 int main(int argc, char *argv[])
 {
-    initClientRpc();
+
     QApplication a(argc, argv);
 
-//    Widget* login = new Widget();
-//    login->show();
-    MainWindow m;
-    m.show();
-
+    Controller controller;
+    controller.login();
     a.exec();
     return 0;
 }

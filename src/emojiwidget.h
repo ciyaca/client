@@ -1,6 +1,6 @@
 #ifndef EMOJIWIDGET_H
 #define EMOJIWIDGET_H
-#include "client_rpc.hpp"
+//#include "client_rpc.hpp"
 #include <QMainWindow>
 #include <QWidget>
 

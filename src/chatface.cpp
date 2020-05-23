@@ -11,7 +11,7 @@
 #include <QWidget>
 #include <QMainWindow>
 #include <QDebug>
-#include "client_rpc.hpp"
+//#include "client_rpc.hpp"
 #include <QImageReader>
 #include <QMovie>
 #include <QTextDocumentFragment>
@@ -111,6 +111,8 @@ void Chatface::on_pushButton_clicked()
         /*
          *  发送sendstr字符串
         */
+//        qDebug() << sendStr;
+
     }
     if(ui->lineEdit->text() != ""){
         /*
