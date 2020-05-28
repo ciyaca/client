@@ -17,12 +17,6 @@ MainWindow::MainWindow(QWidget *parent) :
     //设置界面初始化
     this->Show_init();
 
-//    //来信格式样例
-//    struct person_info temp;
-//    temp.name = "Derk";
-//    temp.Message = "1 4984984984465646";
-//    temp.tag = 1;
-//    this->recv_message(temp);
 }
 
 MainWindow::~MainWindow()
@@ -31,14 +25,9 @@ MainWindow::~MainWindow()
 }
 
 void MainWindow::Show_init(){
-    //用户头像
-    QPixmap Avatar;
-    Avatar.load(":/image/Avatar/10.jpg");
-    this->Avatar_tag = 10;
-    // 将图片剪裁压缩成50*50大小的图
-    QPixmap fitpixmap_avatar = Avatar.scaled(50, 50, Qt::IgnoreAspectRatio, Qt::SmoothTransformation);
-    fitpixmap_avatar = PixmapToRound(Avatar,25);
-    ui->Avatar->setPixmap(fitpixmap_avatar);
+
+    this->set_Avatar(10);
+    this->set_name("ifpop");
 
     //添加切换按钮icon
     ui->tabWidget->setTabIcon(0,QIcon(":/image/chat.png"));
@@ -62,15 +51,15 @@ void MainWindow::Show_init(){
         Qt::SmoothTransformation)));  // 使用平滑的缩放方式
     ui->page->setPalette(palette);         // 给widget加上背景图
 
-    //显示初始状态背景图
-    ui->widget_tab_2->setAutoFillBackground(true);  // 不加上, 可能显示不出背景图.
-    palette = ui->widget_tab_2->palette();
-    palette.setBrush(QPalette::Window,
-    QBrush(QPixmap(":/image/bg.jpg").scaled(  // 缩放背景图.
-    ui->widget_tab_2->size(),
-    Qt::IgnoreAspectRatio,
-    Qt::SmoothTransformation)));  // 使用平滑的缩放方式
-    ui->widget_tab_2->setPalette(palette);         // 给widget加上背景图
+    //显示好友请求列表
+//    ui->widget_tab_2->setAutoFillBackground(true);  // 不加上, 可能显示不出背景图.
+//    palette = ui->widget_tab_2->palette();
+//    palette.setBrush(QPalette::Window,
+//    QBrush(QPixmap(":/image/bg3.jpg").scaled(  // 缩放背景图.
+//    ui->widget_tab_2->size(),
+//    Qt::IgnoreAspectRatio,
+//    Qt::SmoothTransformation)));  // 使用平滑的缩放方式
+//    ui->widget_tab_2->setPalette(palette);         // 给widget加上背景图
 
     //初始化BBS
 
@@ -90,8 +79,6 @@ void MainWindow::Show_init(){
     this->initGroupChatTree();
     //读取历史聊天记录
 
-    //初始化list
-
     //初始化，添加好友按钮
     QAction *addfriend = new QAction("添加好友或群组", this);
     QAction *create_group = new QAction("创建群聊", this);
@@ -102,6 +89,21 @@ void MainWindow::Show_init(){
     //绑定槽函数
     connect( addfriend, SIGNAL(triggered()), this, SLOT(Add_friend()));
     connect( create_group, SIGNAL(triggered()), this, SLOT(Create_group()));
+}
+void MainWindow::set_Avatar(int tag){
+    //用户头像
+    QPixmap Avatar;
+    QString path = ":/image/Avatar/%1.jpg";
+    path = path.arg(tag);
+    Avatar.load(path);
+    this->Avatar_tag = 10;
+    // 将图片剪裁压缩成50*50大小的图
+    QPixmap fitpixmap_avatar = Avatar.scaled(50, 50, Qt::IgnoreAspectRatio, Qt::SmoothTransformation);
+    fitpixmap_avatar = PixmapToRound(Avatar,25);
+    ui->Avatar->setPixmap(fitpixmap_avatar);
+}
+void MainWindow::set_name(QString name){
+    ui->name->setText(name);
 }
 
 //第一次收到消息

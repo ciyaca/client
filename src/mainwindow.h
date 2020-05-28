@@ -25,6 +25,9 @@ public:
     void initContactTree();
     void initGroupChatTree();
     void addMyFriendInfo(QTreeWidgetItem* pRootGroupItem,person_info,int);
+
+    void set_Avatar(int);
+    void set_name(QString);
     int Avatar_tag;
     QList<person_info> person_list;
     QList<person_info> group_list;

@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>860</width>
-    <height>702</height>
+    <height>673</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -36,6 +36,7 @@
 /*设置窗体样式*/
 QTabWidget#tabWidget::pane{ 
 	/*border:none;*/
+   border-image: url(:/image/bg3.jpg) 0 0 0 0     stretch stretch;
 }
 /*设置QTabWidget 的Tab标签所在那一行的样式下*/
 QTabWidget#tabWidget::tab-bar{
@@ -64,7 +65,7 @@ border:none;
 }</string>
     </property>
     <property name="currentIndex">
-     <number>0</number>
+     <number>1</number>
     </property>
     <property name="iconSize">
      <size>
@@ -87,6 +88,9 @@ border:none;
         <width>671</width>
         <height>641</height>
        </rect>
+      </property>
+      <property name="styleSheet">
+       <string notr="true"/>
       </property>
       <widget class="QWidget" name="page"/>
       <widget class="QWidget" name="page_2"/>
@@ -126,12 +130,25 @@ QListWidget::Item:selected:!active {
      <widget class="QWidget" name="widget_tab_2" native="true">
       <property name="geometry">
        <rect>
-        <x>240</x>
+        <x>250</x>
         <y>0</y>
-        <width>621</width>
+        <width>611</width>
         <height>641</height>
        </rect>
       </property>
+      <property name="styleSheet">
+       <string notr="true"/>
+      </property>
+      <widget class="QListWidget" name="listWidget_2">
+       <property name="geometry">
+        <rect>
+         <x>10</x>
+         <y>40</y>
+         <width>581</width>
+         <height>531</height>
+        </rect>
+       </property>
+      </widget>
      </widget>
      <widget class="QTreeWidget" name="treeWidget">
       <property name="geometry">
@@ -173,8 +190,8 @@ QTreeWidget::item:selected:!active, QTreeView::item:hover
      <widget class="QPushButton" name="pushButton">
       <property name="geometry">
        <rect>
-        <x>210</x>
-        <y>550</y>
+        <x>200</x>
+        <y>570</y>
         <width>31</width>
         <height>31</height>
        </rect>
@@ -238,6 +255,22 @@ background-color: rgb(85,170,255);
     </property>
     <property name="text">
      <string>image</string>
+    </property>
+   </widget>
+   <widget class="QLabel" name="name">
+    <property name="geometry">
+     <rect>
+      <x>80</x>
+      <y>0</y>
+      <width>71</width>
+      <height>41</height>
+     </rect>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">font: 57 20pt &quot;Ubuntu&quot;;</string>
+    </property>
+    <property name="text">
+     <string>TextLabel</string>
     </property>
    </widget>
   </widget>
