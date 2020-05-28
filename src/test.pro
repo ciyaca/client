@@ -34,6 +34,7 @@ SOURCES += \
     feverrpc/feverrpc-server.cpp \
     feverrpc/feverrpc.cpp \
     feverrpc/utils.cpp \
+    friendrequest.cpp \
     main.cpp \
     mainwindow.cpp \
     widget.cpp
@@ -53,6 +54,7 @@ HEADERS += \
     feverrpc/feverrpc-server.hpp \
     feverrpc/feverrpc.hpp \
     feverrpc/utils.hpp \
+    friendrequest.h \
     info_code.h \
     mainwindow.h \
     widget.h
@@ -64,6 +66,7 @@ FORMS += \
     contactitem.ui \
     emoji.ui \
     emojiwidget.ui \
+    friendrequest.ui \
     mainwindow.ui \
     widget.ui
 

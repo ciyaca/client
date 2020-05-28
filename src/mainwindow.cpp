@@ -7,6 +7,7 @@
 #include <QDateTime>
 #include "contactitem.h"
 #include "addfriend.h"
+#include "friendrequest.h"
 
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
@@ -51,16 +52,6 @@ void MainWindow::Show_init(){
         Qt::SmoothTransformation)));  // 使用平滑的缩放方式
     ui->page->setPalette(palette);         // 给widget加上背景图
 
-    //显示好友请求列表
-//    ui->widget_tab_2->setAutoFillBackground(true);  // 不加上, 可能显示不出背景图.
-//    palette = ui->widget_tab_2->palette();
-//    palette.setBrush(QPalette::Window,
-//    QBrush(QPixmap(":/image/bg3.jpg").scaled(  // 缩放背景图.
-//    ui->widget_tab_2->size(),
-//    Qt::IgnoreAspectRatio,
-//    Qt::SmoothTransformation)));  // 使用平滑的缩放方式
-//    ui->widget_tab_2->setPalette(palette);         // 给widget加上背景图
-
     //初始化BBS
 
     //显示好友列表
@@ -89,6 +80,22 @@ void MainWindow::Show_init(){
     //绑定槽函数
     connect( addfriend, SIGNAL(triggered()), this, SLOT(Add_friend()));
     connect( create_group, SIGNAL(triggered()), this, SLOT(Create_group()));
+    this->addfriendrequest("ifpop","111111111111111111111111");
+    this->addfriendrequest("de","111111111111111111111111");
+
+}
+void MainWindow::addfriendrequest(QString name, QString message){
+    QListWidgetItem* item = new QListWidgetItem;
+    friendrequest* fr = new friendrequest(ui->listWidget_2);
+    fr->setname(name);
+    fr->setmessage(message);
+    //获取tag
+    fr->setavatar(10);
+
+     item->setSizeHint(QSize(581,80));
+     ui->listWidget_2->addItem(item);
+     ui->listWidget_2->setItemWidget(item,fr);
+     connect(fr, &friendrequest::deleterequestline, this, &MainWindow::deleterequestline);
 }
 void MainWindow::set_Avatar(int tag){
     //用户头像
@@ -186,7 +193,7 @@ void MainWindow::initContactTree()
 {
     ui->treeWidget->clear();
     //分组节点
-    QTreeWidgetItem *pRootFriendItem = new QTreeWidgetItem();
+    this->pRootFriendItem = new QTreeWidgetItem();
     //设置Data用于区分，Item是分组节点还是子节点，0代表分组节点，1代表子节点
     pRootFriendItem->setData(0, Qt::UserRole, 0);
     QLabel *pItemName = new QLabel(ui->treeWidget);
@@ -308,4 +315,21 @@ void MainWindow::Add_friend(){
 }
 void MainWindow::Create_group(){
 
+}
+void MainWindow::deleterequestline(){
+    int row = ui->listWidget_2->currentRow();
+    QListWidgetItem* item = ui->listWidget_2->currentItem();
+    friendrequest* fr = (friendrequest*)ui->listWidget_2->itemWidget(item);
+
+    if(fr->isagree == 1){//agree
+        struct person_info temp;
+        temp.name = fr->name;
+        temp.Message = "";
+        temp.tag = fr->avatar;
+        person_list.append(temp);
+        qDebug()<<person_list.last().name;
+        addMyFriendInfo(this->pRootFriendItem,person_list.last(),person_list.size());
+    }
+    ui->listWidget_2->takeItem(row);
+    delete fr;
 }
