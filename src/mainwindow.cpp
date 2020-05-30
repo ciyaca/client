@@ -142,35 +142,39 @@ void MainWindow::First_recv(){
 
 void MainWindow::recv_message(message_info recv_person){
     int cur_index = -1; //标记是否在左边找到，没有则新建
-    if(recv_person.groupname == nullptr){
-        int cur_index = -1; //标记是否在左边找到，没有则新建
-        //遍历左边tab列表
 
+    if(recv_person.groupname==nullptr){//单聊
         for(int i = 0 ; i < this->num_r ; i++){
             if(this->Recv_t[i].name == recv_person.name){
                 //显示消息
                 cur_index = i;
             }
         }
-        if(cur_index != -1){
-            ui->stackedWidget->setCurrentIndex(cur_index+2);
-            Chatface* chat_temp = (Chatface*)ui->stackedWidget->widget(cur_index+2);
-            if(recv_person.time == nullptr){
-                QString time = QString::number(QDateTime::currentDateTime().toTime_t()); //时间戳
-                chat_temp->dealMessageTime(time);
+    }
+    else{// 群聊
+        for(int i = 0 ; i < this->num_r ; i++){
+            if(this->Recv_t[i].name == recv_person.groupname){
+                //显示消息
+                cur_index = i;
             }
-            else{
-                chat_temp->dealMessageTime(recv_person.time);
-            }
-            chat_temp->recv_message(recv_person.Message);
-        }
-        else{
-            this->Recv_t[this->num_r++] = recv_person;
-            this->First_recv();
         }
     }
-    else{
 
+    if(cur_index != -1){//不在消息列表
+        ui->stackedWidget->setCurrentIndex(cur_index+2);
+        Chatface* chat_temp = (Chatface*)ui->stackedWidget->widget(cur_index+2);
+        if(recv_person.time == nullptr){//显示时间
+            QString time = QString::number(QDateTime::currentDateTime().toTime_t()); //时间戳
+            chat_temp->dealMessageTime(time);
+        }
+        else{
+            chat_temp->dealMessageTime(recv_person.time);
+        }
+        chat_temp->recv_message(recv_person.Message);
+    }
+    else{//新建
+        this->Recv_t[this->num_r++] = recv_person;
+        this->First_recv();
     }
 }
 

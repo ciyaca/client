@@ -17,9 +17,11 @@
 #include <QtWidgets/QMainWindow>
 #include <QtWidgets/QMenuBar>
 #include <QtWidgets/QPushButton>
+#include <QtWidgets/QScrollArea>
 #include <QtWidgets/QStackedWidget>
 #include <QtWidgets/QStatusBar>
 #include <QtWidgets/QTabWidget>
+#include <QtWidgets/QTextEdit>
 #include <QtWidgets/QTreeWidget>
 #include <QtWidgets/QWidget>
 
@@ -41,6 +43,13 @@ public:
     QTreeWidget *treeWidget;
     QPushButton *pushButton;
     QWidget *tab_3;
+    QWidget *widget;
+    QScrollArea *post_view_scroll_area;
+    QWidget *scrollAreaWidgetContents;
+    QPushButton *bbs_post_refresh_btn;
+    QWidget *widget_2;
+    QPushButton *bbs_send_btn;
+    QTextEdit *textEdit;
     QLabel *Avatar;
     QLabel *name;
     QMenuBar *menubar;
@@ -194,6 +203,29 @@ public:
         tabWidget->addTab(tab_2, QString());
         tab_3 = new QWidget();
         tab_3->setObjectName(QString::fromUtf8("tab_3"));
+        widget = new QWidget(tab_3);
+        widget->setObjectName(QString::fromUtf8("widget"));
+        widget->setGeometry(QRect(40, 0, 711, 401));
+        post_view_scroll_area = new QScrollArea(widget);
+        post_view_scroll_area->setObjectName(QString::fromUtf8("post_view_scroll_area"));
+        post_view_scroll_area->setGeometry(QRect(160, 0, 551, 401));
+        post_view_scroll_area->setWidgetResizable(true);
+        scrollAreaWidgetContents = new QWidget();
+        scrollAreaWidgetContents->setObjectName(QString::fromUtf8("scrollAreaWidgetContents"));
+        scrollAreaWidgetContents->setGeometry(QRect(0, 0, 549, 399));
+        post_view_scroll_area->setWidget(scrollAreaWidgetContents);
+        bbs_post_refresh_btn = new QPushButton(widget);
+        bbs_post_refresh_btn->setObjectName(QString::fromUtf8("bbs_post_refresh_btn"));
+        bbs_post_refresh_btn->setGeometry(QRect(0, 0, 89, 25));
+        widget_2 = new QWidget(tab_3);
+        widget_2->setObjectName(QString::fromUtf8("widget_2"));
+        widget_2->setGeometry(QRect(280, 430, 281, 161));
+        bbs_send_btn = new QPushButton(widget_2);
+        bbs_send_btn->setObjectName(QString::fromUtf8("bbs_send_btn"));
+        bbs_send_btn->setGeometry(QRect(90, 120, 89, 25));
+        textEdit = new QTextEdit(widget_2);
+        textEdit->setObjectName(QString::fromUtf8("textEdit"));
+        textEdit->setGeometry(QRect(60, 10, 151, 71));
         QIcon icon;
         QString iconThemeName = QString::fromUtf8(":/image/chat.png");
         if (QIcon::hasThemeIcon(iconThemeName)) {
@@ -220,7 +252,7 @@ public:
 
         retranslateUi(MainWindow);
 
-        tabWidget->setCurrentIndex(2);
+        tabWidget->setCurrentIndex(0);
 
 
         QMetaObject::connectSlotsByName(MainWindow);
@@ -234,6 +266,8 @@ public:
         ___qtreewidgetitem->setText(0, QCoreApplication::translate("MainWindow", "\350\201\224\347\263\273\344\272\272", nullptr));
         pushButton->setText(QString());
         tabWidget->setTabText(tabWidget->indexOf(tab_2), QCoreApplication::translate("MainWindow", "2", nullptr));
+        bbs_post_refresh_btn->setText(QCoreApplication::translate("MainWindow", "refresh", nullptr));
+        bbs_send_btn->setText(QCoreApplication::translate("MainWindow", "send", nullptr));
         tabWidget->setTabText(tabWidget->indexOf(tab_3), QCoreApplication::translate("MainWindow", "3", nullptr));
         Avatar->setText(QCoreApplication::translate("MainWindow", "image", nullptr));
         name->setText(QCoreApplication::translate("MainWindow", "TextLabel", nullptr));

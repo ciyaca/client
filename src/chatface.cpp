@@ -92,8 +92,8 @@ void Chatface::on_recv_emoji_path(QString path)
      * 这里需要将path直接发送
      */
     msg = "0 " + path;
-//    client_rpc.call<int>("sendMessage",this->my_nickname.toStdString(),
-//                         this->object_nickname.toStdString(),msg.toStdString());
+    client_rpc.call<int>("sendMessage",this->my_nickname.toStdString(),
+                         this->object_nickname.toStdString(),msg.toStdString());
 
     this->emoji_flag = 0;
 }
@@ -122,8 +122,8 @@ void Chatface::on_pushButton_clicked()
         qDebug() << "my nickname" << this->my_nickname;
         qDebug() << "object nickname" << this->object_nickname;
         qDebug() << sendStr;
-//        client_rpc.call<int>("sendMessage",this->my_nickname.toStdString(),
-//                             this->object_nickname.toStdString(),sendStr.toStdString());
+        client_rpc.call<int>("sendMessage",this->my_nickname.toStdString(),
+                             this->object_nickname.toStdString(),sendStr.toStdString());
 
 
     }
