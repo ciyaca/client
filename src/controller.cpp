@@ -12,16 +12,17 @@ Controller::Controller(QObject *parent) : QObject(parent)
   client->moveToThread(&client_thread);
 
   this->login_window = new Widget();
-  this->main_window = new MainWindow();
+  this->main_window = new MainWindow(nullptr);
+  this->main_window->setParentController((void*)this);
 
   connect(this, &Controller::startRunning, client, &Client::on_doSomething);
   connect(&client_thread, &QThread::finished, client, &QObject::deleteLater);
   connect(client, &Client::resultReady, this, &Controller::recvMessage);
   client_thread.start();
 
-
   connect(login_window, &Widget::loginSuccessfully, this, &Controller::loginSuccessfully);
-  connect(login_window, &Widget::close, this, &Controller::exit);
+
+  connect(login_window, &Widget::close, this, &Controller::exitController);
 }
 
 
@@ -58,11 +59,13 @@ void Controller::loginSuccessfully(QString nickname)
     this->main_window->show();
 }
 
-void Controller::exit()
+void Controller::exitController()
 {
+    qDebug() << "exitController";
     client_thread.exit(0);
     delete this->client;
     delete this->login_window;
     delete this->main_window;
 
+    exit(0);
 }

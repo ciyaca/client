@@ -5,6 +5,9 @@
 #include "common.h"
 #include <QListWidgetItem>
 #include<QTreeWidgetItem>
+#include <QCloseEvent>
+#include <signal.h>
+#include <unistd.h>
 
 namespace Ui {
 class MainWindow;
@@ -48,12 +51,18 @@ private slots:
     void Create_group();
     void deleterequestline();
 
+public:
+    void closeEvent(QCloseEvent *event);
+    void setParentController(void*);
+
 private:
     Ui::MainWindow *ui;
     struct message_info Recv_t[50];
     QTreeWidgetItem *pRootFriendItem;
 
     int num_r = 0;
+
+    void* parent_controller;
 };
 
 #endif // MAINWINDOW_H
