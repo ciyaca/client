@@ -174,7 +174,7 @@ void QNChatMessage::paintEvent(QPaintEvent *event)
     QString She_path = QString(":/image/Avatar/%1.jpg").arg(this->She_tag);
     m_leftPixmap = QPixmap(She_path);   //头像
     m_rightPixmap = QPixmap(Me_path);
-    qDebug()<<Me_path<<this->She_tag;
+    qDebug()<<She_path<<this->She_tag;
     if(m_userType == User_Type::User_She) { // 用户
         //头像
 //        painter.drawRoundedRect(m_iconLeftRect,m_iconLeftRect.width(),m_iconLeftRect.height());
@@ -386,7 +386,7 @@ void QNChatMessage::paintEvent(QPaintEvent *event)
         painter.drawLine(QPointF(m_sanjiaoLeftRect.x() - 1, 30), QPointF(m_sanjiaoLeftRect.x()+m_sanjiaoLeftRect.width(), 24));
         painter.drawLine(QPointF(m_sanjiaoLeftRect.x() - 1, 30), QPointF(m_sanjiaoLeftRect.x()+m_sanjiaoLeftRect.width(), 36));
 
-//        pic = pic.scaled(250,250, Qt::KeepAspectRatio);
+        pic = pic.scaled(250,250, Qt::KeepAspectRatio);
         painter.drawPixmap(m_textLeftRect,pic);
     }
 }

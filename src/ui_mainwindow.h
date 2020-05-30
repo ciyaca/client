@@ -50,7 +50,7 @@ public:
     {
         if (MainWindow->objectName().isEmpty())
             MainWindow->setObjectName(QString::fromUtf8("MainWindow"));
-        MainWindow->resize(860, 673);
+        MainWindow->resize(875, 673);
         MainWindow->setStyleSheet(QString::fromUtf8(""));
         centralwidget = new QWidget(MainWindow);
         centralwidget->setObjectName(QString::fromUtf8("centralwidget"));
@@ -98,7 +98,7 @@ public:
         tab->setObjectName(QString::fromUtf8("tab"));
         stackedWidget = new QStackedWidget(tab);
         stackedWidget->setObjectName(QString::fromUtf8("stackedWidget"));
-        stackedWidget->setGeometry(QRect(199, 0, 671, 641));
+        stackedWidget->setGeometry(QRect(199, 0, 643, 600));
         stackedWidget->setStyleSheet(QString::fromUtf8(""));
         page = new QWidget();
         page->setObjectName(QString::fromUtf8("page"));
@@ -212,7 +212,7 @@ public:
         MainWindow->setCentralWidget(centralwidget);
         menubar = new QMenuBar(MainWindow);
         menubar->setObjectName(QString::fromUtf8("menubar"));
-        menubar->setGeometry(QRect(0, 0, 860, 28));
+        menubar->setGeometry(QRect(0, 0, 875, 28));
         MainWindow->setMenuBar(menubar);
         statusbar = new QStatusBar(MainWindow);
         statusbar->setObjectName(QString::fromUtf8("statusbar"));
@@ -220,7 +220,7 @@ public:
 
         retranslateUi(MainWindow);
 
-        tabWidget->setCurrentIndex(1);
+        tabWidget->setCurrentIndex(0);
 
 
         QMetaObject::connectSlotsByName(MainWindow);

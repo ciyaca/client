@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>creategroup</class>
+ <widget class="QWidget" name="creategroup">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>318</width>
+    <height>108</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>Form</string>
+  </property>
+  <widget class="QLineEdit" name="lineEdit_2">
+   <property name="geometry">
+    <rect>
+     <x>10</x>
+     <y>40</y>
+     <width>211</width>
+     <height>41</height>
+    </rect>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">QLineEdit#lineEdit_2 {
+   font-family: &quot;Microsoft YaHei&quot;;
+   font-size: 18px;
+   color: rgb(50, 50, 50);
+	background-color: rgba(255, 255, 255, 0%);
+	border:2px solid #b9babb;
+    border-radius: 4px;
+    padding: 2px 2px;
+    min-height: 18px;   /* 对应高度大概是24px，这里不知为何不能等价 */
+    padding-right: 18px;
+}
+QLineEdit#lineEdit_2:focus{
+    border: 2px solid #014099;
+}
+ 
+QLineEdit#lineEdit_2:hover{
+    border: 2px solid #014099;
+}
+QLineEdit#lineEdit_2 QPushButton {
+    width:  16px;
+    height: 16px;
+    qproperty-flat: true;
+    margin-right: 4px;
+    border: none;
+    border-width: 0;
+    background: transparent;
+    border-image: url(:/image/search.png) 0 0 0 0 stretch stretch;
+
+}
+ </string>
+   </property>
+  </widget>
+  <widget class="QPushButton" name="pushButton">
+   <property name="geometry">
+    <rect>
+     <x>240</x>
+     <y>40</y>
+     <width>61</width>
+     <height>41</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>PushButton</string>
+   </property>
+  </widget>
+ </widget>
+ <resources/>
+ <connections/>
+</ui>

@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>860</width>
+    <width>875</width>
     <height>673</height>
    </rect>
   </property>
@@ -65,7 +65,7 @@ border:none;
 }</string>
     </property>
     <property name="currentIndex">
-     <number>1</number>
+     <number>0</number>
     </property>
     <property name="iconSize">
      <size>
@@ -85,8 +85,8 @@ border:none;
        <rect>
         <x>199</x>
         <y>0</y>
-        <width>671</width>
-        <height>641</height>
+        <width>643</width>
+        <height>600</height>
        </rect>
       </property>
       <property name="styleSheet">
@@ -279,7 +279,7 @@ background-color: rgb(85,170,255);
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>860</width>
+     <width>875</width>
      <height>28</height>
     </rect>
    </property>

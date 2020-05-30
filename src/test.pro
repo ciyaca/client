@@ -28,6 +28,7 @@ SOURCES += \
     common.cpp \
     controller.cpp \
     contactitem.cpp \
+    creategroup.cpp \
     emojiwidget.cpp \
     feverrpc/feverrpc-client.cpp \
     feverrpc/feverrpc-factory.cpp \
@@ -48,6 +49,7 @@ HEADERS += \
     common.h \
     controller.h \
     contactitem.h \
+    creategroup.h \
     emojiwidget.h \
     feverrpc/feverrpc-client.hpp \
     feverrpc/feverrpc-factory.hpp \
@@ -64,6 +66,7 @@ FORMS += \
     chatface.ui \
     come_message.ui \
     contactitem.ui \
+    creategroup.ui \
     emoji.ui \
     emojiwidget.ui \
     friendrequest.ui \

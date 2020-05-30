@@ -8,6 +8,7 @@
 #include "contactitem.h"
 #include "addfriend.h"
 #include "friendrequest.h"
+#include "creategroup.h"
 
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
@@ -92,7 +93,7 @@ void MainWindow::addfriendrequest(QString name, QString message){
     //获取tag
     fr->setavatar(10);
 
-     item->setSizeHint(QSize(581,80));
+     item->setSizeHint(QSize(575,80));
      ui->listWidget_2->addItem(item);
      ui->listWidget_2->setItemWidget(item,fr);
      connect(fr, &friendrequest::deleterequestline, this, &MainWindow::deleterequestline);
@@ -115,6 +116,10 @@ void MainWindow::set_name(QString name){
 
 //第一次收到消息
 void MainWindow::First_recv(){
+    qDebug()<<"first_recv";
+    qDebug()<<this->Recv_t[this->num_r-1].name;
+    qDebug()<<this->Recv_t[this->num_r-1].tag;
+
     //在tab左边新建一行list
     QListWidgetItem* item = new QListWidgetItem;
     //从头像库中进行寻找
@@ -126,7 +131,11 @@ void MainWindow::First_recv(){
 
     Chatface* chat_temp = new Chatface(this->nickname, this->Recv_t[this->num_r-1]);
     chat_temp->Me_tag = this->Avatar_tag;
-    chat_temp->She_tag = this->Recv_t[this->num_r-1].tag;
+
+//    qDebug()<<chat_temp->Me_tag;
+    chat_temp->recv_message("0 :/image/emoji/23.gif");
+    chat_temp->recv_message("2 :/image/bg.jpg");
+
     ui->stackedWidget->addWidget(chat_temp);
     ui->stackedWidget->setCurrentIndex(this->num_r+1);
     ui->listWidget->setCurrentRow(this->num_r-1);
@@ -256,7 +265,8 @@ void MainWindow::on_treeWidget_itemDoubleClicked(QTreeWidgetItem *item, int colu
         qDebug()<<"我的群组";
     }
     else if(num >= 1 && num < 100){//好友上限100
-//        qDebug()<<person_list[num-1].name;
+        qDebug()<<person_list[num-1].name;
+        qDebug()<<person_list[num-1].tag;
         int cur_index = -1;
         //从消息列表中进行寻找
         for(int i = 0 ; i < this->num_r ; i++){
@@ -265,7 +275,6 @@ void MainWindow::on_treeWidget_itemDoubleClicked(QTreeWidgetItem *item, int colu
                 cur_index = i;
             }
         }
-        qDebug()<<cur_index;
         if(cur_index != -1){
             ui->tabWidget->setCurrentIndex(0);
             ui->stackedWidget->setCurrentIndex(cur_index+2);
@@ -314,7 +323,8 @@ void MainWindow::Add_friend(){
 
 }
 void MainWindow::Create_group(){
-
+    creategroup* cg = new creategroup();
+    cg->show();
 }
 void MainWindow::deleterequestline(){
     int row = ui->listWidget_2->currentRow();

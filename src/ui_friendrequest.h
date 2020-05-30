@@ -31,7 +31,7 @@ public:
     {
         if (friendrequest->objectName().isEmpty())
             friendrequest->setObjectName(QString::fromUtf8("friendrequest"));
-        friendrequest->resize(581, 74);
+        friendrequest->resize(575, 74);
         Avatar = new QLabel(friendrequest);
         Avatar->setObjectName(QString::fromUtf8("Avatar"));
         Avatar->setGeometry(QRect(10, 10, 50, 50));
