@@ -1,4 +1,5 @@
 QT       += core gui
+QT += webenginewidgets xml
 
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 
@@ -20,8 +21,10 @@ DEFINES += QT_DEPRECATED_WARNINGS
 #DEFINES += QT_DISABLE_DEPRECATED_BEFORE=0x060000    # disables all the APIs deprecated before Qt 6.0.0
 
 SOURCES += \
+    BBSPostReceiver.cpp \
     addfriend.cpp \
-    bbsnewpost.cpp \
+    bbsnewpostdialog.cpp \
+    bbspostlistwidget.cpp \
     chatface.cpp \
     chatmessage.cpp \
     client.cpp \
@@ -39,11 +42,14 @@ SOURCES += \
     friendrequest.cpp \
     main.cpp \
     mainwindow.cpp \
+    post.cpp \
     widget.cpp
 
 HEADERS += \
+    BBSPostReceiver.h \
     addfriend.h \
-    bbsnewpost.h \
+    bbsnewpostdialog.h \
+    bbspostlistwidget.h \
     chatface.h \
     chatmessage.h \
     client.h \
@@ -61,11 +67,12 @@ HEADERS += \
     friendrequest.h \
     info_code.h \
     mainwindow.h \
+    post.h \
     widget.h
 
 FORMS += \
     addfriend.ui \
-    bbsnewpost.ui \
+    bbsnewpostdialog.ui \
     chatface.ui \
     come_message.ui \
     contactitem.ui \

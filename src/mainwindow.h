@@ -8,7 +8,7 @@
 #include <QCloseEvent>
 #include <signal.h>
 #include <unistd.h>
-#include "bbsnewpost.h"
+#include "bbsnewpostdialog.h"
 
 namespace Ui {
 class MainWindow;
@@ -65,7 +65,8 @@ private:
 
     int num_r = 0;
 
-    BBSNewPost* __bbs_new_post_window;
+
+    BBSNewPostDialog* __bbs_new_post_dialog;
     void* parent_controller;
 };
 

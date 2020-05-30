@@ -1,6 +1,6 @@
 #include "controller.h"
 #include "QDebug"
-#include "bbsnewpost.h"
+
 
 Controller::Controller(QObject *parent) : QObject(parent)
 {
@@ -15,8 +15,7 @@ Controller::Controller(QObject *parent) : QObject(parent)
   this->main_window = new MainWindow(nullptr);
   this->main_window->setParentController((void*)this);
 
-//  BBSNewPost *bbs = new BBSNewPost(this->main_window);
-//  bbs->show();
+
 
   connect(this, &Controller::startRunning, client, &Client::on_doSomething);
   connect(&client_thread, &QThread::finished, client, &QObject::deleteLater);

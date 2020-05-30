@@ -347,6 +347,7 @@ void MainWindow::closeEvent(QCloseEvent *event)
 
 void MainWindow::on_bbs_new_post_btn_clicked()
 {
-    this->__bbs_new_post_window = new BBSNewPost(this);
-    this->__bbs_new_post_window->show();
+
+    this->__bbs_new_post_dialog = new BBSNewPostDialog(this);
+    this->__bbs_new_post_dialog->show();
 }
