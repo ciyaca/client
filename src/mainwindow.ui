@@ -245,25 +245,24 @@ background-color: rgb(85,170,255);
      <widget class="QWidget" name="widget" native="true">
       <property name="geometry">
        <rect>
-        <x>0</x>
+        <x>40</x>
         <y>0</y>
-        <width>120</width>
-        <height>251</height>
+        <width>711</width>
+        <height>401</height>
        </rect>
       </property>
-      <widget class="QPushButton" name="bbs_refresh_btn">
+      <widget class="QScrollArea" name="post_view_scroll_area">
        <property name="geometry">
         <rect>
-         <x>10</x>
-         <y>10</y>
-         <width>89</width>
-         <height>25</height>
+         <x>160</x>
+         <y>0</y>
+         <width>551</width>
+         <height>401</height>
         </rect>
        </property>
-       <property name="text">
-        <string>refresh</string>
+       <property name="widgetResizable">
+        <bool>true</bool>
        </property>
-<<<<<<< HEAD
        <widget class="QWidget" name="scrollAreaWidgetContents">
         <property name="geometry">
          <rect>
@@ -273,56 +272,64 @@ background-color: rgb(85,170,255);
           <height>399</height>
          </rect>
         </property>
-        <widget class="QPushButton" name="pushButton_2">
-         <property name="geometry">
-          <rect>
-           <x>210</x>
-           <y>130</y>
-           <width>89</width>
-           <height>25</height>
-          </rect>
-         </property>
-         <property name="text">
-          <string>PushButton</string>
-         </property>
-        </widget>
        </widget>
-=======
->>>>>>> 3aecc5c8a2eb2fcbb64ce46561431158349cf3ff
       </widget>
-      <widget class="QPushButton" name="bbs_new_post_btn">
+      <widget class="QPushButton" name="bbs_post_refresh_btn">
        <property name="geometry">
         <rect>
-         <x>10</x>
-         <y>60</y>
+         <x>0</x>
+         <y>0</y>
          <width>89</width>
          <height>25</height>
         </rect>
        </property>
        <property name="text">
-        <string>new post</string>
+        <string>refresh</string>
        </property>
       </widget>
-     </widget>
-     <widget class="QScrollArea" name="scrollArea">
-      <property name="geometry">
-       <rect>
-        <x>119</x>
-        <y>-1</y>
-        <width>751</width>
-        <height>591</height>
-       </rect>
-      </property>
-      <property name="widgetResizable">
-       <bool>true</bool>
-      </property>
-      <widget class="QWidget" name="scrollAreaWidgetContents">
+      <widget class="QPushButton" name="pushButton_2">
        <property name="geometry">
         <rect>
          <x>0</x>
-         <y>0</y>
-         <width>749</width>
-         <height>589</height>
+         <y>20</y>
+         <width>89</width>
+         <height>25</height>
+        </rect>
+       </property>
+       <property name="text">
+        <string>PushButton</string>
+       </property>
+      </widget>
+     </widget>
+     <widget class="QWidget" name="widget_2" native="true">
+      <property name="geometry">
+       <rect>
+        <x>280</x>
+        <y>430</y>
+        <width>281</width>
+        <height>161</height>
+       </rect>
+      </property>
+      <widget class="QPushButton" name="bbs_send_btn">
+       <property name="geometry">
+        <rect>
+         <x>90</x>
+         <y>120</y>
+         <width>89</width>
+         <height>25</height>
+        </rect>
+       </property>
+       <property name="text">
+        <string>send</string>
+       </property>
+      </widget>
+      <widget class="QTextEdit" name="textEdit">
+       <property name="geometry">
+        <rect>
+         <x>60</x>
+         <y>10</y>
+         <width>151</width>
+         <height>71</height>
         </rect>
        </property>
       </widget>
@@ -365,7 +372,7 @@ background-color: rgb(85,170,255);
      <x>0</x>
      <y>0</y>
      <width>875</width>
-     <height>22</height>
+     <height>28</height>
     </rect>
    </property>
   </widget>
