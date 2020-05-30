@@ -64,4 +64,5 @@ void Controller::exit()
     delete this->client;
     delete this->login_window;
     delete this->main_window;
+
 }
