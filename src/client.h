@@ -34,7 +34,7 @@ private:
 
 
 signals:
-  void resultReady(person_info); // 向外界发送结果
+  void resultReady(message_info); // 向外界发送结果
 
 public slots:
   void on_doSomething(); // 耗时操作

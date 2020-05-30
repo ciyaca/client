@@ -21,7 +21,7 @@ private:
     QString object_nickname;
 
 public:
-    explicit Chatface(QString my_nickname, struct person_info);
+    explicit Chatface(QString my_nickname, struct message_info);
     void chatface_init();
     bool emoji_flag;
     QWidget parentt;

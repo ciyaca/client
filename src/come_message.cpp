@@ -5,7 +5,7 @@
 #include "common.h"
 //#include "client_rpc.hpp"
 
-Come_message::Come_message(struct person_info temp) :
+Come_message::Come_message(struct message_info temp) :
     ui(new Ui::Come_message)
 {
     ui->setupUi(this);

@@ -13,7 +13,7 @@ class Come_message : public QWidget
     Q_OBJECT
 
 public:
-    explicit Come_message(struct person_info);
+    explicit Come_message(struct message_info);
     ~Come_message();
 
 private:

@@ -20,7 +20,7 @@
 #include <QVBoxLayout>
 #include <QFileDialog>
 
-Chatface::Chatface(QString my_nickname, struct person_info temp):
+Chatface::Chatface(QString my_nickname, struct message_info temp):
     ui(new Ui::Chatface)
 {
 

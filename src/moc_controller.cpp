@@ -23,7 +23,7 @@ QT_WARNING_PUSH
 QT_WARNING_DISABLE_DEPRECATED
 struct qt_meta_stringdata_Controller_t {
     QByteArrayData data[9];
-    char stringdata0[83];
+    char stringdata0[84];
 };
 #define QT_MOC_LITERAL(idx, ofs, len) \
     Q_STATIC_BYTE_ARRAY_DATA_HEADER_INITIALIZER_WITH_OFFSET(len, \
@@ -36,15 +36,15 @@ QT_MOC_LITERAL(0, 0, 10), // "Controller"
 QT_MOC_LITERAL(1, 11, 12), // "startRunning"
 QT_MOC_LITERAL(2, 24, 0), // ""
 QT_MOC_LITERAL(3, 25, 11), // "recvMessage"
-QT_MOC_LITERAL(4, 37, 11), // "person_info"
-QT_MOC_LITERAL(5, 49, 1), // "p"
-QT_MOC_LITERAL(6, 51, 17), // "loginSuccessfully"
-QT_MOC_LITERAL(7, 69, 8), // "nickname"
-QT_MOC_LITERAL(8, 78, 4) // "exit"
+QT_MOC_LITERAL(4, 37, 12), // "message_info"
+QT_MOC_LITERAL(5, 50, 1), // "p"
+QT_MOC_LITERAL(6, 52, 17), // "loginSuccessfully"
+QT_MOC_LITERAL(7, 70, 8), // "nickname"
+QT_MOC_LITERAL(8, 79, 4) // "exit"
 
     },
     "Controller\0startRunning\0\0recvMessage\0"
-    "person_info\0p\0loginSuccessfully\0"
+    "message_info\0p\0loginSuccessfully\0"
     "nickname\0exit"
 };
 #undef QT_MOC_LITERAL
@@ -88,7 +88,7 @@ void Controller::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _id, 
         Q_UNUSED(_t)
         switch (_id) {
         case 0: _t->startRunning(); break;
-        case 1: _t->recvMessage((*reinterpret_cast< person_info(*)>(_a[1]))); break;
+        case 1: _t->recvMessage((*reinterpret_cast< message_info(*)>(_a[1]))); break;
         case 2: _t->loginSuccessfully((*reinterpret_cast< QString(*)>(_a[1]))); break;
         case 3: _t->exit(); break;
         default: ;

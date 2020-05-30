@@ -21,18 +21,18 @@ public:
     explicit MainWindow(QWidget *parent = nullptr);
     void Show_init();
     void First_recv();
-    void recv_message(person_info);
+    void recv_message(message_info);
     void initContactTree();
     void initGroupChatTree();
-    void addMyFriendInfo(QTreeWidgetItem* pRootGroupItem,person_info,int);
+    void addMyFriendInfo(QTreeWidgetItem* pRootGroupItem,message_info,int);
 
     void addfriendrequest(QString,QString);
 
     void set_Avatar(int);
     void set_name(QString);
     int Avatar_tag;
-    QList<person_info> person_list;
-    QList<person_info> group_list;
+    QList<message_info> person_list;
+    QList<message_info> group_list;
 
     ~MainWindow();
 
@@ -50,7 +50,7 @@ private slots:
 
 private:
     Ui::MainWindow *ui;
-    struct person_info Recv_t[50];
+    struct message_info Recv_t[50];
     QTreeWidgetItem *pRootFriendItem;
 
     int num_r = 0;

@@ -36,7 +36,7 @@ void Controller::start()
   emit startRunning();
 }
 
-void Controller::recvMessage(person_info p)
+void Controller::recvMessage(message_info p)
 {
     this->main_window->recv_message(p);
 }

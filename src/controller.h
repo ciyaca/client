@@ -31,7 +31,7 @@ signals:
   void startRunning(); // 用于触发新线程中的耗时操作函数
 
 private slots:
-  void recvMessage(person_info p); // 接收新线程中的结果
+  void recvMessage(message_info p); // 接收新线程中的结果
   void loginSuccessfully(QString nickname);
   void exit();
 

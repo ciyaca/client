@@ -15,10 +15,8 @@ MainWindow::MainWindow(QWidget *parent) :
     ui(new Ui::MainWindow)
 {
     ui->setupUi(this);
-
     //设置界面初始化
     this->Show_init();
-
 }
 
 MainWindow::~MainWindow()
@@ -56,7 +54,7 @@ void MainWindow::Show_init(){
     //初始化BBS
 
     //显示好友列表
-    struct person_info temp;
+    struct message_info temp;
     temp.name = "q";
     temp.Message = "";
     temp.tag = 1;
@@ -133,8 +131,8 @@ void MainWindow::First_recv(){
     chat_temp->Me_tag = this->Avatar_tag;
 
 //    qDebug()<<chat_temp->Me_tag;
-    chat_temp->recv_message("0 :/image/emoji/23.gif");
-    chat_temp->recv_message("2 :/image/bg.jpg");
+//    chat_temp->recv_message("0 :/image/emoji/23.gif");
+//    chat_temp->recv_message("2 :/image/bg.jpg");
 
     ui->stackedWidget->addWidget(chat_temp);
     ui->stackedWidget->setCurrentIndex(this->num_r+1);
@@ -142,54 +140,37 @@ void MainWindow::First_recv(){
     recv_message(this->Recv_t[this->num_r-1]);
 }
 
-void MainWindow::recv_message(person_info recv_person){
-    QString msg = recv_person.Message;
+void MainWindow::recv_message(message_info recv_person){
     int cur_index = -1; //标记是否在左边找到，没有则新建
-    //遍历左边tab列表
-    qDebug()<<recv_person.name;
-    for(int i = 0 ; i < this->num_r ; i++){
-        if(this->Recv_t[i].name == recv_person.name){
-            //显示消息
-            cur_index = i;
+    if(recv_person.groupname == nullptr){
+        int cur_index = -1; //标记是否在左边找到，没有则新建
+        //遍历左边tab列表
+
+        for(int i = 0 ; i < this->num_r ; i++){
+            if(this->Recv_t[i].name == recv_person.name){
+                //显示消息
+                cur_index = i;
+            }
         }
-    }
-    qDebug()<<cur_index<<this->num_r;
-    if(cur_index != -1){
-        if(msg[0] == '0'){// 假设是表情包  0 path
-            msg = msg.mid(2,msg.size());
-            QString message = "        ";
-            //在这边显示消息
-            QString time = QString::number(QDateTime::currentDateTime().toTime_t()); //时间戳
+        if(cur_index != -1){
             ui->stackedWidget->setCurrentIndex(cur_index+2);
             Chatface* chat_temp = (Chatface*)ui->stackedWidget->widget(cur_index+2);
-            chat_temp->dealMessageTime(time);
-            chat_temp->dealMessage(message,time,msg, QNChatMessage::User_Sheemjio);
+            if(recv_person.time == nullptr){
+                QString time = QString::number(QDateTime::currentDateTime().toTime_t()); //时间戳
+                chat_temp->dealMessageTime(time);
+            }
+            else{
+                chat_temp->dealMessageTime(recv_person.time);
+            }
+            chat_temp->recv_message(recv_person.Message);
         }
-        else if(msg[0] == '1'){//如果是文字 1 msg
-            msg = msg.mid(2,msg.size());
-            //在这边显示消息
-            ui->stackedWidget->setCurrentIndex(cur_index+2);
-            Chatface* chat_temp = (Chatface*)ui->stackedWidget->widget(cur_index+2);
-            QString time = QString::number(QDateTime::currentDateTime().toTime_t()); //时间戳
-            chat_temp->dealMessageTime(time);
-            chat_temp->dealMessage(msg, time, "",QNChatMessage::User_She);
-            qDebug()<<msg;
-        }
-        else if(msg[0] == '2'){//如果是图片 2
-            msg = msg.mid(2,msg.size());
-            ui->stackedWidget->setCurrentIndex(cur_index+2);
-            Chatface* chat_temp = (Chatface*)ui->stackedWidget->widget(cur_index+2);
-            QString time = QString::number(QDateTime::currentDateTime().toTime_t()); //时间戳
-            chat_temp->dealMessageTime(time);
-            chat_temp->dealMessage("", time, msg,QNChatMessage::User_Shepic);
-        }
-        else if(msg[0] == '3'){
-            msg = msg.mid(2,msg.size());
+        else{
+            this->Recv_t[this->num_r++] = recv_person;
+            this->First_recv();
         }
     }
     else{
-        this->Recv_t[this->num_r++] = recv_person;
-        this->First_recv();
+
     }
 }
 
@@ -239,7 +220,7 @@ void MainWindow::initGroupChatTree()
     ui->treeWidget->setItemWidget(pRootFriendItem, 0, pItemName);
 }
 
-void MainWindow::addMyFriendInfo(QTreeWidgetItem* pRootGroupItem,person_info pi,int num)
+void MainWindow::addMyFriendInfo(QTreeWidgetItem* pRootGroupItem,message_info pi,int num)
 {
     QTreeWidgetItem *pChild = new QTreeWidgetItem();
     pChild->setSizeHint(0,QSize(241,50));
@@ -332,7 +313,7 @@ void MainWindow::deleterequestline(){
     friendrequest* fr = (friendrequest*)ui->listWidget_2->itemWidget(item);
 
     if(fr->isagree == 1){//agree
-        struct person_info temp;
+        struct message_info temp;
         temp.name = fr->name;
         temp.Message = "";
         temp.tag = fr->avatar;

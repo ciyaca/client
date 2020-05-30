@@ -26,7 +26,7 @@ int Client::recvMessage(std::string source_name, std::string message)
     cout << "recvMessage" << endl;
     cout << source_name << endl;
     cout << message << endl;
-    person_info p;
+    message_info p;
     p.tag = 5;
     p.name = QString::fromStdString(source_name);
     p.Message = QString::fromStdString(message);
