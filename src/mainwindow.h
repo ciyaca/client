@@ -8,6 +8,7 @@
 #include <QCloseEvent>
 #include <signal.h>
 #include <unistd.h>
+#include "bbsnewpost.h"
 
 namespace Ui {
 class MainWindow;
@@ -51,6 +52,8 @@ private slots:
     void Create_group();
     void deleterequestline();
 
+    void on_bbs_new_post_btn_clicked();
+
 public:
     void closeEvent(QCloseEvent *event);
     void setParentController(void*);
@@ -62,6 +65,7 @@ private:
 
     int num_r = 0;
 
+    BBSNewPost* __bbs_new_post_window;
     void* parent_controller;
 };
 

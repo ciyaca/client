@@ -344,3 +344,9 @@ void MainWindow::closeEvent(QCloseEvent *event)
     Controller* tmp = (Controller*)this->parent_controller;
     tmp->exitController();
 }
+
+void MainWindow::on_bbs_new_post_btn_clicked()
+{
+    this->__bbs_new_post_window = new BBSNewPost(this);
+    this->__bbs_new_post_window->show();
+}
