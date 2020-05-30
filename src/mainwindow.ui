@@ -358,13 +358,8 @@ background-color: rgb(85,170,255);
     <rect>
      <x>0</x>
      <y>0</y>
-<<<<<<< HEAD
-     <width>860</width>
-     <height>22</height>
-=======
      <width>875</width>
      <height>28</height>
->>>>>>> d1d7fe80167794d92188dd72aa1f555f1d2b6de4
     </rect>
    </property>
   </widget>
