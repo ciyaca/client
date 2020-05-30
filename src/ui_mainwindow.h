@@ -46,6 +46,7 @@ public:
     QWidget *widget;
     QScrollArea *post_view_scroll_area;
     QWidget *scrollAreaWidgetContents;
+    QPushButton *pushButton_2;
     QPushButton *bbs_post_refresh_btn;
     QWidget *widget_2;
     QPushButton *bbs_send_btn;
@@ -213,6 +214,9 @@ public:
         scrollAreaWidgetContents = new QWidget();
         scrollAreaWidgetContents->setObjectName(QString::fromUtf8("scrollAreaWidgetContents"));
         scrollAreaWidgetContents->setGeometry(QRect(0, 0, 549, 399));
+        pushButton_2 = new QPushButton(scrollAreaWidgetContents);
+        pushButton_2->setObjectName(QString::fromUtf8("pushButton_2"));
+        pushButton_2->setGeometry(QRect(210, 130, 89, 25));
         post_view_scroll_area->setWidget(scrollAreaWidgetContents);
         bbs_post_refresh_btn = new QPushButton(widget);
         bbs_post_refresh_btn->setObjectName(QString::fromUtf8("bbs_post_refresh_btn"));
@@ -252,7 +256,7 @@ public:
 
         retranslateUi(MainWindow);
 
-        tabWidget->setCurrentIndex(0);
+        tabWidget->setCurrentIndex(2);
 
 
         QMetaObject::connectSlotsByName(MainWindow);
@@ -266,6 +270,7 @@ public:
         ___qtreewidgetitem->setText(0, QCoreApplication::translate("MainWindow", "\350\201\224\347\263\273\344\272\272", nullptr));
         pushButton->setText(QString());
         tabWidget->setTabText(tabWidget->indexOf(tab_2), QCoreApplication::translate("MainWindow", "2", nullptr));
+        pushButton_2->setText(QCoreApplication::translate("MainWindow", "PushButton", nullptr));
         bbs_post_refresh_btn->setText(QCoreApplication::translate("MainWindow", "refresh", nullptr));
         bbs_send_btn->setText(QCoreApplication::translate("MainWindow", "send", nullptr));
         tabWidget->setTabText(tabWidget->indexOf(tab_3), QCoreApplication::translate("MainWindow", "3", nullptr));

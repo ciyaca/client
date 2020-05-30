@@ -65,7 +65,7 @@ border:none;
 }</string>
     </property>
     <property name="currentIndex">
-     <number>0</number>
+     <number>2</number>
     </property>
     <property name="iconSize">
      <size>
@@ -272,6 +272,19 @@ background-color: rgb(85,170,255);
           <height>399</height>
          </rect>
         </property>
+        <widget class="QPushButton" name="pushButton_2">
+         <property name="geometry">
+          <rect>
+           <x>210</x>
+           <y>130</y>
+           <width>89</width>
+           <height>25</height>
+          </rect>
+         </property>
+         <property name="text">
+          <string>PushButton</string>
+         </property>
+        </widget>
        </widget>
       </widget>
       <widget class="QPushButton" name="bbs_post_refresh_btn">
