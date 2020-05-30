@@ -9,11 +9,13 @@
 #include "addfriend.h"
 #include "friendrequest.h"
 #include "creategroup.h"
+#include "controller.h"
 
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
     ui(new Ui::MainWindow)
 {
+
     ui->setupUi(this);
     //设置界面初始化
     this->Show_init();
@@ -22,6 +24,11 @@ MainWindow::MainWindow(QWidget *parent) :
 MainWindow::~MainWindow()
 {
     delete ui;
+}
+
+void MainWindow::setParentController(void* parent_controller)
+{
+     this->parent_controller = parent_controller;
 }
 
 void MainWindow::Show_init(){
@@ -143,7 +150,7 @@ void MainWindow::First_recv(){
 void MainWindow::recv_message(message_info recv_person){
     int cur_index = -1; //标记是否在左边找到，没有则新建
 
-    if(recv_person.groupname==nullptr){//单聊
+    if(recv_person.groupname==""){//单聊
         for(int i = 0 ; i < this->num_r ; i++){
             if(this->Recv_t[i].name == recv_person.name){
                 //显示消息
@@ -163,7 +170,7 @@ void MainWindow::recv_message(message_info recv_person){
     if(cur_index != -1){//不在消息列表
         ui->stackedWidget->setCurrentIndex(cur_index+2);
         Chatface* chat_temp = (Chatface*)ui->stackedWidget->widget(cur_index+2);
-        if(recv_person.time == nullptr){//显示时间
+        if(recv_person.time == ""){//显示时间
             QString time = QString::number(QDateTime::currentDateTime().toTime_t()); //时间戳
             chat_temp->dealMessageTime(time);
         }
@@ -327,4 +334,19 @@ void MainWindow::deleterequestline(){
     }
     ui->listWidget_2->takeItem(row);
     delete fr;
+}
+
+
+void MainWindow::closeEvent(QCloseEvent *event)
+{
+    // 向自身进程发送SIGINT信号，相当于raise(SIGINT);
+//    kill(getpid(), SIGINT);
+    Controller* tmp = (Controller*)this->parent_controller;
+    tmp->exitController();
+}
+
+void MainWindow::on_bbs_new_post_btn_clicked()
+{
+    this->__bbs_new_post_window = new BBSNewPost(this);
+    this->__bbs_new_post_window->show();
 }

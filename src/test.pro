@@ -21,6 +21,7 @@ DEFINES += QT_DEPRECATED_WARNINGS
 
 SOURCES += \
     addfriend.cpp \
+    bbsnewpost.cpp \
     chatface.cpp \
     chatmessage.cpp \
     client.cpp \
@@ -42,6 +43,7 @@ SOURCES += \
 
 HEADERS += \
     addfriend.h \
+    bbsnewpost.h \
     chatface.h \
     chatmessage.h \
     client.h \
@@ -63,6 +65,7 @@ HEADERS += \
 
 FORMS += \
     addfriend.ui \
+    bbsnewpost.ui \
     chatface.ui \
     come_message.ui \
     contactitem.ui \
