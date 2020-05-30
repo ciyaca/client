@@ -65,7 +65,7 @@ border:none;
 }</string>
     </property>
     <property name="currentIndex">
-     <number>0</number>
+     <number>2</number>
     </property>
     <property name="iconSize">
      <size>
@@ -245,40 +245,17 @@ background-color: rgb(85,170,255);
      <widget class="QWidget" name="widget" native="true">
       <property name="geometry">
        <rect>
-        <x>40</x>
+        <x>0</x>
         <y>0</y>
-        <width>711</width>
-        <height>401</height>
+        <width>120</width>
+        <height>251</height>
        </rect>
       </property>
-      <widget class="QScrollArea" name="post_view_scroll_area">
+      <widget class="QPushButton" name="bbs_refresh_btn">
        <property name="geometry">
         <rect>
-         <x>160</x>
-         <y>0</y>
-         <width>551</width>
-         <height>401</height>
-        </rect>
-       </property>
-       <property name="widgetResizable">
-        <bool>true</bool>
-       </property>
-       <widget class="QWidget" name="scrollAreaWidgetContents">
-        <property name="geometry">
-         <rect>
-          <x>0</x>
-          <y>0</y>
-          <width>549</width>
-          <height>399</height>
-         </rect>
-        </property>
-       </widget>
-      </widget>
-      <widget class="QPushButton" name="bbs_post_refresh_btn">
-       <property name="geometry">
-        <rect>
-         <x>0</x>
-         <y>0</y>
+         <x>10</x>
+         <y>10</y>
          <width>89</width>
          <height>25</height>
         </rect>
@@ -287,36 +264,39 @@ background-color: rgb(85,170,255);
         <string>refresh</string>
        </property>
       </widget>
-     </widget>
-     <widget class="QWidget" name="widget_2" native="true">
-      <property name="geometry">
-       <rect>
-        <x>280</x>
-        <y>430</y>
-        <width>281</width>
-        <height>161</height>
-       </rect>
-      </property>
-      <widget class="QPushButton" name="bbs_send_btn">
+      <widget class="QPushButton" name="bbs_new_post_btn">
        <property name="geometry">
         <rect>
-         <x>90</x>
-         <y>120</y>
+         <x>10</x>
+         <y>60</y>
          <width>89</width>
          <height>25</height>
         </rect>
        </property>
        <property name="text">
-        <string>send</string>
+        <string>new post</string>
        </property>
       </widget>
-      <widget class="QTextEdit" name="textEdit">
+     </widget>
+     <widget class="QScrollArea" name="scrollArea">
+      <property name="geometry">
+       <rect>
+        <x>119</x>
+        <y>-1</y>
+        <width>751</width>
+        <height>591</height>
+       </rect>
+      </property>
+      <property name="widgetResizable">
+       <bool>true</bool>
+      </property>
+      <widget class="QWidget" name="scrollAreaWidgetContents">
        <property name="geometry">
         <rect>
-         <x>60</x>
-         <y>10</y>
-         <width>151</width>
-         <height>71</height>
+         <x>0</x>
+         <y>0</y>
+         <width>749</width>
+         <height>589</height>
         </rect>
        </property>
       </widget>
@@ -359,7 +339,7 @@ background-color: rgb(85,170,255);
      <x>0</x>
      <y>0</y>
      <width>875</width>
-     <height>28</height>
+     <height>22</height>
     </rect>
    </property>
   </widget>
