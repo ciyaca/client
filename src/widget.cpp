@@ -272,9 +272,10 @@ void Widget::on_pushButton_clicked()
     else if(this->state_login == -2)
     {
         // not exist
-        QMessageBox::warning(this,tr("warning"),tr("asdfiahsifhaiyf"),QMessageBox::Yes);
+        QMessageBox::warning(this,tr("warning"),tr("用户不存在!"),QMessageBox::Yes);
     }
     else if(this->state_login == -1){
         //password or username wrong
+        QMessageBox::warning(this,tr("warning"),tr("用户名或密码错误"),QMessageBox::Yes);
     }
 }

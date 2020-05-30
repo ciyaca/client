@@ -37,10 +37,12 @@ public:
     QListWidget *listWidget;
     QWidget *tab_2;
     QWidget *widget_tab_2;
+    QListWidget *listWidget_2;
     QTreeWidget *treeWidget;
     QPushButton *pushButton;
     QWidget *tab_3;
     QLabel *Avatar;
+    QLabel *name;
     QMenuBar *menubar;
     QStatusBar *statusbar;
 
@@ -48,7 +50,7 @@ public:
     {
         if (MainWindow->objectName().isEmpty())
             MainWindow->setObjectName(QString::fromUtf8("MainWindow"));
-        MainWindow->resize(860, 702);
+        MainWindow->resize(875, 673);
         MainWindow->setStyleSheet(QString::fromUtf8(""));
         centralwidget = new QWidget(MainWindow);
         centralwidget->setObjectName(QString::fromUtf8("centralwidget"));
@@ -62,6 +64,7 @@ public:
 "/*\350\256\276\347\275\256\347\252\227\344\275\223\346\240\267\345\274\217*/\n"
 "QTabWidget#tabWidget::pane{ \n"
 "	/*border:none;*/\n"
+"   border-image: url(:/image/bg3.jpg) 0 0 0 0     stretch stretch;\n"
 "}\n"
 "/*\350\256\276\347\275\256QTabWidget \347\232\204Tab\346\240\207\347\255\276\346\211\200\345\234\250\351\202\243\344\270\200\350\241\214\347\232\204\346\240\267\345\274\217\344\270\213*/\n"
 "QTabWidget#tabWidget::tab-bar{\n"
@@ -80,12 +83,12 @@ public:
 "QTabWidget#tabWidget>QTabBar::tab:!selected:hover{\n"
 "	border:3px solid #C589C3;\n"
 "	background:rgb(255, 255, 255, 100);\n"
-"	border-color: black;\n"
+"	border-color: "
+                        "black;\n"
 "	width:40px;\n"
 "	height:40px;\n"
 "}\n"
-"QTabWidget#tabWidge"
-                        "t>QTabBar::tab:selected{\n"
+"QTabWidget#tabWidget>QTabBar::tab:selected{\n"
 "background: none;\n"
 "border:none;\n"
 "}"));
@@ -95,7 +98,8 @@ public:
         tab->setObjectName(QString::fromUtf8("tab"));
         stackedWidget = new QStackedWidget(tab);
         stackedWidget->setObjectName(QString::fromUtf8("stackedWidget"));
-        stackedWidget->setGeometry(QRect(199, 0, 671, 641));
+        stackedWidget->setGeometry(QRect(199, 0, 643, 600));
+        stackedWidget->setStyleSheet(QString::fromUtf8(""));
         page = new QWidget();
         page->setObjectName(QString::fromUtf8("page"));
         stackedWidget->addWidget(page);
@@ -125,7 +129,11 @@ public:
         tab_2->setObjectName(QString::fromUtf8("tab_2"));
         widget_tab_2 = new QWidget(tab_2);
         widget_tab_2->setObjectName(QString::fromUtf8("widget_tab_2"));
-        widget_tab_2->setGeometry(QRect(240, 0, 621, 641));
+        widget_tab_2->setGeometry(QRect(250, 0, 611, 641));
+        widget_tab_2->setStyleSheet(QString::fromUtf8(""));
+        listWidget_2 = new QListWidget(widget_tab_2);
+        listWidget_2->setObjectName(QString::fromUtf8("listWidget_2"));
+        listWidget_2->setGeometry(QRect(10, 40, 581, 531));
         treeWidget = new QTreeWidget(tab_2);
         treeWidget->setObjectName(QString::fromUtf8("treeWidget"));
         treeWidget->setGeometry(QRect(0, 0, 241, 601));
@@ -151,7 +159,7 @@ public:
 "}"));
         pushButton = new QPushButton(tab_2);
         pushButton->setObjectName(QString::fromUtf8("pushButton"));
-        pushButton->setGeometry(QRect(210, 550, 31, 31));
+        pushButton->setGeometry(QRect(200, 570, 31, 31));
         pushButton->setStyleSheet(QString::fromUtf8("QPushButton#pushButton\n"
 "{\n"
 "border: none;\n"
@@ -197,10 +205,14 @@ public:
         Avatar = new QLabel(centralwidget);
         Avatar->setObjectName(QString::fromUtf8("Avatar"));
         Avatar->setGeometry(QRect(20, 0, 51, 51));
+        name = new QLabel(centralwidget);
+        name->setObjectName(QString::fromUtf8("name"));
+        name->setGeometry(QRect(80, 0, 71, 41));
+        name->setStyleSheet(QString::fromUtf8("font: 57 20pt \"Ubuntu\";"));
         MainWindow->setCentralWidget(centralwidget);
         menubar = new QMenuBar(MainWindow);
         menubar->setObjectName(QString::fromUtf8("menubar"));
-        menubar->setGeometry(QRect(0, 0, 860, 28));
+        menubar->setGeometry(QRect(0, 0, 875, 28));
         MainWindow->setMenuBar(menubar);
         statusbar = new QStatusBar(MainWindow);
         statusbar->setObjectName(QString::fromUtf8("statusbar"));
@@ -224,6 +236,7 @@ public:
         tabWidget->setTabText(tabWidget->indexOf(tab_2), QCoreApplication::translate("MainWindow", "2", nullptr));
         tabWidget->setTabText(tabWidget->indexOf(tab_3), QCoreApplication::translate("MainWindow", "3", nullptr));
         Avatar->setText(QCoreApplication::translate("MainWindow", "image", nullptr));
+        name->setText(QCoreApplication::translate("MainWindow", "TextLabel", nullptr));
     } // retranslateUi
 
 };

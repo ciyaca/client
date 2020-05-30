@@ -33,6 +33,10 @@ Chatface::Chatface(QString my_nickname, struct person_info temp):
 
     this->my_nickname = my_nickname;
     this->object_nickname = temp.name;
+    this->She_tag = temp.tag;
+//    qDebug()<<"chatface";
+//    qDebug()<<this->object_nickname;
+//    qDebug()<<this->She_tag;
 
     //初始化
     chatface_init();
@@ -47,9 +51,6 @@ void Chatface::chatface_init()
 
     ui->lineEdit->setPlaceholderText("文件名");
     ui->progressBar->setValue(0);
-
-//    recv_message("1 :/image/emoji/23.gif");
-//    recv_message("2 :/image/add.png");
 }
 Chatface::~Chatface()
 {
@@ -91,8 +92,8 @@ void Chatface::on_recv_emoji_path(QString path)
      * 这里需要将path直接发送
      */
     msg = "0 " + path;
-    client_rpc.call<int>("sendMessage",this->my_nickname.toStdString(),
-                         this->object_nickname.toStdString(),msg.toStdString());
+//    client_rpc.call<int>("sendMessage",this->my_nickname.toStdString(),
+//                         this->object_nickname.toStdString(),msg.toStdString());
 
     this->emoji_flag = 0;
 }
@@ -121,8 +122,8 @@ void Chatface::on_pushButton_clicked()
         qDebug() << "my nickname" << this->my_nickname;
         qDebug() << "object nickname" << this->object_nickname;
         qDebug() << sendStr;
-        client_rpc.call<int>("sendMessage",this->my_nickname.toStdString(),
-                             this->object_nickname.toStdString(),sendStr.toStdString());
+//        client_rpc.call<int>("sendMessage",this->my_nickname.toStdString(),
+//                             this->object_nickname.toStdString(),sendStr.toStdString());
 
 
     }
@@ -144,8 +145,14 @@ void Chatface::dealMessage(QString text, QString time, QString path, QNChatMessa
 {
     QNChatMessage* messageW = new QNChatMessage(ui->listWidget->parentWidget());
     QListWidgetItem* item = new QListWidgetItem(ui->listWidget);
+
     messageW->Me_tag = this->Me_tag;
     messageW->She_tag = this->She_tag;
+
+    qDebug()<<"dealMessage";
+    qDebug()<<messageW->Me_tag;
+    qDebug()<<messageW->She_tag;
+
     messageW->setFixedWidth(this->width());
     QSize size;
     if(type == QNChatMessage::User_Mepic || type == QNChatMessage::User_Shepic){

@@ -7,6 +7,8 @@
 #include <QDateTime>
 #include "contactitem.h"
 #include "addfriend.h"
+#include "friendrequest.h"
+#include "creategroup.h"
 
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
@@ -17,12 +19,6 @@ MainWindow::MainWindow(QWidget *parent) :
     //设置界面初始化
     this->Show_init();
 
-//    //来信格式样例
-//    struct person_info temp;
-//    temp.name = "Derk";
-//    temp.Message = "1 4984984984465646";
-//    temp.tag = 1;
-//    this->recv_message(temp);
 }
 
 MainWindow::~MainWindow()
@@ -31,14 +27,9 @@ MainWindow::~MainWindow()
 }
 
 void MainWindow::Show_init(){
-    //用户头像
-    QPixmap Avatar;
-    Avatar.load(":/image/Avatar/10.jpg");
-    this->Avatar_tag = 10;
-    // 将图片剪裁压缩成50*50大小的图
-    QPixmap fitpixmap_avatar = Avatar.scaled(50, 50, Qt::IgnoreAspectRatio, Qt::SmoothTransformation);
-    fitpixmap_avatar = PixmapToRound(Avatar,25);
-    ui->Avatar->setPixmap(fitpixmap_avatar);
+
+    this->set_Avatar(10);
+    this->set_name("ifpop");
 
     //添加切换按钮icon
     ui->tabWidget->setTabIcon(0,QIcon(":/image/chat.png"));
@@ -62,16 +53,6 @@ void MainWindow::Show_init(){
         Qt::SmoothTransformation)));  // 使用平滑的缩放方式
     ui->page->setPalette(palette);         // 给widget加上背景图
 
-    //显示初始状态背景图
-    ui->widget_tab_2->setAutoFillBackground(true);  // 不加上, 可能显示不出背景图.
-    palette = ui->widget_tab_2->palette();
-    palette.setBrush(QPalette::Window,
-    QBrush(QPixmap(":/image/bg.jpg").scaled(  // 缩放背景图.
-    ui->widget_tab_2->size(),
-    Qt::IgnoreAspectRatio,
-    Qt::SmoothTransformation)));  // 使用平滑的缩放方式
-    ui->widget_tab_2->setPalette(palette);         // 给widget加上背景图
-
     //初始化BBS
 
     //显示好友列表
@@ -90,8 +71,6 @@ void MainWindow::Show_init(){
     this->initGroupChatTree();
     //读取历史聊天记录
 
-    //初始化list
-
     //初始化，添加好友按钮
     QAction *addfriend = new QAction("添加好友或群组", this);
     QAction *create_group = new QAction("创建群聊", this);
@@ -102,10 +81,45 @@ void MainWindow::Show_init(){
     //绑定槽函数
     connect( addfriend, SIGNAL(triggered()), this, SLOT(Add_friend()));
     connect( create_group, SIGNAL(triggered()), this, SLOT(Create_group()));
+    this->addfriendrequest("ifpop","111111111111111111111111");
+    this->addfriendrequest("de","111111111111111111111111");
+
+}
+void MainWindow::addfriendrequest(QString name, QString message){
+    QListWidgetItem* item = new QListWidgetItem;
+    friendrequest* fr = new friendrequest(ui->listWidget_2);
+    fr->setname(name);
+    fr->setmessage(message);
+    //获取tag
+    fr->setavatar(10);
+
+     item->setSizeHint(QSize(575,80));
+     ui->listWidget_2->addItem(item);
+     ui->listWidget_2->setItemWidget(item,fr);
+     connect(fr, &friendrequest::deleterequestline, this, &MainWindow::deleterequestline);
+}
+void MainWindow::set_Avatar(int tag){
+    //用户头像
+    QPixmap Avatar;
+    QString path = ":/image/Avatar/%1.jpg";
+    path = path.arg(tag);
+    Avatar.load(path);
+    this->Avatar_tag = 10;
+    // 将图片剪裁压缩成50*50大小的图
+    QPixmap fitpixmap_avatar = Avatar.scaled(50, 50, Qt::IgnoreAspectRatio, Qt::SmoothTransformation);
+    fitpixmap_avatar = PixmapToRound(Avatar,25);
+    ui->Avatar->setPixmap(fitpixmap_avatar);
+}
+void MainWindow::set_name(QString name){
+    ui->name->setText(name);
 }
 
 //第一次收到消息
 void MainWindow::First_recv(){
+    qDebug()<<"first_recv";
+    qDebug()<<this->Recv_t[this->num_r-1].name;
+    qDebug()<<this->Recv_t[this->num_r-1].tag;
+
     //在tab左边新建一行list
     QListWidgetItem* item = new QListWidgetItem;
     //从头像库中进行寻找
@@ -117,7 +131,11 @@ void MainWindow::First_recv(){
 
     Chatface* chat_temp = new Chatface(this->nickname, this->Recv_t[this->num_r-1]);
     chat_temp->Me_tag = this->Avatar_tag;
-    chat_temp->She_tag = this->Recv_t[this->num_r-1].tag;
+
+//    qDebug()<<chat_temp->Me_tag;
+    chat_temp->recv_message("0 :/image/emoji/23.gif");
+    chat_temp->recv_message("2 :/image/bg.jpg");
+
     ui->stackedWidget->addWidget(chat_temp);
     ui->stackedWidget->setCurrentIndex(this->num_r+1);
     ui->listWidget->setCurrentRow(this->num_r-1);
@@ -184,7 +202,7 @@ void MainWindow::initContactTree()
 {
     ui->treeWidget->clear();
     //分组节点
-    QTreeWidgetItem *pRootFriendItem = new QTreeWidgetItem();
+    this->pRootFriendItem = new QTreeWidgetItem();
     //设置Data用于区分，Item是分组节点还是子节点，0代表分组节点，1代表子节点
     pRootFriendItem->setData(0, Qt::UserRole, 0);
     QLabel *pItemName = new QLabel(ui->treeWidget);
@@ -247,7 +265,8 @@ void MainWindow::on_treeWidget_itemDoubleClicked(QTreeWidgetItem *item, int colu
         qDebug()<<"我的群组";
     }
     else if(num >= 1 && num < 100){//好友上限100
-//        qDebug()<<person_list[num-1].name;
+        qDebug()<<person_list[num-1].name;
+        qDebug()<<person_list[num-1].tag;
         int cur_index = -1;
         //从消息列表中进行寻找
         for(int i = 0 ; i < this->num_r ; i++){
@@ -256,7 +275,6 @@ void MainWindow::on_treeWidget_itemDoubleClicked(QTreeWidgetItem *item, int colu
                 cur_index = i;
             }
         }
-        qDebug()<<cur_index;
         if(cur_index != -1){
             ui->tabWidget->setCurrentIndex(0);
             ui->stackedWidget->setCurrentIndex(cur_index+2);
@@ -305,5 +323,23 @@ void MainWindow::Add_friend(){
 
 }
 void MainWindow::Create_group(){
+    creategroup* cg = new creategroup();
+    cg->show();
+}
+void MainWindow::deleterequestline(){
+    int row = ui->listWidget_2->currentRow();
+    QListWidgetItem* item = ui->listWidget_2->currentItem();
+    friendrequest* fr = (friendrequest*)ui->listWidget_2->itemWidget(item);
 
+    if(fr->isagree == 1){//agree
+        struct person_info temp;
+        temp.name = fr->name;
+        temp.Message = "";
+        temp.tag = fr->avatar;
+        person_list.append(temp);
+        qDebug()<<person_list.last().name;
+        addMyFriendInfo(this->pRootFriendItem,person_list.last(),person_list.size());
+    }
+    ui->listWidget_2->takeItem(row);
+    delete fr;
 }

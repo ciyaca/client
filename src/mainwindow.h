@@ -25,9 +25,15 @@ public:
     void initContactTree();
     void initGroupChatTree();
     void addMyFriendInfo(QTreeWidgetItem* pRootGroupItem,person_info,int);
+
+    void addfriendrequest(QString,QString);
+
+    void set_Avatar(int);
+    void set_name(QString);
     int Avatar_tag;
     QList<person_info> person_list;
     QList<person_info> group_list;
+
     ~MainWindow();
 
 private slots:
@@ -40,10 +46,13 @@ private slots:
     void on_pushButton_2_clicked();
     void Add_friend();
     void Create_group();
+    void deleterequestline();
 
 private:
     Ui::MainWindow *ui;
     struct person_info Recv_t[50];
+    QTreeWidgetItem *pRootFriendItem;
+
     int num_r = 0;
 };
 
