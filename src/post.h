@@ -67,7 +67,7 @@ protected:
 protected:
     QString packetWithDiv(const QString &entry)
     {
-        return "<div>" + entry + "</div>";
+        return "<div>" + entry + "</div>\n";
     }
     QString packetAttachInfo()
     {

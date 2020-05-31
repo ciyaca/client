@@ -73,7 +73,7 @@ void BBSNewPostDialog::changeProcessDialogValue()
 
 QString BBSNewPostDialog::packetWithLi(const QString &entry)
 {
-    return "<li>" + entry + "</li>";
+    return "<li>" + entry + "</li>\n";
 }
 
 void BBSNewPostDialog::packetPost()
