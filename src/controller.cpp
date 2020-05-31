@@ -1,7 +1,7 @@
 #include "controller.h"
 #include "QDebug"
 
-
+QString Controller::username = "";
 Controller::Controller(QObject *parent) : QObject(parent)
 {
     printf("I'm Controller");
@@ -54,6 +54,7 @@ void Controller::loginSuccessfully(QString nickname)
 {
     qDebug() << nickname;
     this->nickname = nickname;
+    Controller::username = nickname;
     this->main_window->nickname = nickname;
     this->client->setUsername(nickname);
     this->login_window->close();

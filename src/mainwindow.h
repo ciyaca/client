@@ -9,6 +9,7 @@
 #include <signal.h>
 #include <unistd.h>
 #include "bbsnewpostdialog.h"
+#include "BBSPostReceiver.h"
 
 namespace Ui {
 class MainWindow;
@@ -54,10 +55,15 @@ private slots:
 
     void on_bbs_new_post_btn_clicked();
 
+    void on_refresh_clicked();
+
 public:
     void closeEvent(QCloseEvent *event);
     void setParentController(void*);
 
+
+public:
+    BBSPostReceiver* bbs_post_receiver;
 private:
     Ui::MainWindow *ui;
     struct message_info Recv_t[50];
@@ -67,6 +73,7 @@ private:
 
 
     BBSNewPostDialog* __bbs_new_post_dialog;
+
     void* parent_controller;
 };
 

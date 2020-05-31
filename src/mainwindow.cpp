@@ -17,6 +17,7 @@ MainWindow::MainWindow(QWidget *parent) :
 {
 
     ui->setupUi(this);
+    this->bbs_post_receiver = new BBSPostReceiver();
     //设置界面初始化
     this->Show_init();
 }
@@ -348,6 +349,12 @@ void MainWindow::closeEvent(QCloseEvent *event)
 void MainWindow::on_bbs_new_post_btn_clicked()
 {
 
-    this->__bbs_new_post_dialog = new BBSNewPostDialog(this);
+    this->__bbs_new_post_dialog = new BBSNewPostDialog("", "",this);
     this->__bbs_new_post_dialog->show();
+}
+
+void MainWindow::on_refresh_clicked()
+{
+    this->bbs_post_receiver->getPostsFromServer();
+    ui->scrollArea->setWidget(this->bbs_post_receiver->translate());
 }

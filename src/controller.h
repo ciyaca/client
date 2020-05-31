@@ -11,6 +11,8 @@
 class Controller : public QObject
 {
   Q_OBJECT
+public:
+    static QString username;
 private:
   QThread client_thread;
   Client *client;

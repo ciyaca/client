@@ -17,7 +17,7 @@ class BBSNewPostDialog : public QDialog
     Q_OBJECT
 
 public:
-    explicit BBSNewPostDialog(QWidget *parent = nullptr);
+    explicit BBSNewPostDialog(const QString&postid, const QString post, QWidget *parent = nullptr);
     ~BBSNewPostDialog();
 
 
@@ -31,6 +31,9 @@ private slots:
 private:
     void sleep(int ms);
     void showProcess(int range);
+    void sendPost();
+    void packetPost();
+    QString packetWithLi(const QString &entry);
 
 private:
     Ui::BBSNewPostDialog *ui;
@@ -38,6 +41,9 @@ private:
     QVector<QString> __file_paths;
 //    int __progress_dialog_range;
     QProgressDialog *__progress_dialog;
+
+    QString postid;
+    QString post;
 
 };
 

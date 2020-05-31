@@ -3,13 +3,17 @@
 #include <QFileDialog>
 #include <QMessageBox>
 #include <QDebug>
+#include "controller.h"
 
 
-BBSNewPostDialog::BBSNewPostDialog(QWidget *parent) :
+BBSNewPostDialog::BBSNewPostDialog(const QString&postid, const QString post, QWidget *parent) :
     QDialog(parent),
     ui(new Ui::BBSNewPostDialog)
 {
+    this->postid = postid;
+    this->post = post;
     ui->setupUi(this);
+    this->setWindowModality(Qt::ApplicationModal);
 //    this->__progress_dialog = new QProgressDialog(this);
 }
 
@@ -35,16 +39,12 @@ void BBSNewPostDialog::on_bbs_send_post_btn_clicked()
 {
     //diao yong jie kou
 
-    QMessageBox::information(this, "sending...",
-                             "Don't close the dialog.");
+//    QMessageBox::information(this, "sending...",
+//                             "Sending...");
 
-    for(int i = 0;i <= 10;i += 1)
-    {
-        sleep(1000);
-//        this->changeProcessDialogValue();
-    }
+    this->packetPost();
+    this->sendPost();
 
-//    this->__progress_dialog->close();
     this->close();
 }
 
@@ -70,5 +70,49 @@ void BBSNewPostDialog::changeProcessDialogValue()
 {
     this->__progress_dialog->setValue(this->__progress_dialog->value() + 1);
 }
+
+QString BBSNewPostDialog::packetWithLi(const QString &entry)
+{
+    return "<li>" + entry + "</li>";
+}
+
+void BBSNewPostDialog::packetPost()
+{
+    this->post += this->packetWithLi(Controller::username);
+    if(this->post == "" && this->postid == "")
+    {
+        //new post
+    }
+    else
+    {
+        //comment
+        this->post += packetWithLi("");//reply to
+    }
+    this->post += ui->textEdit->toPlainText();
+    this->post += this->packetWithLi(QString::number(this->__file_paths.size()));
+    for(int i = 0; i < this->__file_paths.size(); i++)
+    {
+        QString path = __file_paths[i];
+        int index = path.lastIndexOf('/');//查找最后一次出现'/'在字符串中的索引,
+        path = path.mid(index+1);//截取字符串str,起始索引位置为index+1,截取字符到字符串结束
+        this->post += this->packetWithLi("");//file_id
+        this->post += packetWithLi(path);//file_name
+    }
+}
+
+void BBSNewPostDialog::sendPost()
+{
+    if(this->postid == "")
+    {
+        //new post
+    }
+    else
+    {
+        //comment
+    }
+    qDebug() << this->post;
+    return;
+}
+
 
 
