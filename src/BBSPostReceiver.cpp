@@ -1,5 +1,6 @@
 #include "BBSPostReceiver.h"
-
+#include <string>
+#include "client.h"
 
 BBSPostReceiver::BBSPostReceiver(QObject *parent) : QObject(parent)
 {
@@ -10,28 +11,36 @@ BBSPostReceiver::BBSPostReceiver(QObject *parent) : QObject(parent)
 void BBSPostReceiver::getPostsFromServer()
 {
     if(this->__bbs_post_list_widget != nullptr)
+    {
+        post_vec.clear();
         delete this->__bbs_post_list_widget;
+    }
 
     this->__bbs_post_list_widget = new BBSPostListWidget();
     this->doc.clear();
 
-    QFile file("/home/wang/Documents/ciyaca/BBS/index.html");
+//    QFile file("/home/wang/Documents/ciyaca/BBS/index.html");
 
 
-    if(!file.open(QFile::ReadOnly | QFile::Text))
+//    if(!file.open(QFile::ReadOnly | QFile::Text))
 
-        QMessageBox::information(NULL, QStringLiteral("提示"),
+//        QMessageBox::information(NULL, QStringLiteral("提示"),
 
-                                     QStringLiteral("打不开用户协议文件"));
+//                                     QStringLiteral("打不开用户协议文件"));
 
+    std::string posts = client_rpc.call<std::string>("checkPosts", 5);
 
-    doc.setContent(&file);
+    QString posts_qstr = QString::fromStdString(posts);
+
+    qDebug() << "receivePost: " << posts_qstr;
+
+    doc.setContent(posts_qstr);
 }
 
 
 void BBSPostReceiver::parsePosts()
 {
-//         qDebug() << doc.toString();
+     qDebug() <<  "parsePosts" << doc.toString();
      QDomNodeList lis = doc.elementsByTagName("li");
     for(int i = 0; i < lis.size(); i++)
     {

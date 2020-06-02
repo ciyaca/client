@@ -163,7 +163,7 @@ public:
     {
         if(this->__comment_widget != nullptr)
         {
-            delete  this->__comment_widget;
+//            delete  this->__comment_widget;
             this->__comment_widget = nullptr;
         }
     }
