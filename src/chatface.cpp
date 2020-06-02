@@ -23,7 +23,14 @@
 Chatface::Chatface(QString my_nickname, struct message_info temp):
     ui(new Ui::Chatface)
 {
-
+    if(temp.groupname == "")
+    {
+        this->single_group_flag = 0;
+    }
+    else
+    {
+        this->single_group_flag = 1;
+    }
     ui->setupUi(this);
     ui->label->setText(temp.name);
 //    qDebug() << temp.name;
@@ -93,7 +100,7 @@ void Chatface::on_recv_emoji_path(QString path)
      */
     msg = "0 " + path;
     client_rpc.call<int>("sendMessage",this->my_nickname.toStdString(),
-                         this->object_nickname.toStdString(),msg.toStdString());
+                         this->object_nickname.toStdString(),msg.toStdString(), this->single_group_flag);
 
     this->emoji_flag = 0;
 }
@@ -119,11 +126,13 @@ void Chatface::on_pushButton_clicked()
         /*
          *  发送sendstr字符串
         */
+        qDebug() << "send message:";
         qDebug() << "my nickname" << this->my_nickname;
         qDebug() << "object nickname" << this->object_nickname;
         qDebug() << sendStr;
+        sendStr = "1 " + sendStr;
         client_rpc.call<int>("sendMessage",this->my_nickname.toStdString(),
-                             this->object_nickname.toStdString(),sendStr.toStdString());
+                             this->object_nickname.toStdString(),sendStr.toStdString(), this->single_group_flag);
 
 
     }
@@ -246,4 +255,21 @@ void Chatface::on_toolButton_2_clicked()
         dealMessageTime(time);
         dealMessage("",time,filename,QNChatMessage::User_Mepic);
     }
+
+    QFile file(filename);
+    if(!file.open(QFile::ReadOnly))
+
+        QMessageBox::information(NULL, QStringLiteral("提示"),
+
+                                     QStringLiteral("打不开用户协议文件"));
+
+    QByteArray bytes = file.readAll();
+    std::vector<char> fileData;
+    for(int i = 0; i < bytes.size(); i++)
+    {
+        fileData.push_back(bytes.at(i));
+    }
+    QString file_name = filename.mid(filename.lastIndexOf('/') + 1);
+    client_rpc.call<int>("sendFile", this->my_nickname.toStdString(),
+                         this->object_nickname.toStdString(), file_name.toStdString(),fileData, this->single_group_flag);
 }

@@ -18,4 +18,6 @@ struct message_info{
     QString time = "";
 };
 
+static QString SAVE_FILE_ROOT_PATH = "/home/wang/.client/";
+
 #endif // COMMON_H

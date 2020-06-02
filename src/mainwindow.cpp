@@ -19,7 +19,7 @@ MainWindow::MainWindow(QWidget *parent) :
     ui->setupUi(this);
     this->bbs_post_receiver = new BBSPostReceiver();
     //设置界面初始化
-    this->Show_init();
+//    this->Show_init();
 }
 
 MainWindow::~MainWindow()
@@ -35,7 +35,8 @@ void MainWindow::setParentController(void* parent_controller)
 void MainWindow::Show_init(){
 
     this->set_Avatar(10);
-    this->set_name("ifpop");
+    qDebug() << this->nickname;
+    this->set_name(this->nickname);
 
     //添加切换按钮icon
     ui->tabWidget->setTabIcon(0,QIcon(":/image/chat.png"));
@@ -138,6 +139,7 @@ void MainWindow::First_recv(){
     Chatface* chat_temp = new Chatface(this->nickname, this->Recv_t[this->num_r-1]);
     chat_temp->Me_tag = this->Avatar_tag;
 
+
 //    qDebug()<<chat_temp->Me_tag;
 //    chat_temp->recv_message("0 :/image/emoji/23.gif");
 //    chat_temp->recv_message("2 :/image/bg.jpg");
@@ -152,6 +154,7 @@ void MainWindow::recv_message(message_info recv_person){
     int cur_index = -1; //标记是否在左边找到，没有则新建
 
     if(recv_person.groupname==""){//单聊
+
         for(int i = 0 ; i < this->num_r ; i++){
             if(this->Recv_t[i].name == recv_person.name){
                 //显示消息

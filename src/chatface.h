@@ -19,6 +19,7 @@ class Chatface : public QWidget
 private:
     QString my_nickname;
     QString object_nickname;
+    int single_group_flag = 0;
 
 public:
     explicit Chatface(QString my_nickname, struct message_info);

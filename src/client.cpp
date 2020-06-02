@@ -1,6 +1,9 @@
 #include "client.h"
 #include "QDebug"
 #include "common.h"
+#include "controller.h"
+#include "common.h"
+#include "QMessageBox"
 
 FeverRPC::Client client_rpc("127.0.0.1");
 Client* Client::the_client = nullptr;
@@ -26,12 +29,23 @@ int Client::recvMessage(std::string source_name, std::string message)
     cout << "recvMessage" << endl;
     cout << source_name << endl;
     cout << message << endl;
-    message_info p;
-    p.tag = 5;
-    p.name = QString::fromStdString(source_name);
-    p.Message = QString::fromStdString(message);
-    emit the_client->resultReady(p);
+    emit the_client->recvMessageReady(QString::fromStdString(source_name), QString::fromStdString(message));
     return 0;
+}
+
+int Client::recvFile(string source_name, string target_name, string file_name, vector<char> file_data)
+{
+    qDebug() << "Client::recvFile ";
+//    std::vector<char> bytes = client_rpc.call<std::vector<char>>("downloadFile", this->file_name.toStdString());
+    std::string path = SAVE_FILE_ROOT_PATH.toStdString() + file_name;
+
+    std::ofstream outputFile( path, ios::binary );
+
+    outputFile.write( &file_data[0], file_data.size() );
+    outputFile.close();
+
+    emit the_client->recvFileReady(QString::fromStdString(source_name), QString::fromStdString(path));
+//    QMessageBox::information(nullptr, "info", "file saved into " + QString::fromStdString(path));
 }
 
 string Client::getUsername()
@@ -47,6 +61,7 @@ void Client::initClientRpc()
     qDebug() << "init rpc";
     client_rpc.bind("recvMessage", recvMessage);
     client_rpc.bind("getUsername", getUsername);
+    client_rpc.bind("recvFile", recvFile);
     client_rpc.s2c();
     qDebug() << "init rpc finished";
 }

@@ -27,6 +27,7 @@ public:
     static void initClientRpc();
     static int recvMessage(string, string);
     static string getUsername();
+    static int recvFile(string source_name, string target_name, string file_name,vector<char> file_data);
 
 
 private:
@@ -34,7 +35,8 @@ private:
 
 
 signals:
-  void resultReady(message_info); // 向外界发送结果
+  void recvMessageReady(QString source_name, QString message); // 向外界发送结果
+  void recvFileReady(QString source_name, QString file_path);
 
 public slots:
   void on_doSomething(); // 耗时操作

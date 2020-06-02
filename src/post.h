@@ -19,6 +19,9 @@
 #include "QHBoxLayout"
 #include "QVBoxLayout"
 #include "QGridLayout"
+#include "client.h"
+#include <fstream>
+#include "common.h"
 
 class BBSPostCommentButton : public QPushButton
 {
@@ -55,10 +58,49 @@ public:
     }
 };
 
+
+class BBSFileButton : public QPushButton
+{
+    Q_OBJECT
+private:
+    QString post_id;
+    QString file_name;
+
+public:
+    explicit BBSFileButton(const QString& file_name, QWidget* parent) : QPushButton(parent)
+    {
+        this->post_id = post_id;
+        this->file_name = file_name;
+        this->setText(file_name);
+        connect(this, SIGNAL(clicked(bool)), this, SLOT(downLoadFile(bool)));
+    }
+//    virtual ~BBSPostCommentButton();
+
+public slots:
+    void downLoadFile(bool clicked)
+    {
+        qDebug() << "downLoadFile";
+        std::vector<char> bytes = client_rpc.call<std::vector<char>>("downloadFile", this->file_name.toStdString());
+        std::string path = SAVE_FILE_ROOT_PATH.toStdString() + this->file_name.toStdString();
+
+
+
+        std::ofstream outputFile( path, ios::binary );
+
+        outputFile.write( &bytes[0], bytes.size() );
+        outputFile.close();
+
+        QMessageBox::information(this, "info", "file saved into " + QString::fromStdString(path));
+    }
+
+};
+
+
+
 class PostCommentBasic
 {
 public:
-    QVector<QPushButton*> attach_download_btn_vec;
+    QVector<BBSFileButton*> attach_download_btn_vec;
 protected:
     QMap<QString, QString> attach_file_name_id_map;
     QMap<QString, QString> attach_file_id_name_map;
@@ -69,6 +111,7 @@ protected:
     {
         return "<div>" + entry + "</div>\n";
     }
+
     QString packetAttachInfo()
     {
         QString info = packetWithDiv(QString::number(this->attach_file_name_vec.size()));
@@ -79,6 +122,32 @@ protected:
         }
         return info;
     }
+
+    QWidget* setUserNameAndIcon(const QString &username, const int &icon_size, QWidget* parent)
+    {
+        QLabel *user_icon = new QLabel(parent);
+        //用户头像
+        QPixmap *Avatar = new QPixmap();
+        QString path = ":/image/Avatar/%1.jpg";
+        path = path.arg(9);
+        Avatar->load(path);
+        // 将图片剪裁压缩成50*50大小的图
+        QPixmap fitpixmap_avatar = Avatar->scaled(50, 50, Qt::IgnoreAspectRatio, Qt::SmoothTransformation);
+        fitpixmap_avatar = PixmapToRound(*Avatar,icon_size);
+        user_icon->setPixmap(fitpixmap_avatar);
+
+        QLabel *user_name_label = new QLabel(username, parent);
+
+        QWidget *t = new QWidget(parent);
+        QHBoxLayout *layout = new QHBoxLayout(t);
+        layout->addWidget(user_icon);
+        layout->addWidget(user_name_label);
+        layout->setSpacing(0);
+        layout->addStretch();
+        t->setLayout(layout);
+        return t;
+    }
+
     QWidget* attachtranslateWidget(const QString& post_id, QWidget* parent)
     {
         if(this->attach_file_name_vec.size() == 0)
@@ -95,8 +164,9 @@ protected:
 
             for(int j = 0; j < 3 && i < attach_file_name_vec.size(); j++)
              {
-                QPushButton *btn = new QPushButton(w_tmp);
-                 btn->setText(attach_file_name_vec[i++]);
+                QString file_name_tmp = attach_file_name_vec[i++];
+                BBSFileButton *btn = new BBSFileButton(file_name_tmp, w_tmp);
+                 btn->setText(file_name_tmp);
                  btn->setFlat(true);
                  btn->setAutoFillBackground(true);
                  btn->setStyleSheet("color:blue");
@@ -161,11 +231,7 @@ public:
     }
     ~Comment()
     {
-        if(this->__comment_widget != nullptr)
-        {
-//            delete  this->__comment_widget;
-            this->__comment_widget = nullptr;
-        }
+
     }
 
     QString packetCommentInfo()
@@ -186,9 +252,13 @@ public:
             info += " reply " + this->reply_to_username;
         }
 
-        info += " : " + this->content;
+//        info += " : " + this->content;
 
-        QLabel *comment_label = new QLabel(info, __comment_widget);
+//        QLabel *comment_label = new QLabel(info, __comment_widget);
+        QWidget *user_info = this->setUserNameAndIcon(info, 20, __comment_widget);
+        QLabel *comment_label = new QLabel(this->content);
+
+        layout->addWidget(user_info);
         layout->addWidget(comment_label);
 
 
@@ -265,8 +335,6 @@ public:
         this->comments_vec.push_back(Comment(this->post_id, username, reply_to_username, content));
     }
 
-
-
     QWidget* translate(QWidget* parent) override
     {
         this->__post_widget = new QWidget(parent);
@@ -278,8 +346,12 @@ public:
 
         QWidget *w_tmp = new QWidget(this->__post_widget);
         QHBoxLayout *h_layout = new QHBoxLayout(w_tmp);
+
         //add user icon and info
-        QLabel *user_info = new QLabel(this->masterUsername(), w_tmp);
+
+        QWidget *user_info =  this->setUserNameAndIcon(this->masterUsername(),25, this->__post_widget);
+//        QLabel *user_info = new QLabel(this->masterUsername());
+
         h_layout->addWidget(user_info);
         h_layout->addWidget(comment_btn);
         h_layout->addStretch();

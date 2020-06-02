@@ -13,6 +13,7 @@ class Controller : public QObject
   Q_OBJECT
 public:
     static QString username;
+
 private:
   QThread client_thread;
   Client *client;
@@ -34,8 +35,9 @@ signals:
 
 
 private slots:
-  void recvMessage(message_info p); // 接收新线程中的结果
+  void recvMessage(QString source_name, QString message); // 接收新线程中的结果
   void loginSuccessfully(QString nickname);
+  void recvFile(QString source_name, QString file_path);
 public:
   void exitController();
 

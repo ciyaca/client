@@ -49,7 +49,7 @@ void BBSNewPostDialog::on_bbs_attach_file_btn_clicked()
 
         QByteArray bytes = file.readAll();
         std::vector<char> fileData;
-        for(size_t i = 0; i < bytes.size(); i++)
+        for(int i = 0; i < bytes.size(); i++)
         {
             fileData.push_back(bytes.at(i));
         }

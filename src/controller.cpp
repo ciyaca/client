@@ -19,7 +19,10 @@ Controller::Controller(QObject *parent) : QObject(parent)
 
   connect(this, &Controller::startRunning, client, &Client::on_doSomething);
   connect(&client_thread, &QThread::finished, client, &QObject::deleteLater);
-  connect(client, &Client::resultReady, this, &Controller::recvMessage);
+//  connect(client, &Client::resultReady, this, &Controller::recvMessage, Qt::QueuedConnection);
+  connect(client, &Client::recvMessageReady, this, &Controller::recvMessage);
+  connect(client, &Client::recvFileReady, this, &Controller::recvFile);
+
   client_thread.start();
 
   connect(login_window, &Widget::loginSuccessfully, this, &Controller::loginSuccessfully);
@@ -39,8 +42,15 @@ void Controller::start()
   emit startRunning();
 }
 
-void Controller::recvMessage(message_info p)
+void Controller::recvMessage(QString source_name, QString message)
 {
+    qDebug() << "Controller::recvMessage";
+    message_info p;
+    p.tag = 5;
+    p.name = source_name;
+    p.Message = message;
+    qDebug() << p.name;
+    qDebug() << p.Message;
     this->main_window->recv_message(p);
 }
 
@@ -59,8 +69,28 @@ void Controller::loginSuccessfully(QString nickname)
     this->client->setUsername(nickname);
     this->login_window->close();
     this->start();
+    this->main_window->Show_init();
     this->main_window->show();
 }
+
+void Controller::recvFile(QString source_name, QString file_path)
+{
+    qDebug() << "Controller::recvFile";
+    qDebug() << file_path;
+    message_info p;
+    p.name = source_name;
+    if(file_path.endsWith(".png") || file_path.endsWith(".jpg"))
+    {
+        p.Message = "2 " + file_path;
+    }
+    else
+    {
+        p.Message = "3 " + file_path;
+    }
+    this->main_window->recv_message(p);
+}
+
+
 
 void Controller::exitController()
 {

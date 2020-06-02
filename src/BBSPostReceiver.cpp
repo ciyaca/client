@@ -15,7 +15,6 @@ void BBSPostReceiver::getPostsFromServer()
         post_vec.clear();
         delete this->__bbs_post_list_widget;
     }
-
     this->__bbs_post_list_widget = new BBSPostListWidget();
     this->doc.clear();
 
