@@ -19,6 +19,8 @@
 #include <QDateTime>
 #include <QVBoxLayout>
 #include <QFileDialog>
+#include "common.h"
+#include "controller.h"
 
 Chatface::Chatface(QString my_nickname, struct message_info temp):
     ui(new Ui::Chatface)
@@ -272,4 +274,10 @@ void Chatface::on_toolButton_2_clicked()
     QString file_name = filename.mid(filename.lastIndexOf('/') + 1);
     client_rpc.call<int>("sendFile", this->my_nickname.toStdString(),
                          this->object_nickname.toStdString(), file_name.toStdString(),fileData, this->single_group_flag);
+}
+
+void Chatface::on_toolButton_4_clicked()
+{
+    client_rpc.call<int>("checkHistoryMessage", Controller::username.toStdString());
+
 }

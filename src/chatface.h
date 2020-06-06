@@ -45,6 +45,8 @@ private slots:
 
     void on_toolButton_2_clicked();
 
+    void on_toolButton_4_clicked();
+
 private:
     Ui::Chatface *ui;
     normal_emoji* normalEmoji;
